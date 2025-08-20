@@ -61,4 +61,3 @@ A execução é simples e não requer a instalação de pacotes externos.
     python main.py
     ```
 4.  A aplicação será iniciada no console. Siga as instruções na tela para navegar pelos menus.
-# Software-Project-Phase2
