@@ -1,4 +1,4 @@
-from models import Student, Course, Instructor, Conteudo
+from models import Student, Course, Instructor, Conteudo, Usuario
 from data_base import alunos, cursos, instrutores
 from aluno import inscrever_curso, ver_cursos, plataformas_cursos, desempenho_aluno
 

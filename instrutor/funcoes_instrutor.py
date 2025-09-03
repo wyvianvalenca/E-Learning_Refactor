@@ -1,5 +1,5 @@
 from data_base import alunos, cursos, instrutores
-from models import Course, Student, Instructor, Conteudo
+from models import Course, Student, Instructor, Conteudo, Usuario
 from instrutor import listar_cursos, criar_curso, atualizar_curso, excluir_curso, add_remove_conteudo, ver_conteudo, criar_quiz, relatorios_turma
 
 
