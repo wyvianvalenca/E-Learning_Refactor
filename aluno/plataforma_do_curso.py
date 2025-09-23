@@ -8,7 +8,7 @@ from aluno import certificado, responder_quiz
 '''
 
 def executar(aluno_logado, curso_escolhido):
-   
+
     if curso_escolhido.titulo not in aluno_logado.progresso:
         aluno_logado.progresso[curso_escolhido.titulo] = []
 
@@ -16,7 +16,7 @@ def executar(aluno_logado, curso_escolhido):
         titulos_vistos_pelo_aluno = aluno_logado.progresso[curso_escolhido.titulo]
         titulos_obrigatorios_do_curso = {conteudo.titulo for conteudo in curso_escolhido.conteudos}
         curso_completo = titulos_obrigatorios_do_curso.issubset(set(titulos_vistos_pelo_aluno))
-        
+
         total_conteudos = len(curso_escolhido.conteudos)
 
         print(f"\n--- Conteúdos do Curso: {curso_escolhido.titulo} ---")
@@ -46,11 +46,11 @@ def executar(aluno_logado, curso_escolhido):
                 os.startfile("pdf.pdf")
                 if conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
                     aluno_logado.progresso[curso_escolhido.titulo].append(conteudo_selecionado.titulo)
-                
-            
-            
+
+
+
             elif conteudo_selecionado.tipo.lower() == "quiz":
-             
+
                 quiz_passou = responder_quiz.executar(conteudo_selecionado)
 
                 if quiz_passou and conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:

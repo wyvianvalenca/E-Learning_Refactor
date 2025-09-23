@@ -2,4 +2,4 @@
 alunos = []
 cursos = []
 instrutores = []
-
+posts = []
