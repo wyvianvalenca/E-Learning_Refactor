@@ -19,6 +19,7 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 * **Interactive Learning Tools:** Instrutores podem criar quizzes interativos, que os alunos podem responder para testar seus conhecimentos.
 * **Payment and Subscription Management (Simulação):** O sistema simula um fluxo de pagamento para cursos pagos antes de liberar o acesso ao aluno.
 * **Analytics and Reporting:** A plataforma fornece relatórios detalhados sobre o desempenho dos alunos e o engajamento nos cursos, tanto para a visão do aluno quanto para a do instrutor.
+* **Discussion Forums and Chat:** A interação via FORUM foi implementada. A interação via CHAT está sendo trabalhada.
 
 ### Não Implementadas
 
