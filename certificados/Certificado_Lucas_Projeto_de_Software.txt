@@ -11,11 +11,11 @@
 
     concluiu com sucesso o curso:
 
-        "PYTHON BASICO"
+        "PROJETO DE SOFTWARE"
 
     ministrado pelo(a) instrutor(a) Carlos.
 
     -------------------------------------------------------------------
-    Certificado emitido em: 03/09/2025 às 10:22
+    Certificado emitido em: 03/09/2025 às 10:07
     Plataforma E-Learning
     

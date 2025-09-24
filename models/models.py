@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 
 from typing_extensions import override
 
@@ -9,26 +11,55 @@ class Course:
         self.instrutor = instrutor
         self.conteudos = conteudos if conteudos is not None else []
         self.students = students if students is not None else []
-        self.preco = preco  
+        # underline (convenção), indicando que é "privado"
+        self._preco = preco #preco esta encapsulado
+
+    @property #getter só retorna o valor
+    def preco(self):
+        return self._preco
+
+    @preco.setter #setter controla o valor definto
+    def preco(self, novo_preco):
+        
+        if novo_preco >= 0:
+            self._preco = novo_preco
+        else:
+            print("Erro: O preço de um curso não pode ser negativo.")
 
 
-
-class Student:
-    def __init__(self, nome, senha, cursos_inscritos=None, cursos_pagos=None, progresso=None, notas_quizzes=None):
+# classe usuario criada para implementar herança
+# assim, Student e Instructor herdam de Usuario
+class Usuario(ABC): #abstract base class
+    def __init__(self, nome, senha):
         self.nome = nome
-        self.senha = senha
+        self.__senha = senha #senha está encapsulada
+
+    @abstractmethod # método que deve ser implementado por subclasses
+    def exibir_menu(self, cursos): # metodo abstrato
+        pass
+
+
+class Student(Usuario):
+    def __init__(self, nome, senha, cursos_inscritos=None, cursos_pagos=None, progresso=None, notas_quizzes=None):
+        super().__init__(nome, senha) #chama o init da classe usuario
         self.cursos_inscritos = cursos_inscritos if cursos_inscritos is not None else []
         self.progresso = progresso if progresso is not None else {}
         self.cursos_pagos = cursos_pagos if cursos_pagos is not None else []
         self.notas_quizzes = notas_quizzes if notas_quizzes is not None else {}
         self.chats: dict[str, 'Chat'] = {}
 
+    def exibir_menu(self, cursos):
+        from aluno.funcoes_aluno import menu_aluno # tive q usar assim pq tava dando erro circular :(
+        menu_aluno(self, cursos)
 
-class Instructor:
+class Instructor(Usuario):
     def __init__(self, nome, senha):
-        self.nome = nome
-        self.senha = senha
+        super().__init__(nome, senha) #aqui tbm chama o init da classe usuario
         self.cursos = []
+    
+    def exibir_menu(self, cursos):
+        from instrutor.funcoes_instrutor import menu_instrutor
+        menu_instrutor(self, cursos)
 
 class Conteudo:
     def __init__(self, titulo, tipo, duracao_minutos, quiz_obj=None):
