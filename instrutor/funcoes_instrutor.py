@@ -1,42 +1,42 @@
+import questionary
 from aluno import forum
 from data_base import alunos, cursos, instrutores, posts
 from models import Course, Student, Instructor, Conteudo, Usuario
 from instrutor import listar_cursos, criar_curso, atualizar_curso, excluir_curso, add_remove_conteudo, ver_conteudo, criar_quiz, relatorios_turma
 
 
-def menu_instrutor(instrutor, cursos):
+def menu_instrutor(instrutor: Instructor, cursos: list[Course]) -> None:
 
     while True:
         # Menu do instrutor
         print(f"\n--- Menu do Instrutor: {instrutor.nome} ---")
-        print("1 - Listar Meus Cursos")
-        print("2 - Criar Curso")
-        print("3 - Atualizar informações Curso")
-        print("4 - Excluir Curso")
-        print("5 - Ver conteúdos do curso")
-        print("6 - Adicionar/Remover conteúdos do curso")
-        print("7 - Chat e Fórum")
-        print("8 - Criar Quiz/Tarefa")
-        print("9 - Relatórios da Turma")
-        print("10 - Ver Forum")
-        print("0 - Sair")
 
-        choose = int(input("Escolha uma opção: "))
+        opcoes: list[str] = [
+            "1 - Listar Meus Cursos",
+            "2 - Criar Curso",
+            "3 - Atualizar informações Curso",
+            "4 - Excluir Curso",
+            "5 - Ver conteúdos do curso",
+            "6 - Adicionar/Remover conteúdos do curso",
+            "7 - Chat e Fórum",
+            "8 - Criar Quiz/Tarefa",
+            "9 - Relatórios da Turma",
+            "10 - Ver Forum",
+            "0 - Sair"]
 
-        while choose not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
-            print("Opção inválida. Tente novamente.")
-            choose = int(input("Escolha uma opção: "))
+        choose: str = questionary.select("Escolha uma opcao:",
+                                         choices=opcoes).ask()
 
-        if choose == 1:
+        if choose == opcoes[0]:
             listar_cursos.executar(instrutor, cursos)
 
-        elif choose == 2:
+        elif choose == opcoes[1]:
             criar_curso.executar(instrutor, cursos)
 
-        elif choose == 3:
+        elif choose == opcoes[2]:
             atualizar_curso.executar(instrutor, cursos)
 
-        elif choose == 4:
+        elif choose == opcoes[3]:
             excluir_curso.executar(instrutor, cursos)
 
         elif choose == 5:

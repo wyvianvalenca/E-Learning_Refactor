@@ -1,10 +1,12 @@
+from rich.panel import Panel
+
 from models import Student, Course, Instructor
 from data_base import alunos, cursos, instrutores, posts
 
 
 def inicial():
 
-    print("\n\nBem-vindo a plataforma E-learning!\n\n")
+    print(Panel("\n\nBem-vindo a plataforma E-learning!\n\n"))
     # menu principal
     print("--- Menu Principal ---")
     print("1 - Entrar como Aluno")

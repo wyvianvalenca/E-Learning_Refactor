@@ -6,8 +6,8 @@ from typing_extensions import override
 
 class Course:
     def __init__(self, titulo, descricao, instrutor, conteudos=None, students=None, preco=0.0):
-        self.titulo = titulo
-        self.descricao = descricao
+        self.titulo: str = titulo
+        self.descricao: str = descricao
         self.instrutor = instrutor
         self.conteudos = conteudos if conteudos is not None else []
         self.students = students if students is not None else []
@@ -127,7 +127,7 @@ class ForumPost:
 
 class Mensagem:
     def __init__(self, autor: Usuario, conteudo: str):
-        self.autor: Student | Instructor = autor
+        self.autor: Usuario = autor
         self.conteudo: str = conteudo
 
     @override
