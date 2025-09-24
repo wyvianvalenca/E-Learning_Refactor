@@ -1,5 +1,5 @@
 from models import Student, Course, Instructor
-from data_base import alunos, cursos, instrutores
+from data_base import alunos, cursos, instrutores, posts
 
 
 def inicial():
@@ -29,7 +29,8 @@ def inicial():
 
     elif (choose == 2):
         # logica para o instrutor
-        print("\nInstrutores disponíveis:", [instrutor.nome for instrutor in instrutores])
+        print("\nInstrutores disponíveis:", [
+              instrutor.nome for instrutor in instrutores])
         nome_usuario = input("Digite o nome do instrutor para 'logar': ")
         lista_usuarios = instrutores
         tipo_usuario = "Instrutor"
@@ -37,16 +38,16 @@ def inicial():
     elif (choose == 3):
         print("Saindo do sistema. Até logo!")
         exit()
-        
+
     for usuario in lista_usuarios:
         if usuario.nome.lower() == nome_usuario.lower():
             usuario_logado = usuario
             break
-    
+
     if usuario_logado:
         print(f"\nBem-vindo, {usuario_logado.nome}!")
         # aqui chamamos o polimorfismo
-        usuario_logado.exibir_menu(cursos)
+        usuario_logado.exibir_menu(cursos, posts)
         inicial()
     else:
         print(f"{tipo_usuario} não encontrado.")
