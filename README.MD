@@ -24,7 +24,7 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 ### Não Implementadas
 
 * **Mobile Compatibility:** Sendo uma aplicação de console, não possui interface gráfica.
-* **Discussion Forums and Chat:** A funcionalidade de interação e comunidade entre usuários não foi implementada.
+* **Discussion Forums and Chat:** A funcionalidade de interação entre usuários via CHAT ainda não foi implementada.
 
 ---
 
