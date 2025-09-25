@@ -1,45 +1,53 @@
+import questionary
+from rich.panel import Panel
+
+from inicial import console
+
 from models import Student, Course, Instructor, Conteudo, Usuario, ForumPost
+
 from aluno import adicionar_post, inscrever_curso, ver_cursos, plataformas_cursos, desempenho_aluno, forum
 
 
 def menu_aluno(aluno_logado: Student, cursos: Course, posts: list[ForumPost]):
     while True:
-        print("\n--- Menu do Aluno ---")
-        print("1 - Ver Cursos Inscritos")
-        print("2 - Inscrever em Curso")
-        print("3 - Plataforma Cursos")
-        print("4 - Desempenho do Aluno")
-        print("5 - Ver Forum")
-        print("6 - Adicionar Post")
-        print("0 - Sair")
 
-        choose = int(input("Escolha uma opção: "))
+        console.print(Panel.fit(
+            f":pencil: Menu do Aluno: {aluno_logado.nome} :pencil:", style="light_sea_green"))
 
-        while choose not in [0, 1, 2, 3, 4, 5, 6]:
-            print("Opção inválida. Tente novamente.")
-            choose = int(input())
+        opcoes: list[str] = [
+            "Ver Cursos Inscritos",
+            "Inscrever em Curso",
+            "Plataforma Cursos",
+            "Desempenho do Aluno",
+            "Ver Forum",
+            "Adicionar Post",
+            "Sair"
+        ]
+
+        choose: str = questionary.select("Escolha uma opcao:",
+                                         choices=opcoes).ask()
 
         # VER CURSOS INSCRITOS
-        if choose == 1:
+        if choose == opcoes[0]:
             ver_cursos.ver_cursos(aluno_logado)
 
         # MATRICULAR EM CURSO
-        elif choose == 2:
+        elif choose == opcoes[1]:
             inscrever_curso.executar(aluno_logado, cursos)
 
-        elif choose == 3:
+        elif choose == opcoes[2]:
             plataformas_cursos.executar(aluno_logado, cursos)
 
-        elif choose == 4:
+        elif choose == opcoes[3]:
             desempenho_aluno.executar(aluno_logado)
 
-        elif choose == 5:
+        elif choose == opcoes[4]:
             forum.mostrar_feed(posts, aluno_logado)
 
-        elif choose == 6:
+        elif choose == opcoes[5]:
             adicionar_post.adicionar_post(aluno_logado, posts)
 
-        elif choose == 0:
+        elif choose == opcoes[6]:
             print("Saindo do menu do aluno. Até logo!")
             break
 

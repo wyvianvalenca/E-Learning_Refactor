@@ -1,7 +1,6 @@
-
-
 import questionary
-from main import console
+
+from inicial import console
 from models.models import ForumPost, Student
 
 

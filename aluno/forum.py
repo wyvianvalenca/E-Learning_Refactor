@@ -1,12 +1,11 @@
 from rich.panel import Panel
-from rich.style import StyleType
 from rich.text import Text
 
 import questionary
 
 from models import ForumPost, Comentario, Usuario
 
-from main import console
+from inicial import console
 
 
 def nada(post: ForumPost, autor: Usuario) -> None:
