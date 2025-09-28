@@ -5,6 +5,7 @@ from instrutor.dry import selecionar_curso_do_instrutor
     função para ver todos os conteudos do curso
 '''
 
+
 def executar(instrutor, cursos):
     print("\n--- Ver Conteúdos de um Curso ---")
 
@@ -17,4 +18,4 @@ def executar(instrutor, cursos):
             print("  - Este curso ainda não possui conteúdos.")
         else:
             for conteudo_obj in curso_selecionado.conteudos:
-                print(f"  - {conteudo_obj.titulo} ({conteudo_obj.tipo}, {conteudo_obj.duracao_minutos} min)")
+                print(f"  - {conteudo_obj}")

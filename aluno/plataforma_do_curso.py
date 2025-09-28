@@ -16,8 +16,10 @@ def executar(aluno_logado: Student, curso_escolhido: Course):
 
     while True:
         titulos_vistos_pelo_aluno = aluno_logado.progresso[curso_escolhido.titulo]
+
         titulos_obrigatorios_do_curso = {
             conteudo.titulo for conteudo in curso_escolhido.conteudos}
+
         curso_completo = titulos_obrigatorios_do_curso.issubset(
             set(titulos_vistos_pelo_aluno))
 

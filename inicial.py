@@ -1,7 +1,6 @@
 import questionary
 from rich.panel import Panel
 
-from models import Student, Course, Instructor
 from data_base import alunos, cursos, instrutores, posts
 
 from rich.console import Console
@@ -54,7 +53,8 @@ def inicial():
 
     if usuario_logado:
         console.print(
-            f"\n\nBem-vindo, {usuario_logado.nome}!\n", style="gray100 on light_sea_green")
+            f"\n\nBem-vindo, {usuario_logado.nome}!\n",
+            style="gray100 on light_sea_green")
         # aqui chamamos o polimorfismo
         usuario_logado.exibir_menu(cursos, posts)
         inicial()
