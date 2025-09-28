@@ -1,7 +1,15 @@
-from abc import ABC, abstractmethod
+import os
+import sys
+import subprocess
 
+import questionary
+
+from rich.console import Console
+from rich.markdown import Markdown
+from rich.panel import Panel
 
 from typing_extensions import override
+from abc import ABC, abstractmethod
 
 
 class Course:
@@ -73,40 +81,134 @@ class Instructor(Usuario):
         menu_instrutor(self, cursos)
 
 
-class Conteudo:
-    def __init__(self, titulo, tipo, duracao_minutos, quiz_obj=None):
-        self.titulo: str = titulo
-        self.tipo: str = tipo  # 'video', 'PDF', '
-        self.duracao_minutos = duracao_minutos
-        self.quiz_obj = quiz_obj
+class PerguntaQuiz:
+    # aqui vai ficas as perguntas do quiz
+    def __init__(self, pergunta: str,
+                 alternativas: list[str],
+                 resposta: str):
+        self.pergunta: str = pergunta
+        self.alternativas: list[str] = alternativas
+        self.resposta: str = resposta
 
-    # representação:
     @override
     def __repr__(self):
-        return f"[{self.tipo}] {self.titulo} ({self.duracao_minutos} min)"
+        return f"[PerguntaQuiz] {self.pergunta} - {self.alternativas})"
+
+    def acertou(self, alternativaEscolhida: str) -> bool:
+        return alternativaEscolhida == self.resposta
 
 
-# aqui é o quiz completo
 class Quiz:
-    def __init__(self, titulo, perguntas):
-        self.titulo = titulo
-        self.perguntas = perguntas
+    # quiz completo
+    def __init__(self, titulo: str, perguntas: list[PerguntaQuiz]):
+        self.titulo: str = titulo
+        self.perguntas: list[PerguntaQuiz] = perguntas
 
     @override
     def __repr__(self):
         return f"[Quiz] {self.titulo} ({len(self.perguntas)} perguntas)"
 
+    @override
+    def __str__(self) -> str:
+        return self.__repr__()
 
-# aqui vai ficas as perguntas do quiz
-class PerguntaQuiz:
-    def __init__(self, pergunta, alternativas, indiceResposta):
-        self.pergunta = pergunta
-        self.alternativas = alternativas
-        self.indiceResposta = indiceResposta
+    def criar_formulario(self) -> list[dict[str, str | list[str]]]:
+        formulario: list[dict[str, str | list[str]]] = []
+        for pergunta in self.perguntas:
+            formulario.append({
+                "type": "select",
+                "name": pergunta.pergunta,
+                "message": pergunta.pergunta,
+                "options": pergunta.alternativas
+            })
+        return formulario
+
+    def nota(self, respostas: dict[str, str]) -> int:
+        acertos: int = 0
+        for pergunta in self.perguntas:
+            if pergunta.acertou(respostas[pergunta.pergunta]):
+                acertos += 1
+
+        return acertos
+
+
+class Conteudo(ABC):
+    # produto abstrato
+    def __init__(self, console: Console,
+                 titulo: str, tipo: str, duracao_minutos: int):
+        self.console: Console = console
+        self.titulo: str = titulo.lower()
+        self.tipo: str = tipo.lower()  # pode ser omitido...
+        self.duracao_minutos: int = duracao_minutos
 
     @override
-    def __repr__(self):
-        return f"[PerguntaQuiz] {self.pergunta} - {self.alternativas})"
+    def __repr__(self) -> str:
+        return f"[{self.tipo.upper()}] {self.titulo.title()} ({self.duracao_minutos} min)"
+
+    @override
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    @abstractmethod
+    def apresentar(self) -> bool:
+        '''Apresenta o conteudo e retorna se ele foi consumido ou nao'''
+        pass
+
+    @staticmethod
+    def abrir_arquivo(filename: str) -> None:
+        if sys.platform == "win32":
+            os.startfile(filename)
+        else:
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
+            _ = subprocess.call([opener, filename])
+
+
+class Externo(Conteudo):
+    # produto concreto
+    def __init__(self, console: Console,
+                 titulo: str, tipo: str, duracao: int, caminho: str) -> None:
+        super().__init__(console, titulo, tipo, duracao)
+        self.caminho: str = caminho
+
+    @override
+    def apresentar(self) -> bool:
+        self.abrir_arquivo(self.caminho)
+        return True
+
+
+class Texto(Conteudo):
+    # produto concreto
+    def __init__(self, console: Console,
+                 titulo: str, tipo: str, duracao: int, texto: str) -> None:
+        super().__init__(console, titulo, tipo, duracao)
+        self.texto: str = texto
+
+    @override
+    def apresentar(self) -> bool:
+        self.console.print(Panel.fit(Markdown(self.texto)))
+        return True
+
+
+class Questionario(Conteudo):
+    # produto concreto
+    def __init__(self, console: Console,
+                 titulo: str, tipo: str, duracao: int, quiz: Quiz) -> None:
+        super().__init__(console, titulo, tipo, duracao)
+        self.quiz: Quiz = quiz
+
+    @override
+    def apresentar(self) -> bool:
+        self.console.print(f"\n--- Iniciando Quiz: {self.quiz.titulo.title()}")
+        respostas: dict[str, str] = questionary.prompt(
+            self.quiz.criar_formulario())
+
+        corretas: int = self.quiz.nota(respostas)
+        total: int = len(self.quiz.perguntas)
+
+        self.console.print("\n--- Resultado do Quiz ---")
+        self.console.print(f"Você acertou {corretas} de {total} perguntas.")
+
+        return corretas == total
 
 
 class Comentario:
