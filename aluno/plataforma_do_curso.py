@@ -1,21 +1,25 @@
 
 import os
 from aluno import certificado, responder_quiz
+from models.models import Course, Student
 
 
 '''
     mostra o conteúdo do curso escolhido pelo aluno
 '''
 
-def executar(aluno_logado, curso_escolhido):
+
+def executar(aluno_logado: Student, curso_escolhido: Course):
 
     if curso_escolhido.titulo not in aluno_logado.progresso:
         aluno_logado.progresso[curso_escolhido.titulo] = []
 
     while True:
         titulos_vistos_pelo_aluno = aluno_logado.progresso[curso_escolhido.titulo]
-        titulos_obrigatorios_do_curso = {conteudo.titulo for conteudo in curso_escolhido.conteudos}
-        curso_completo = titulos_obrigatorios_do_curso.issubset(set(titulos_vistos_pelo_aluno))
+        titulos_obrigatorios_do_curso = {
+            conteudo.titulo for conteudo in curso_escolhido.conteudos}
+        curso_completo = titulos_obrigatorios_do_curso.issubset(
+            set(titulos_vistos_pelo_aluno))
 
         total_conteudos = len(curso_escolhido.conteudos)
 
@@ -40,24 +44,25 @@ def executar(aluno_logado, curso_escolhido):
             if conteudo_selecionado.tipo == "video":
                 os.startfile("video.mp4")
                 if conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
-                    aluno_logado.progresso[curso_escolhido.titulo].append(conteudo_selecionado.titulo)
+                    aluno_logado.progresso[curso_escolhido.titulo].append(
+                        conteudo_selecionado.titulo)
 
             elif conteudo_selecionado.tipo == "PDF":
                 os.startfile("pdf.pdf")
                 if conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
-                    aluno_logado.progresso[curso_escolhido.titulo].append(conteudo_selecionado.titulo)
-
-
+                    aluno_logado.progresso[curso_escolhido.titulo].append(
+                        conteudo_selecionado.titulo)
 
             elif conteudo_selecionado.tipo.lower() == "quiz":
 
                 quiz_passou = responder_quiz.executar(conteudo_selecionado)
 
                 if quiz_passou and conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
-                    aluno_logado.progresso[curso_escolhido.titulo].append(conteudo_selecionado.titulo)
+                    aluno_logado.progresso[curso_escolhido.titulo].append(
+                        conteudo_selecionado.titulo)
                 else:
-                    print("Progresso não salvo. Tente o quiz novamente para gabaritá-lo.")
-
+                    print(
+                        "Progresso não salvo. Tente o quiz novamente para gabaritá-lo.")
 
         elif curso_completo and escolha == total_conteudos + 1:
             certificado.executar(curso_escolhido, aluno_logado)

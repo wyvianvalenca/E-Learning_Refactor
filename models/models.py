@@ -5,24 +5,31 @@ from typing_extensions import override
 
 
 class Course:
-    def __init__(self, titulo, descricao, instrutor, conteudos=None, students=None, preco=0.0):
+    def __init__(self, titulo: str, descricao: str,
+                 instrutor: 'Instructor',
+                 conteudos: list['Conteudo'] | None = None,
+                 students: list['Student'] | None = None,
+                 preco: float = 0.0):
+
         self.titulo: str = titulo
         self.descricao: str = descricao
-        self.instrutor = instrutor
-        self.conteudos = conteudos if conteudos is not None else []
-        self.students = students if students is not None else []
+        self.instrutor: Instructor = instrutor
+        self.conteudos: list[Conteudo] = conteudos if conteudos is not None else [
+        ]
+        self.students: list[Student] = students if students is not None else []
+
         # underline (convenção), indicando que é "privado"
-        self._preco = preco  # preco esta encapsulado
+        self.__preco: float = preco  # preco esta encapsulado
 
     @property  # getter só retorna o valor
-    def preco(self):
-        return self._preco
+    def preco(self) -> float:
+        return self.__preco
 
     @preco.setter  # setter controla o valor definto
-    def preco(self, novo_preco):
+    def preco(self, novo_preco: float):
 
         if novo_preco >= 0:
-            self._preco = novo_preco
+            self.__preco = novo_preco
         else:
             print("Erro: O preço de um curso não pode ser negativo.")
 
@@ -51,7 +58,6 @@ class Student(Usuario):
 
     @override
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
-        # tive q usar assim pq tava dando erro circular :(
         from aluno.funcoes_aluno import menu_aluno
         menu_aluno(self, cursos, posts)
 
@@ -69,24 +75,24 @@ class Instructor(Usuario):
 
 class Conteudo:
     def __init__(self, titulo, tipo, duracao_minutos, quiz_obj=None):
-        self.titulo = titulo
-        self.tipo = tipo  # 'video' ou 'PDF'
+        self.titulo: str = titulo
+        self.tipo: str = tipo  # 'video', 'PDF', '
         self.duracao_minutos = duracao_minutos
         self.quiz_obj = quiz_obj
 
     # representação:
-
+    @override
     def __repr__(self):
         return f"[{self.tipo}] {self.titulo} ({self.duracao_minutos} min)"
 
 
 # aqui é o quiz completo
 class Quiz:
-
     def __init__(self, titulo, perguntas):
         self.titulo = titulo
         self.perguntas = perguntas
 
+    @override
     def __repr__(self):
         return f"[Quiz] {self.titulo} ({len(self.perguntas)} perguntas)"
 

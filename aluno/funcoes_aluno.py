@@ -8,7 +8,7 @@ from models import Student, Course, Instructor, Conteudo, Usuario, ForumPost
 from aluno import adicionar_post, inscrever_curso, ver_cursos, plataformas_cursos, desempenho_aluno, forum
 
 
-def menu_aluno(aluno_logado: Student, cursos: Course, posts: list[ForumPost]):
+def menu_aluno(aluno_logado: Student, cursos: list[Course], posts: list[ForumPost]):
     while True:
 
         console.print(Panel.fit(
