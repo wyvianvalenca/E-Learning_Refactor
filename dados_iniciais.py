@@ -1,6 +1,16 @@
-from models import Course, Student, Instructor, Conteudo, PerguntaQuiz, Quiz
-from data_base import alunos, cursos, instrutores, posts
-from models.models import Comentario, ForumPost
+from inicial import console
+from data_base import posts
+from models.models import (
+    Course,
+    Student,
+    Instructor,
+    Comentario,
+    ForumPost,
+    Externo,
+    Questionario,
+    Quiz,
+    PerguntaQuiz
+)
 
 
 def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
@@ -19,27 +29,35 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
     # Quiz
     perguntas_py = [
         PerguntaQuiz("O que é Python?", [
-                     "Linguagem de programação", "Fruta", "Animal"], 0),
+                     "Linguagem de programação", "Fruta", "Animal"],
+                     "Linguagem de programação"),
         PerguntaQuiz("Qual a extensão de arquivos Python?",
-                     [".py", ".txt", ".docx"], 0)
+                     [".py", ".txt", ".docx"],
+                     ".py")
     ]
     perguntas_ds = [
         PerguntaQuiz("O que é Data Science?", [
-                     "Análise de dados", "Programação", "Design"], 0),
-        PerguntaQuiz("Qual biblioteca é usada para análise de dados em Python?", [
-                     "Pandas", "NumPy", "Matplotlib"], 0)
+                     "Análise de dados", "Programação", "Design"],
+                     "Análise de dados"),
+        PerguntaQuiz("Qual biblioteca é usada para análise de dados em Python?",
+                     ["Pandas", "NumPy", "Matplotlib"],
+                     "Pandas")
     ]
     perguntas_ml = [
-        PerguntaQuiz("O que é Machine Learning?", [
-                     "Aprendizado de máquina", "Programação", "Banco de dados"], 0),
-        PerguntaQuiz("Qual algoritmo é usado em Machine Learning?", [
-                     "Regressão Linear", "HTML", "CSS"], 0)
+        PerguntaQuiz("O que é Machine Learning?",
+                     ["Aprendizado de máquina", "Programação", "Banco de dados"],
+                     "Aprendizado de máquina"),
+        PerguntaQuiz("Qual algoritmo é usado em Machine Learning?",
+                     ["Regressão Linear", "HTML", "CSS"],
+                     "Regressão Linear")
     ]
     perguntas_django = [
-        PerguntaQuiz("O que é Django?", [
-                     "Framework web", "Banco de dados", "Sistema operacional"], 0),
+        PerguntaQuiz("O que é Django?",
+                     ["Framework web", "Banco de dados", "Sistema operacional"],
+                     "Framework web"),
         PerguntaQuiz("Qual linguagem é usada no Django?",
-                     ["Python", "JavaScript", "Java"], 0)
+                     ["Python", "JavaScript", "Java"],
+                     "Python")
     ]
 
     # Criando objetos Quiz
@@ -48,30 +66,41 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
     quiz3 = Quiz("Quiz Machine Learning", perguntas_ml)
     quiz4 = Quiz("Quiz Django", perguntas_django)
 
-    quiz_py = Conteudo("Quiz Python", "Quiz", 5, quiz_obj=quiz1)
-    quiz_ds = Conteudo("Quiz Data Science", "Quiz", 5, quiz_obj=quiz2)
-    quiz_ml = Conteudo("Quiz Machine Learning", "Quiz", 5, quiz_obj=quiz3)
-    quiz_django = Conteudo("Quiz Django", "Quiz", 5, quiz_obj=quiz4)
+    quiz_py = Questionario(
+        console, "Quiz Python", "Quiz", 5, quiz=quiz1)
+    quiz_ds = Questionario(
+        console, "Quiz Data Science", "Quiz", 5, quiz=quiz2)
+    quiz_ml = Questionario(
+        console, "Quiz Machine Learning", "Quiz", 5, quiz=quiz3)
+    quiz_django = Questionario(
+        console, "Quiz Django", "Quiz", 5, quiz=quiz4)
 
     # CONTÉUDOS
     conteudos_py = [
-        Conteudo("PDF - Sobre Python", "PDF", 10),
-        Conteudo("video - Introdução ao Python", "video", 30),
+        Externo(console, "Sobre Python", "PDF", 10, "content/pdf.pdf"),
+        Externo(console, "Introdução ao Python",
+                "video", 30, "content/video.mp4"),
         quiz_py
     ]
     conteudos_ds = [
-        Conteudo("PDF - Introdução ao Data Science", "PDF", 15),
-        Conteudo("video - Análise de Dados", "video", 45),
+        Externo(console, "Introdução ao Data Science",
+                "PDF", 15, "content/pdf.pdf"),
+        Externo(console, "Análise de Dados",
+                "video", 45, "content/video.mp4"),
         quiz_ds
     ]
     conteudos_ml = [
-        Conteudo("PDF - Fundamentos de Machine Learning", "PDF", 20),
-        Conteudo("video - Algoritmos de Machine Learning", "video", 50),
+        Externo(console, "Fundamentos de Machine Learning",
+                "PDF", 20, "content/pdf.pdf"),
+        Externo(console, "Algoritmos de Machine Learning",
+                "video", 50, "content/video.mp4"),
         quiz_ml
     ]
     conteudos_web = [
-        Conteudo("PDF - Introdução ao Django", "PDF", 25),
-        Conteudo("video - Criando APIs com Django", "video", 60),
+        Externo(console, "Introdução ao Django",
+                "PDF", 25, "content/pdf.pdf"),
+        Externo(console, "Criando APIs com Django",
+                "video", 60, "content/video.mp4"),
         quiz_django
     ]
 
