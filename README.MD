@@ -34,31 +34,57 @@ O projeto foi organizado de forma modular para seguir o **Princípio da Responsa
 
 ```
 / (pasta raiz)
+├── requirements.txt
 ├── main.py
 ├── inicial.py
 ├── dados_iniciais.py
 ├── data_base.py
+├── singleton_metaclass.py
 ├── models/
 │   └── models.py
 ├── aluno/
 │   ├── funcoes_aluno.py
 │   └── ... (um arquivo para cada ação do aluno)
-└── instrutor/
-    ├── funcoes_instrutor.py
-    └── ... (um arquivo para cada ação do instrutor)
+├── instrutor/
+│   ├── funcoes_instrutor.py
+│   └── ... (um arquivo para cada ação do instrutor)
+└── content/
+    ├── video.mp4
+    ├── pdf.pdf
+    └── ... (arquivos de conteudo externo)
 ```
 
 ---
 
 ## Como Rodar o Projeto
 
-A execução é simples e não requer a instalação de pacotes externos.
+A execução é simples. Recomendamos o uso de Ambiente Virtual Python para instalação dos pacotes externos.
 
-1.  Certifique-se de que você tem o **Python 3** instalado.
-2.  Navegue pelo seu terminal até a pasta raiz do projeto (a que contém o `main.py`).
-3.  Execute o seguinte comando, no terminal:
+### Clone o repositório e vá para a pasta do projeto
+```bash
+git clone https://github.com/wyvianvalenca/E-Learning_Refactor.git
+cd E-Learning_Refactor
+```
 
-    ```bash
-    python main.py
-    ```
-4.  A aplicação será iniciada no console. Siga as instruções na tela para navegar pelos menus.
+### Crie e ative um Ambiente Virtual
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### Instale as dependencias do projeto
+Esse projeto usa algumas bibliotecas externas:
+- [rich](https://github.com/Textualize/rich)
+- [questionary](https://github.com/tmbo/questionary)
+
+```bash
+pip install -r requirements.txt
+```
+
+### Rode o código
+```bash
+python main.py
+
+```
+
+A aplicação será iniciada no console. Siga as instruções na tela para navegar pelos menus.
