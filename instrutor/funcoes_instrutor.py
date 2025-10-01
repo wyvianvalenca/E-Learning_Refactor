@@ -12,11 +12,14 @@ from instrutor.gerenciador_cursos import GerenciadorCurso
 from aluno import forum
 
 
-def menu_instrutor(instrutor: Instructor, cursos: list[Course]) -> None:
+def cursos_instrutor(cursos: list[Course], instrutor: Instructor) -> list[Course]:
     cursos_instrutor: list[Course] = [
         curso for curso in cursos if curso.instrutor == instrutor
     ]
+    return cursos_instrutor
 
+
+def menu_instrutor(instrutor: Instructor, cursos: list[Course]) -> None:
     while True:
         # Menu do instrutor
         console.print(Panel.fit(
@@ -43,7 +46,7 @@ def menu_instrutor(instrutor: Instructor, cursos: list[Course]) -> None:
             criar_curso.executar(instrutor, cursos)
 
         elif choose == opcoes[2]:
-            GerenciadorCurso(console).menu(cursos_instrutor)
+            GerenciadorCurso(console).menu(cursos_instrutor(cursos, instrutor))
 
         elif choose == opcoes[3]:
             excluir_curso.executar(instrutor, cursos)

@@ -1,3 +1,4 @@
+from typing import Callable
 import questionary
 
 from rich.console import Console
