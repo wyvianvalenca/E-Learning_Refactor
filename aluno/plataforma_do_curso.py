@@ -51,38 +51,12 @@ def executar(aluno_logado: Student, curso_escolhido: Course):
         if 1 <= escolha <= total_conteudos:
             conteudo_selecionado = curso_escolhido.conteudos[escolha - 1]
 
-            print(conteudo_selecionado)
-
             visto: bool = conteudo_selecionado.apresentar()
 
             if visto and conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
                 aluno_logado.progresso[curso_escolhido.titulo].append(
-                    curso_escolhido.titulo)
-
-            '''
-            if conteudo_selecionado.tipo == "video":
-                os.startfile("video.mp4")
-                if conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
-                    aluno_logado.progresso[curso_escolhido.titulo].append(
-                        conteudo_selecionado.titulo)
-
-            elif conteudo_selecionado.tipo == "PDF":
-                os.startfile("pdf.pdf")
-                if conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
-                    aluno_logado.progresso[curso_escolhido.titulo].append(
-                        conteudo_selecionado.titulo)
-
-            elif conteudo_selecionado.tipo.lower() == "quiz":
-
-                quiz_passou = responder_quiz.executar(conteudo_selecionado)
-
-                if quiz_passou and conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
-                    aluno_logado.progresso[curso_escolhido.titulo].append(
-                        conteudo_selecionado.titulo)
-                else:
-                    print(
-                        "Progresso não salvo. Tente o quiz novamente para gabaritá-lo.")
-            '''
+                    conteudo_selecionado.titulo)
+            print(aluno_logado.progresso[curso_escolhido.titulo])
 
         # se o usuario escolheu o certificado E o curso esta completo
         elif curso_completo and escolha == total_conteudos + 1:

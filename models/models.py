@@ -120,7 +120,7 @@ class Quiz:
                 "type": "select",
                 "name": pergunta.pergunta,
                 "message": pergunta.pergunta,
-                "options": pergunta.alternativas
+                "choices": pergunta.alternativas
             })
         return formulario
 
