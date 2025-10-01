@@ -79,28 +79,28 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
     conteudos_py = [
         Externo(console, "Sobre Python", "PDF", 10, "content/pdf.pdf"),
         Externo(console, "Introdução ao Python",
-                "video", 30, "content/video.mp4"),
+                "video", 30, "content/videoo.mp4"),
         quiz_py
     ]
     conteudos_ds = [
         Externo(console, "Introdução ao Data Science",
                 "PDF", 15, "content/pdf.pdf"),
         Externo(console, "Análise de Dados",
-                "video", 45, "content/video.mp4"),
+                "video", 45, "content/videoo.mp4"),
         quiz_ds
     ]
     conteudos_ml = [
         Externo(console, "Fundamentos de Machine Learning",
                 "PDF", 20, "content/pdf.pdf"),
         Externo(console, "Algoritmos de Machine Learning",
-                "video", 50, "content/video.mp4"),
+                "video", 50, "content/videoo.mp4"),
         quiz_ml
     ]
     conteudos_web = [
         Externo(console, "Introdução ao Django",
                 "PDF", 25, "content/pdf.pdf"),
         Externo(console, "Criando APIs com Django",
-                "video", 60, "content/video.mp4"),
+                "video", 60, "content/videoo.mp4"),
         quiz_django
     ]
 
