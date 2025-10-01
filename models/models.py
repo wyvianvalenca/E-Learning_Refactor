@@ -59,7 +59,8 @@ class Student(Usuario):
         super().__init__(nome, senha)  # chama o init da classe usuario
         self.cursos_inscritos: list[Course] = cursos_inscritos if cursos_inscritos is not None else [
         ]
-        self.progresso = progresso if progresso is not None else {}
+        self.progresso: dict[str, list[str]
+                             ] = progresso if progresso is not None else {}
         self.cursos_pagos = cursos_pagos if cursos_pagos is not None else []
         self.notas_quizzes = notas_quizzes if notas_quizzes is not None else {}
         self.chats: dict[str, 'Chat'] = {}

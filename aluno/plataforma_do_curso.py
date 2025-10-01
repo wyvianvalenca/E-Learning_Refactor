@@ -11,6 +11,7 @@ from models.models import Course, Student
 
 def executar(aluno_logado: Student, curso_escolhido: Course):
 
+    # adicionar o curso escolhido no progresso do aluno
     if curso_escolhido.titulo not in aluno_logado.progresso:
         aluno_logado.progresso[curso_escolhido.titulo] = []
 
@@ -20,29 +21,45 @@ def executar(aluno_logado: Student, curso_escolhido: Course):
         titulos_obrigatorios_do_curso = {
             conteudo.titulo for conteudo in curso_escolhido.conteudos}
 
-        curso_completo = titulos_obrigatorios_do_curso.issubset(
+        # booleano que indica se o conj de todos os conteudos do curso eh
+        # subconj dos conteudos vistos pelo aluno
+        curso_completo: bool = titulos_obrigatorios_do_curso.issubset(
             set(titulos_vistos_pelo_aluno))
 
         total_conteudos = len(curso_escolhido.conteudos)
 
+        # imprime todos os conteudos do curso
         print(f"\n--- Conteúdos do Curso: {curso_escolhido.titulo} ---")
         for i, conteudo in enumerate(curso_escolhido.conteudos):
             status = "✅ Visto" if conteudo.titulo in titulos_vistos_pelo_aluno else ""
             print(f"  {i + 1} - {conteudo} {status}")
 
+        # adiciona a opcao de certificado quando o curso esta completo
         print("-" * 30)
         if curso_completo:
             print(f"{total_conteudos + 1} - Emitir Certificado")
         print("0 - Voltar")
 
+        # opcao do usuario
         try:
             escolha = int(input("\nEscolha uma opção: "))
-        except:
+        except ValueError:
             print("Opção inválida.")
             continue
 
+        # se o usuario escolheu um conteudo
         if 1 <= escolha <= total_conteudos:
             conteudo_selecionado = curso_escolhido.conteudos[escolha - 1]
+
+            print(conteudo_selecionado)
+
+            visto: bool = conteudo_selecionado.apresentar()
+
+            if visto and conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
+                aluno_logado.progresso[curso_escolhido.titulo].append(
+                    curso_escolhido.titulo)
+
+            '''
             if conteudo_selecionado.tipo == "video":
                 os.startfile("video.mp4")
                 if conteudo_selecionado.titulo not in titulos_vistos_pelo_aluno:
@@ -65,11 +82,16 @@ def executar(aluno_logado: Student, curso_escolhido: Course):
                 else:
                     print(
                         "Progresso não salvo. Tente o quiz novamente para gabaritá-lo.")
+            '''
 
+        # se o usuario escolheu o certificado E o curso esta completo
         elif curso_completo and escolha == total_conteudos + 1:
             certificado.executar(curso_escolhido, aluno_logado)
             input("\nPressione Enter para continuar...")
+
+        # se o usuario escolheu sair
         elif escolha == 0:
             break
+
         else:
             print("Opção inválida.")
