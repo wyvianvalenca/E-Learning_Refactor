@@ -28,6 +28,19 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 
 ---
 
+## Padrões de Projeto
+
+Foram implementados alguns padrões de projeto para melhor qualidade de código.
+
+### Criacionais
+
+- **Singleton**: instâncias únicas para o gerenciador de cursos e para os gerenciadores de conteúdo.
+- **Factory Method**: fábrica para os gerenciadores de conteúdo, visto que temos vários tipos de conteúdo.
+
+### Comportamentais
+
+- **Strategy**: menu do Instrutor
+
 ## Estrutura do Código
 
 O projeto foi organizado de forma modular para seguir o **Princípio da Responsabilidade Única**, onde cada arquivo possui uma responsabilidade clara.
