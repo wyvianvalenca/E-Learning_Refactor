@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+# STRATEGY INTERFACE
+
+
 class MenuActionStrategy(ABC):
     @abstractmethod
     def execute(self, context: Any) -> None:

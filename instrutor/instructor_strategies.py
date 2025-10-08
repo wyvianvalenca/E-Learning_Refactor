@@ -8,11 +8,15 @@ from models import Instructor, Course, ForumPost
 from inicial import console
 from aluno import forum
 
+
 def cursos_instrutor(cursos: list[Course], instrutor: Instructor) -> list[Course]:
     instructor_courses_list: list[Course] = [
         curso for curso in cursos if curso.instrutor == instrutor
     ]
     return instructor_courses_list
+
+# CONCRETE STRATEGIES
+
 
 class ListCoursesStrategy(MenuActionStrategy):
     @override
@@ -25,6 +29,7 @@ class ListCoursesStrategy(MenuActionStrategy):
         listar_cursos.executar(instrutor, cursos)
         return None
 
+
 class AddCourseStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
@@ -35,6 +40,7 @@ class AddCourseStrategy(MenuActionStrategy):
         cursos: list[Course] = context['courses']
         criar_curso.executar(instrutor, cursos)
         return None
+
 
 class ManageCourseStrategy(MenuActionStrategy):
     @override
@@ -53,6 +59,7 @@ class ManageCourseStrategy(MenuActionStrategy):
         cursos: list[Course] = context['courses']
 
         return len(cursos_instrutor(cursos, instrutor)) > 0
+
 
 class DeleteCourseStrategy(MenuActionStrategy):
     @override
@@ -73,6 +80,7 @@ class DeleteCourseStrategy(MenuActionStrategy):
 
         return len(cursos_instrutor(cursos, instrutor)) > 0
 
+
 class AccessForumStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
@@ -83,6 +91,7 @@ class AccessForumStrategy(MenuActionStrategy):
         instructor: Instructor = context['instructor']
         posts: list[ForumPost] = context['posts']
         forum.mostrar_feed(posts, instructor)
+
 
 class ExitStrategy(MenuActionStrategy):
     def get_label(self) -> str:

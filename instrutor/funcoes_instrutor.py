@@ -19,6 +19,8 @@ from instrutor.instructor_strategies import (
 )
 from aluno import forum
 
+
+# STRATEGY MENU
 def menu_instrutor_strategy(instrutor: Instructor, cursos: list[Course]) -> None:
     # Cria o gerenciador de menu
     menu = MenuManager(
@@ -27,7 +29,7 @@ def menu_instrutor_strategy(instrutor: Instructor, cursos: list[Course]) -> None
     )
 
     # Adiciona as estratégias na ordem desejada
-    menu.add_strategy(ListCoursesStrategy()) \
+    _ = menu.add_strategy(ListCoursesStrategy()) \
         .add_strategy(AddCourseStrategy()) \
         .add_strategy(ManageCourseStrategy()) \
         .add_strategy(DeleteCourseStrategy()) \
@@ -43,6 +45,7 @@ def menu_instrutor_strategy(instrutor: Instructor, cursos: list[Course]) -> None
 
     # Executa o menu
     menu.run(context)
+
 
 def menu_instrutor(instrutor: Instructor, cursos: list[Course]) -> None:
     while True:
