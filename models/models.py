@@ -78,8 +78,8 @@ class Instructor(Usuario):
 
     @override
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
-        from instrutor.funcoes_instrutor import menu_instrutor
-        menu_instrutor(self, cursos)
+        from instrutor.funcoes_instrutor import menu_instrutor, menu_instrutor_strategy
+        menu_instrutor_strategy(self, cursos)
 
 
 class PerguntaQuiz:

@@ -1,11 +1,9 @@
 from typing import Callable
 import questionary
-
 from rich.console import Console
 from rich.panel import Panel
 
 from singleton_metaclass import SingletonMeta
-
 from models.models import Course, Conteudo
 from instrutor.gerenciador_conteudo import (
     GerenciadorConteudo,
@@ -32,12 +30,6 @@ class GerenciadorCurso(metaclass=SingletonMeta):
     def nada() -> None:
         return None
 
-    def retornar(self) -> None:
-        self.console.print()
-        _ = questionary.press_any_key_to_continue(
-            "Pressione qualquer tecla para retornar...").ask()
-        return None
-
     def __init__(self, console: Console):
         self.console: Console = console
         self.trocar_curso: bool = True
@@ -55,6 +47,12 @@ class GerenciadorCurso(metaclass=SingletonMeta):
         self.cabecalho("Work In Progress")
         self.console.print("\nEstamos trabalhando nesse...\n")
         return self.retornar()
+
+    def retornar(self) -> None:
+        self.console.print()
+        _ = questionary.press_any_key_to_continue(
+            "Pressione qualquer tecla para retornar...").ask()
+        return None
 
     def atualizar_infos(self) -> None:
         self.cabecalho("Atualizar o Curso")
@@ -80,7 +78,7 @@ class GerenciadorCurso(metaclass=SingletonMeta):
         exibir: str = ""
         if conteudos:
             for cont in conteudos:
-                exibir += (f"  > {cont}\n")
+                exibir += f"  > {cont}\n"
             self.console.print(exibir)
         else:
             self.console.print("  > Este curso ainda não possui conteúdos.")
@@ -174,8 +172,7 @@ class GerenciadorCurso(metaclass=SingletonMeta):
         print("="*45)
         print(f"Total de Alunos Inscritos: {total_alunos}")
         print(f"Progresso Médio da Turma: {progresso_medio_turma:.1f}%")
-        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({
-              (total_concluintes/total_alunos)*100:.1f}%)")
+        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({(total_concluintes/total_alunos)*100:.1f}%)")
         print("="*45)
 
         self.retornar()
