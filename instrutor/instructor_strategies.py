@@ -2,7 +2,7 @@ from typing import Any
 from typing_extensions import override
 
 from instrutor import listar_cursos, criar_curso, excluir_curso
-from instrutor.gerenciador_cursos import GerenciadorCurso
+from instrutor.gerenciador_cursos import GerenciadorCurso, course_management_menu
 from menu_strategies import MenuActionStrategy
 from models import Instructor, Course, ForumPost
 from inicial import console
@@ -15,7 +15,8 @@ def cursos_instrutor(cursos: list[Course], instrutor: Instructor) -> list[Course
     ]
     return instructor_courses_list
 
-# CONCRETE STRATEGIES
+
+# CONCRETE INSTRUCTOR STRATEGIES
 
 
 class ListCoursesStrategy(MenuActionStrategy):
@@ -26,8 +27,12 @@ class ListCoursesStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
+
+        self.cabecalho(f"Cursos de [bold]{instrutor.nome}[/]")
+
         listar_cursos.executar(instrutor, cursos)
-        return None
+
+        return self.retornar()
 
 
 class AddCourseStrategy(MenuActionStrategy):
@@ -38,8 +43,12 @@ class AddCourseStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
+
+        self.cabecalho("Criar Curso")
+
         criar_curso.executar(instrutor, cursos)
-        return None
+
+        return self.retornar()
 
 
 class ManageCourseStrategy(MenuActionStrategy):
@@ -47,13 +56,14 @@ class ManageCourseStrategy(MenuActionStrategy):
     def get_label(self) -> str:
         return "Gerenciar Curso"
 
+    @override
     def execute(self, context: dict[str, Any]) -> None:
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
 
-        GerenciadorCurso(console).menu(cursos_instrutor(cursos, instrutor))
-        return None
+        course_management_menu(console, cursos_instrutor(cursos, instrutor))
 
+    @override
     def can_execute(self, context: dict[str, Any]) -> bool:
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
@@ -71,9 +81,13 @@ class DeleteCourseStrategy(MenuActionStrategy):
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
 
-        excluir_curso.executar(instrutor, cursos)
-        return None
+        self.cabecalho("Excluir Curso")
 
+        excluir_curso.executar(instrutor, cursos)
+
+        return self.retornar()
+
+    @override
     def can_execute(self, context: dict[str, Any]) -> bool:
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
@@ -90,14 +104,9 @@ class AccessForumStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         instructor: Instructor = context['instructor']
         posts: list[ForumPost] = context['posts']
+
+        self.cabecalho("Acessar Forum")
+
         forum.mostrar_feed(posts, instructor)
 
-
-class ExitStrategy(MenuActionStrategy):
-    def get_label(self) -> str:
-        return "Sair"
-
-    def execute(self, context: dict[str, Any]) -> None:
-        console.print("\nSaindo do menu do instrutor. Até logo!")
-        context['continue'] = False  # Sinaliza para parar o loop
         return None

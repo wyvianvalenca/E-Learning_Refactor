@@ -6,7 +6,6 @@ from instrutor.dry import selecionar_curso_do_instrutor
 
 def executar(instrutor, cursos):
 
-    print("\n--- Excluir Curso ---")
     curso_para_excluir = selecionar_curso_do_instrutor(instrutor, cursos)
 
     if not curso_para_excluir:

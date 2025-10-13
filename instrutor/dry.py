@@ -13,7 +13,7 @@ def selecionar_curso_do_instrutor(instrutor, cursos):
         print("\nVocê ainda não criou nenhum curso.")
         return None
 
-    print("\nDisponível nos seus cursos:")
+    print("Disponível nos seus cursos:")
     for i, curso in enumerate(cursos_do_instrutor):
         print(f"{i + 1} - {curso.titulo}")
 

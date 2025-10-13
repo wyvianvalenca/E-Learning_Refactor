@@ -6,7 +6,6 @@
     juntamente com os alunos inscritos em cada um.
 """
 def executar(instrutor, cursos):
-    print("\n--- Meus Cursos Criados ---")
 
     #filtra da lista geral de cursos apenas os que pertencem a este instrutor.
     cursos_do_instrutor = [curso for curso in cursos if curso.instrutor == instrutor]

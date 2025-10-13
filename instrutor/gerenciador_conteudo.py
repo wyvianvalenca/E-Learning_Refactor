@@ -5,7 +5,7 @@ import questionary
 
 from rich.console import Console
 
-from singleton_metaclass import SingletonABCMeta
+from singleton_metaclass import SingletonABCMeta, SingletonMeta
 
 from models.models import (
     Course,
@@ -18,11 +18,11 @@ from models.models import (
 )
 
 
-''' FACTORY METHOD '''
+""" FACTORY METHOD """
 
 
 class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
-    # criador abstrato
+    """Criador Abstrato / Interface de Criador para os gerenciadores de conteúdo"""
 
     def __init__(self, console: Console, tipo: str):
         self.console: Console = console
@@ -38,7 +38,7 @@ class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
 
 
 class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
-    # criador concreto
+    """Criador concreto para Conteúdos Externos"""
 
     @override
     def factory_method(self) -> Conteudo:
@@ -59,7 +59,7 @@ class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
 
 class GerenciadorTexto(GerenciadorConteudo, metaclass=SingletonABCMeta):
-    # criador concreto
+    """Criador concreto para Conteúdo de Texto"""
 
     @override
     def factory_method(self) -> Conteudo:
@@ -81,7 +81,7 @@ class GerenciadorTexto(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
 
 class GerenciadorQuestionario(GerenciadorConteudo, metaclass=SingletonABCMeta):
-    # criador concreto
+    """Criador concreto para Conteúdo de Quiz"""
 
     def criar_quiz(self) -> Quiz:
         self.console.print(f"\n--- CRIAR NOVO QUIZ ---\n")

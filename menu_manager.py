@@ -39,12 +39,11 @@ class MenuManager:
             # Monta as opções do menu
             choices = list(available_strategies.keys())
 
+            # Pede para o usuário escolher uma opção do menu
             chosen_label: str = questionary.select(
                 "Escolha uma opção:",
                 choices=choices
             ).ask()
 
-            self.console.print()
-
-            # Encontra e executa a estratégia escolhida
+            # Executa a estratégia escolhida
             available_strategies[chosen_label].execute(context)

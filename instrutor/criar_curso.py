@@ -6,7 +6,6 @@ from models import Course
 """
 def executar(instrutor, lista_geral_de_cursos):
 
-    print("\n--- Criando Novo Curso ---")
     nome_curso = input("Digite o nome do novo curso: ")
     descricao_curso = input("Digite a descrição do curso: ")
     preco_curso = float(input("Digite o preço do curso (R$): "))
