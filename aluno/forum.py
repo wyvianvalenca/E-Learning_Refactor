@@ -60,7 +60,7 @@ def acoes_post(index: int, post: ForumPost, autor: Usuario) -> int:
 
 def mostrar_post(index: int, post: ForumPost, usuario_logado: Usuario) -> int:
     texto: str = post.header() + "\n" + post.conteudo
-    painel: Panel = Panel.fit(Text(text=texto).wrap(console, width=500))
+    painel: Panel = Panel.fit(Text(text=texto).wrap(console, width=100))
     console.print(painel)
     console.print()
 

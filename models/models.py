@@ -15,16 +15,21 @@ from abc import ABC, abstractmethod
 class Course:
     def __init__(self, titulo: str, descricao: str,
                  instrutor: 'Instructor',
-                 conteudos: list['Conteudo'] | None = None,
-                 students: list['Student'] | None = None,
-                 preco: float = 0.0):
+                 conteudos: list['Conteudo'],
+                 students: list['Student'],
+                 preco: float,
+                 forum: list['ForumPost'],
+                 nivel: str,
+                 categorias: list[str]):
 
         self.titulo: str = titulo
         self.descricao: str = descricao
         self.instrutor: Instructor = instrutor
-        self.conteudos: list[Conteudo] = conteudos if conteudos is not None else [
-        ]
-        self.students: list[Student] = students if students is not None else []
+        self.conteudos: list[Conteudo] = conteudos
+        self.students: list[Student] = students
+        self.forum: list['ForumPost'] = forum
+        self.nivel: str = nivel
+        self.categorias: list[str] = categorias
 
         # underline (convenção), indicando que é "privado"
         self.__preco: float = preco  # preco esta encapsulado
@@ -55,14 +60,12 @@ class Usuario(ABC):  # abstract base class
 
 
 class Student(Usuario):
-    def __init__(self, nome, senha, cursos_inscritos=None, cursos_pagos=None, progresso=None, notas_quizzes=None):
+    def __init__(self, nome, senha):
         super().__init__(nome, senha)  # chama o init da classe usuario
-        self.cursos_inscritos: list[Course] = cursos_inscritos if cursos_inscritos is not None else [
-        ]
-        self.progresso: dict[str, list[str]
-                             ] = progresso if progresso is not None else {}
-        self.cursos_pagos = cursos_pagos if cursos_pagos is not None else []
-        self.notas_quizzes = notas_quizzes if notas_quizzes is not None else {}
+        self.cursos_inscritos: list[Course] = []
+        self.progresso: dict[str, list[str]] = {}
+        self.cursos_pagos: list[Course] = []
+        self.notas_quizzes = {}
         self.chats: dict[str, 'Chat'] = {}
 
     @override

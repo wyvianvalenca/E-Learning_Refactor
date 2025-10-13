@@ -1,6 +1,7 @@
 import questionary
 from rich.console import Console
 
+from models import Usuario
 from models.models import Course, Conteudo
 from menu_manager import MenuManager
 from menu_strategies import ExitStrategy
@@ -9,7 +10,8 @@ from instrutor.course_management_strategies import (
     ViewContentStrategy,
     AddContentStrategy,
     RemoveContentStrategy,
-    ReportStrategy
+    ReportStrategy,
+    CourseForumStrategy
 )
 
 
@@ -26,14 +28,15 @@ def escolher_curso(cursos_instrutor: list[Course]) -> None | Course:
 
 
 # STRATEGY MENU
-def course_management_menu(console: Console, cursos: list[Course]) -> None:
+def course_management_menu(console: Console, cursos: list[Course], usuario: Usuario) -> None:
     """Função para criar o menu do gerenciador de cursos"""
 
     # Prepara o contexto
     curso: Course = escolher_curso(cursos)
     context = {
         'course': curso,
-        'console': console
+        'console': console,
+        'user': usuario
     }
 
     # Cria o gerenciador de menu
@@ -48,5 +51,6 @@ def course_management_menu(console: Console, cursos: list[Course]) -> None:
         .add_strategy(AddContentStrategy()) \
         .add_strategy(RemoveContentStrategy()) \
         .add_strategy(ReportStrategy()) \
+        .add_strategy(CourseForumStrategy()) \
         .add_strategy(ExitStrategy()) \
         .run(context)

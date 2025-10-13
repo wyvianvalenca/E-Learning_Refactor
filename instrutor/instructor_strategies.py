@@ -2,7 +2,7 @@ from typing import Any
 from typing_extensions import override
 
 from instrutor import listar_cursos, criar_curso, excluir_curso
-from instrutor.gerenciador_cursos import GerenciadorCurso, course_management_menu
+from instrutor.gerenciador_cursos import course_management_menu
 from menu_strategies import MenuActionStrategy
 from models import Instructor, Course, ForumPost
 from inicial import console
@@ -61,7 +61,7 @@ class ManageCourseStrategy(MenuActionStrategy):
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
 
-        course_management_menu(console, cursos_instrutor(cursos, instrutor))
+        course_management_menu(console, cursos_instrutor(cursos, instrutor), instrutor)
 
     @override
     def can_execute(self, context: dict[str, Any]) -> bool:

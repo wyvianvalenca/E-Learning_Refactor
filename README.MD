@@ -36,10 +36,11 @@ Foram implementados alguns padrões de projeto para melhor qualidade de código.
 
 - **Singleton**: instâncias únicas para o gerenciador de cursos e para os gerenciadores de conteúdo.
 - **Factory Method**: fábrica para os gerenciadores de conteúdo, visto que temos vários tipos de conteúdo.
+- **Builder**: construtor versátil para os cursos.
 
 ### Comportamentais
 
-- **Strategy**: menu do Instrutor
+- **Strategy**: padrão utilizado no menu do Instrutor.
 
 ## Estrutura do Código
 

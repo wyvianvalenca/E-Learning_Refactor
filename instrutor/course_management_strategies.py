@@ -11,6 +11,7 @@ from instrutor.gerenciador_conteudo import (
     GerenciadorExterno,
     GerenciadorQuestionario
 )
+from aluno import forum
 from models import Course, Conteudo, Student
 
 
@@ -152,7 +153,7 @@ class ReportStrategy(MenuActionStrategy):
 
         for aluno in alunos_curso:
             if curso.titulo in aluno.progresso:
-                titulos_vistos_pelo_aluno = set(aluno.progresso[self.__curso.titulo])
+                titulos_vistos_pelo_aluno = set(aluno.progresso[curso.titulo])
             else:
                 titulos_vistos_pelo_aluno = set()
 
@@ -184,3 +185,23 @@ class ReportStrategy(MenuActionStrategy):
         print("=" * 45)
 
         self.retornar()
+
+class CourseForumStrategy(MenuActionStrategy):
+    @override
+    def get_label(self) -> str:
+        return "Ver Forum do Curso"
+    
+    @override
+    def can_execute(self, context: Any) -> bool:
+        return context['course'].forum is not None and len(context['course'].forum) > 0
+    
+    @override
+    def execute(self, context: Any) -> None:
+        curso: Course = context['course']
+        curso_forum: list[str] = context['course'].forum
+        
+        self.cabecalho(f"Forum do Curso [bold]{curso.titulo}[/]")
+
+        forum.mostrar_feed(curso_forum, context['user'])
+
+        return None

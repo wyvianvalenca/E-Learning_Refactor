@@ -1,5 +1,6 @@
 from inicial import console
 from data_base import posts
+from instrutor.course_builder import CourseBuilder
 from models.models import (
     Course,
     Student,
@@ -77,43 +78,51 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
 
     # CONTÉUDOS
     conteudos_py = [
-        Externo(console, "Sobre Python", "PDF", 10, "content/pdf.pdf"),
+        Externo(console, "Sobre Python", "PDF", 10, "content\\pdf.pdf"),
         Externo(console, "Introdução ao Python",
-                "video", 30, "content/videoo.mp4"),
+                "video", 30, "content\\videoo.mp4"),
         quiz_py
     ]
     conteudos_ds = [
         Externo(console, "Introdução ao Data Science",
-                "PDF", 15, "content/pdf.pdf"),
+                "PDF", 15, "content\\pdf.pdf"),
         Externo(console, "Análise de Dados",
-                "video", 45, "content/videoo.mp4"),
+                "video", 45, "content\\videoo.mp4"),
         quiz_ds
     ]
     conteudos_ml = [
         Externo(console, "Fundamentos de Machine Learning",
-                "PDF", 20, "content/pdf.pdf"),
+                "PDF", 20, "content\\pdf.pdf"),
         Externo(console, "Algoritmos de Machine Learning",
-                "video", 50, "content/videoo.mp4"),
+                "video", 50, "content\\videoo.mp4"),
         quiz_ml
     ]
     conteudos_web = [
         Externo(console, "Introdução ao Django",
-                "PDF", 25, "content/pdf.pdf"),
+                "PDF", 25, "content\\pdf.pdf"),
         Externo(console, "Criando APIs com Django",
-                "video", 60, "content/videoo.mp4"),
+                "video", 60, "content\\videoo.mp4"),
         quiz_django
     ]
 
     # CURSOS
     curso1 = Course("Python Basico", "Curso introdutório de Python",
-                    carlos, conteudos_py, [lucas, larissa], preco=100.0)
+                    carlos, conteudos_py, [lucas, larissa], 100.0, [], '', [])
     curso2 = Course("Data Science", "Curso de Data Science com Python",
-                    laura, conteudos_ds, [larissa, maria], preco=150.0)
+                    laura, conteudos_ds, [larissa, maria], 150.0, [], '', [])
     curso3 = Course("Machine Learning", "Curso de Machine Learning com Python",
-                    carlos, conteudos_ml, [lucas, maria], preco=200.0)
-    curso4 = Course("Desenvolvimento Web", "Curso de desenvolvimento web com Django",
-                    laura, conteudos_web, [larissa], preco=250.0)
-    listaCursos.extend([curso1, curso2, curso3, curso4])
+                    carlos, conteudos_ml, [lucas, maria], 200.0, [], '', [])
+    curso4_com_builder: Course = CourseBuilder() \
+        .with_name("Desenvolvimento Web") \
+        .with_descricao("Curso de desenvolvimento web com Django") \
+        .with_instrutor(laura) \
+        .with_conteudos(conteudos_web) \
+        .with_students([larissa]) \
+        .with_preco(250.0) \
+        .with_forum([ForumPost("Preciso de ajuda com o interpretador!", "ajude-me!", larissa)]) \
+        .build()
+
+    listaCursos.extend([curso1, curso2, curso3, curso4_com_builder])
 
     for curso in listaCursos:
         for aluno in curso.students:
