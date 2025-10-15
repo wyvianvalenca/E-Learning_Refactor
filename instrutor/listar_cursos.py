@@ -5,6 +5,9 @@
     lista todos os cursos criados pelo instrutor logado,
     juntamente com os alunos inscritos em cada um.
 """
+from src.print_courses import print_courses
+
+
 def executar(instrutor, cursos):
 
     #filtra da lista geral de cursos apenas os que pertencem a este instrutor.
@@ -14,12 +17,4 @@ def executar(instrutor, cursos):
         print("Você ainda não criou nenhum curso.")
         return
 
-    for curso in cursos_do_instrutor:
-        print(f"\n- Título: {curso.titulo}")
-        print(f"  Descrição: {curso.descricao}")
-        
-        if curso.students:
-            nomes_alunos = [aluno.nome for aluno in curso.students]
-            print(f"  Alunos Inscritos: {nomes_alunos}")
-        else:
-            print("  Nenhum aluno inscrito.")
+    print_courses(cursos_do_instrutor, show_students=True)

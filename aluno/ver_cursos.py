@@ -4,12 +4,12 @@
 '''
 
 from models.models import Student
+from src.print_courses import print_courses
 
 
 def ver_cursos(aluno_logado: Student) -> None:
     if aluno_logado.cursos_inscritos:
         print("\nCursos Inscritos:")
-        for i,curso in enumerate(aluno_logado.cursos_inscritos):
-            print(f"{i+1}- {curso.titulo}")
+        print_courses(aluno_logado.cursos_inscritos, show_students=False)
     else:
         print("Você não está inscrito em nenhum curso.")

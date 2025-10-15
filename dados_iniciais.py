@@ -120,6 +120,8 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
         .with_students([larissa]) \
         .with_preco(250.0) \
         .with_forum([ForumPost("Preciso de ajuda com o interpretador!", "ajude-me!", larissa)]) \
+        .with_nivel("Iniciante") \
+        .with_categorias(["Django", "Web", "Front-End", "Back-End"]) \
         .build()
 
     listaCursos.extend([curso1, curso2, curso3, curso4_com_builder])

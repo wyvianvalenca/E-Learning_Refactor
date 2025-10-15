@@ -1,4 +1,6 @@
 from aluno.pagamento import pagamento
+from src.print_courses import print_courses
+
 '''
     função para inscrever um aluno em um curso
 '''
@@ -7,8 +9,8 @@ from aluno.pagamento import pagamento
 def executar(aluno_logado, cursos):
 
     print("\nCursos Disponíveis:")
-    for curso in cursos:
-        print(f"- {curso.titulo} (Instrutor: {curso.instrutor.nome})")
+
+    print_courses(cursos, show_students=False)
 
     titulo_curso = input("\nDigite o título do curso para se matricular: ")
     curso_encontrado = None
