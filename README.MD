@@ -6,10 +6,17 @@ Este projeto foi feito em `Python` como um exercício prático de **Programaçã
 ---
 
 ## TO-DO
+
+### Funcional
 - inserir novas informações do curso (nível e categorias) na visualização dos cursos
-- implementar strategy no menu dos alunos
 - implementar forum do curso para os alunos (visualizar e adicionar post)
 - implementar chat
+
+### Padrões
+- refatorar criacao de curso com builder
+- implementar strategy no menu dos alunos
+- implementar state no forum (open, closed, deleted)
+- implementar chain of responsability para criação de conteudos
 
 ## Funcionalidades
 
