@@ -1,11 +1,16 @@
 import questionary
 from rich.panel import Panel
 
-from inicial import console
-
-from models import Student, Course, Instructor, Conteudo, Usuario, ForumPost
-
-from aluno import adicionar_post, inscrever_curso, ver_cursos, plataformas_cursos, desempenho_aluno, forum
+from src.inicial import console
+from src.models.models import Student, Course, ForumPost
+from src.functions.student_functions import (
+    adicionar_post,
+    inscrever_curso,
+    ver_cursos,
+    plataformas_cursos,
+    desempenho_aluno
+)
+from src.menus import forum
 
 
 def menu_aluno(aluno_logado: Student, cursos: list[Course], posts: list[ForumPost]):

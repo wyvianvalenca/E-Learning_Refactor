@@ -1,17 +1,21 @@
 from typing import Any
 from typing_extensions import override
 
-from instrutor import listar_cursos, criar_curso, excluir_curso
-from instrutor.gerenciador_cursos import course_management_menu
-from menu_strategies import MenuActionStrategy
-from models import Instructor, Course, ForumPost
-from inicial import console
-from aluno import forum
+from src.inicial import console
+from src.models.models import Instructor, Course, ForumPost
+from src.menus.menu_strategies import MenuActionStrategy
+from src.functions.instructor_functions import (
+    listar_cursos,
+    criar_curso,
+    excluir_curso
+)
+from src.menus.course_management_menu import course_management_menu
+from src.menus import forum
 
 
-def cursos_instrutor(cursos: list[Course], instrutor: Instructor) -> list[Course]:
+def cursos_instrutor(all_courses: list[Course], instructor: Instructor) -> list[Course]:
     instructor_courses_list: list[Course] = [
-        curso for curso in cursos if curso.instrutor == instrutor
+        curso for curso in all_courses if curso.instrutor == instructor
     ]
     return instructor_courses_list
 
@@ -61,7 +65,8 @@ class ManageCourseStrategy(MenuActionStrategy):
         instrutor: Instructor = context['instructor']
         cursos: list[Course] = context['courses']
 
-        course_management_menu(console, cursos_instrutor(cursos, instrutor), instrutor)
+        course_management_menu(console, cursos_instrutor(
+            cursos, instrutor), instrutor)
 
     @override
     def can_execute(self, context: dict[str, Any]) -> bool:

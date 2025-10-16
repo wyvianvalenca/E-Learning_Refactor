@@ -1,11 +1,9 @@
+import questionary
 from rich.panel import Panel
 from rich.text import Text
 
-import questionary
-
-from models import ForumPost, Comentario, Usuario
-
-from inicial import console
+from src.inicial import console
+from src.models.models import ForumPost, Comentario, Usuario
 
 
 def nada(post: ForumPost, autor: Usuario) -> None:

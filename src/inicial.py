@@ -1,9 +1,8 @@
 import questionary
 from rich.panel import Panel
-
-from data_base import alunos, cursos, instrutores, posts
-
 from rich.console import Console
+
+from src.data_base import alunos, cursos, instrutores, posts
 
 console = Console()
 

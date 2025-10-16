@@ -1,18 +1,17 @@
 from typing import Any
-
-from rich.console import Console
 from typing_extensions import override
 
+from rich.console import Console
 import questionary
 
-from menu_strategies import MenuActionStrategy
-from instrutor.gerenciador_conteudo import (
+from src.models.models import Course, Conteudo, Student
+from src.menus.menu_strategies import MenuActionStrategy
+from src.menus.gerenciador_conteudo import (
     GerenciadorTexto,
     GerenciadorExterno,
     GerenciadorQuestionario
 )
-from aluno import forum
-from models import Course, Conteudo, Student
+from src.menus import forum
 
 
 # CONCRETE COURSE MANAGEMENT STRATEGIES
@@ -28,7 +27,8 @@ class UpdateInfoStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         curso: Course = context['course']
 
-        self.cabecalho(f"Atualizar informações do Curso [bold]{curso.titulo}[/]")
+        self.cabecalho(f"Atualizar informações do Curso [bold]{
+                       curso.titulo}[/]")
         novo_nome: str = questionary.text(
             "Digite o novo nome (ou <Enter> para manter):").ask()
 
@@ -115,7 +115,8 @@ class RemoveContentStrategy(MenuActionStrategy):
 
         self.cabecalho(f"Remover Conteúdo do Curso [bold]{curso.titulo}[/]")
 
-        nomes: list[str] = [f"{id} - {item}" for id, item in enumerate(curso.conteudos)]
+        nomes: list[str] = [f"{id} - {item}" for id,
+                            item in enumerate(curso.conteudos)]
         remover: str = questionary.select(
             "Selecione o conteúdo que deseja remover:",
             choices=nomes).ask()
@@ -170,7 +171,7 @@ class ReportStrategy(MenuActionStrategy):
                 vistos_que_ainda_existem = len(
                     titulos_obrigatorios_do_curso.intersection(titulos_vistos_pelo_aluno))
                 percentual_aluno = (vistos_que_ainda_existem / total_conteudos_curso) * \
-                                   100 if total_conteudos_curso > 0 else 0
+                    100 if total_conteudos_curso > 0 else 0
 
             soma_percentuais_progresso += percentual_aluno
 
@@ -181,25 +182,27 @@ class ReportStrategy(MenuActionStrategy):
         print("=" * 45)
         print(f"Total de Alunos Inscritos: {total_alunos}")
         print(f"Progresso Médio da Turma: {progresso_medio_turma:.1f}%")
-        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({(total_concluintes / total_alunos) * 100:.1f}%)")
+        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({
+              (total_concluintes / total_alunos) * 100:.1f}%)")
         print("=" * 45)
 
         self.retornar()
+
 
 class CourseForumStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
         return "Ver Forum do Curso"
-    
+
     @override
     def can_execute(self, context: Any) -> bool:
         return context['course'].forum is not None and len(context['course'].forum) > 0
-    
+
     @override
     def execute(self, context: Any) -> None:
         curso: Course = context['course']
         curso_forum: list[str] = context['course'].forum
-        
+
         self.cabecalho(f"Forum do Curso [bold]{curso.titulo}[/]")
 
         forum.mostrar_feed(curso_forum, context['user'])

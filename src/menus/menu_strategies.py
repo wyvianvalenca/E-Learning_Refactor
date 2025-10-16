@@ -4,7 +4,7 @@ from typing import Any
 from rich.panel import Panel
 import questionary
 
-from inicial import console
+from src.inicial import console
 
 
 # STRATEGY INTERFACE
@@ -36,6 +36,7 @@ class MenuActionStrategy(ABC):
     @abstractmethod
     def execute(self, context: Any) -> None:
         pass
+
 
 class ExitStrategy(MenuActionStrategy):
     def get_label(self) -> str:

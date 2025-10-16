@@ -3,7 +3,7 @@ import questionary
 from rich.console import Console
 from rich.panel import Panel
 
-from menu_strategies import MenuActionStrategy
+from src.menus.menu_strategies import MenuActionStrategy
 
 # STRATEGY CONTEXT
 

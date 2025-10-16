@@ -4,6 +4,7 @@ def is_non_empty(text: str) -> bool | str:
     else:
         return "O texto não pode ser vazio."
 
+
 def is_positive_number(text: str) -> bool | str:
     try:
         f: float = float(text)

@@ -2,12 +2,10 @@ from typing_extensions import override
 from abc import ABC, abstractmethod
 
 import questionary
-
 from rich.console import Console
 
-from singleton_metaclass import SingletonABCMeta, SingletonMeta
-
-from models.models import (
+from src.singleton_metaclass import SingletonABCMeta
+from src.models.models import (
     Course,
     Conteudo,
     Externo,

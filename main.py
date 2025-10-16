@@ -1,7 +1,7 @@
 # main.py
-from inicial import inicial
-from data_base import alunos, instrutores, cursos
-from dados_iniciais import dados_iniciais
+from src.inicial import inicial
+from src.data_base import alunos, instrutores, cursos
+from src.dados_iniciais import dados_iniciais
 
 
 def main():

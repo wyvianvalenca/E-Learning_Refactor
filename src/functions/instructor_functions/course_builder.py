@@ -1,4 +1,10 @@
-from models import Instructor, Conteudo, Student, Course, ForumPost
+from src.models.models import (
+    Instructor,
+    Conteudo,
+    Student,
+    Course,
+    ForumPost
+)
 
 
 class CourseBuilder:

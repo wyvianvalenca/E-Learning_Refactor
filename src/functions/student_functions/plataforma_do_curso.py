@@ -1,7 +1,5 @@
-
-import os
-from aluno import certificado, responder_quiz
-from models.models import Course, Student
+from src.functions.student_functions import certificado
+from src.models.models import Course, Student
 
 
 '''

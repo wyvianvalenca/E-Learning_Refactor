@@ -70,19 +70,19 @@ class Student(Usuario):
 
     @override
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
-        from aluno.funcoes_aluno import menu_aluno
+        from src.menus.funcoes_aluno import menu_aluno
         menu_aluno(self, cursos, posts)
 
 
 class Instructor(Usuario):
     def __init__(self, nome, senha):
         super().__init__(nome, senha)  # aqui tbm chama o init da classe usuario
-        self.cursos = []
+        self.cursos: list[Course] = []
 
     @override
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
-        from instrutor.funcoes_instrutor import menu_instrutor_strategy
-        menu_instrutor_strategy(self, cursos)
+        from src.menus.instructor_menu import instructor_menu
+        instructor_menu(self, cursos)
 
 
 class PerguntaQuiz:

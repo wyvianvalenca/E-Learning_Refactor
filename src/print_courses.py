@@ -1,4 +1,4 @@
-from models import Course
+from src.models.models import Course
 
 
 def print_courses(courses: list[Course], show_students: bool) -> None:
