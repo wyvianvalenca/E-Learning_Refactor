@@ -22,7 +22,7 @@ class MenuActionStrategy(ABC):
     @staticmethod
     def retornar() -> None:
         console.print()
-        _ = questionary.press_any_key_to_continue(
+        questionary.press_any_key_to_continue(
             "Pressione qualquer tecla para retornar...").ask()
         return None
 
@@ -30,19 +30,9 @@ class MenuActionStrategy(ABC):
     def get_label(self) -> str:
         pass
 
-    def can_execute(self, context: Any) -> bool:
+    def can_execute(self, context: dict[str, Any]) -> bool:
         return True
 
     @abstractmethod
-    def execute(self, context: Any) -> None:
-        pass
-
-
-class ExitStrategy(MenuActionStrategy):
-    def get_label(self) -> str:
-        return "Sair"
-
     def execute(self, context: dict[str, Any]) -> None:
-        console.print("\nRetornando...")
-        context['continue'] = False  # Sinaliza para parar o loop
-        return None
+        pass

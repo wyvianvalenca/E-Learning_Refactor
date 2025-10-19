@@ -1,17 +1,14 @@
 from typing import Any
 from typing_extensions import override
 
-from rich.console import Console
-
 from src.models.models import Student, Course, ForumPost
-from src.menus.menu_strategies import MenuActionStrategy
+from src.menus.strategy_interface import MenuActionStrategy
 from src.functions.student_functions import (
+    adicionar_post,
     inscrever_curso,
     ver_cursos
 )
-from src.menus.course_management_menu import course_management_menu
 from src.menus.strategies import get_users_courses
-from src.functions import forum
 
 
 class StudentsCoursesStrategy(MenuActionStrategy):
@@ -56,27 +53,6 @@ class SubscribeStrategy(MenuActionStrategy):
         return self.retornar()
 
 
-class AccessCourseStrategy(MenuActionStrategy):
-    @override
-    def get_label(self) -> str:
-        return "Acessar Curso"
-
-    @override
-    def can_execute(self, context: Any) -> bool:
-        student: Student = context['user']
-        return len(get_users_courses(student)) > 0
-
-    @override
-    def execute(self, context: dict[str, Any]) -> None:
-        student: Student = context['user']
-        students_courses: list[Course] = get_users_courses(student)
-        console: Console = context['console']
-
-        course_management_menu(console, students_courses, student)
-
-        return None
-
-
 class AddPostStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
@@ -93,4 +69,4 @@ class AddPostStrategy(MenuActionStrategy):
 
         self.cabecalho("Forum Geral")
 
-        forum.mostrar_feed(posts, student)
+        adicionar_post.adicionar_post(student, posts)

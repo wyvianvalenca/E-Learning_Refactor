@@ -11,8 +11,8 @@ from src.menus.student_strategies import (
 from src.menus.strategies import (
     AccessForumStrategy,
     ManageCourseStrategy,
+    ExitStrategy
 )
-from src.menus.menu_strategies import ExitStrategy
 
 
 def student_menu(student: Student,

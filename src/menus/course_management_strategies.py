@@ -5,7 +5,7 @@ from rich.console import Console
 import questionary
 
 from src.models.models import Course, Conteudo, ForumPost, Instructor, Student
-from src.menus.menu_strategies import MenuActionStrategy
+from src.menus.strategy_interface import MenuActionStrategy
 from src.functions.instructor_functions import (
     gerenciador_conteudo
 )

@@ -70,7 +70,7 @@ class Student(Usuario):
 
     @override
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
-        from src.menus.funcoes_aluno import student_menu
+        from src.menus.student_menu import student_menu
         student_menu(self, cursos, posts)
 
 

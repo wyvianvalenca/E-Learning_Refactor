@@ -3,7 +3,7 @@ from typing_extensions import override
 
 from src.inicial import console
 from src.models.models import Instructor, Course, ForumPost
-from src.menus.menu_strategies import MenuActionStrategy
+from src.menus.strategy_interface import MenuActionStrategy
 from src.functions.instructor_functions import (
     listar_cursos,
     criar_curso,

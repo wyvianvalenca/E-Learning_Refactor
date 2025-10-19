@@ -14,7 +14,7 @@ from src.menus.course_management_strategies import (
     ReportStrategy,
     CourseForumStrategy
 )
-from src.menus.menu_strategies import ExitStrategy
+from src.menus.strategies import ExitStrategy
 
 
 def escolher_curso(cursos_instrutor: list[Course]) -> None | Course:
@@ -50,7 +50,7 @@ def course_management_menu(console: Console, cursos: list[Course], usuario: Usua
     # Cria o gerenciador de menu
     menu = MenuManager(
         console,
-        f":books: Gerenciar Curso [bold]{curso.titulo}[/] :books:"
+        f":books: Acessando Curso [bold]{curso.titulo}[/] :books:"
     )
 
     # Adiciona as estratégias na ordem desejada e roda o menu
