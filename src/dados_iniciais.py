@@ -108,10 +108,13 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
     # CURSOS
     curso1 = Course("Python Basico", "Curso introdutório de Python",
                     carlos, conteudos_py, [lucas, larissa], 100.0, [], '', [])
+    carlos.cursos.append(curso1)
     curso2 = Course("Data Science", "Curso de Data Science com Python",
                     laura, conteudos_ds, [larissa, maria], 150.0, [], '', [])
+    laura.cursos.append(curso2)
     curso3 = Course("Machine Learning", "Curso de Machine Learning com Python",
                     carlos, conteudos_ml, [lucas, maria], 200.0, [], '', [])
+    carlos.cursos.append(curso3)
     curso4_com_builder: Course = CourseBuilder() \
         .with_name("Desenvolvimento Web") \
         .with_descricao("Curso de desenvolvimento web com Django") \
@@ -123,6 +126,7 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
         .with_nivel("Iniciante") \
         .with_categorias(["Django", "Web", "Front-End", "Back-End"]) \
         .build()
+    laura.cursos.append(curso4_com_builder)
 
     listaCursos.extend([curso1, curso2, curso3, curso4_com_builder])
 

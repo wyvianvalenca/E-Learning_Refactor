@@ -4,14 +4,17 @@ from typing_extensions import override
 from rich.console import Console
 import questionary
 
-from src.models.models import Course, Conteudo, Student
+from src.models.models import Course, Conteudo, ForumPost, Instructor, Student
 from src.menus.menu_strategies import MenuActionStrategy
-from src.menus.gerenciador_conteudo import (
-    GerenciadorTexto,
-    GerenciadorExterno,
-    GerenciadorQuestionario
+from src.functions.instructor_functions import (
+    gerenciador_conteudo
 )
-from src.menus import forum
+from src.functions.student_functions import (
+    adicionar_post,
+    desempenho_aluno,
+    plataforma_do_curso
+)
+from src.functions import forum
 
 
 # CONCRETE COURSE MANAGEMENT STRATEGIES
@@ -22,6 +25,10 @@ class UpdateInfoStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
         return "Atualizar Informações"
+
+    @override
+    def can_execute(self, context) -> bool:
+        return isinstance(context['user'], Instructor)
 
     @override
     def execute(self, context: dict[str, Any]) -> None:
@@ -68,10 +75,36 @@ class ViewContentStrategy(MenuActionStrategy):
         return self.retornar()
 
 
+class CoursePlatformStrategy(MenuActionStrategy):
+    @override
+    def get_label(self) -> str:
+        return "Plataforma do Curso"
+
+    @override
+    def can_execute(self, context: Any) -> bool:
+        return (isinstance(context['user'], Student) and
+                (len(context['course'].conteudos) > 0))
+
+    @override
+    def execute(self, context: dict[str, Any]) -> None:
+        student: Student = context['user']
+        course: Course = context['course']
+
+        self.cabecalho(f"Plataforma do Curso [bold]{course.titulo}[/]")
+
+        plataforma_do_curso.executar(student, course)
+
+        return self.retornar()
+
+
 class AddContentStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
         return "Adicionar Conteudo"
+
+    @override
+    def can_execute(self, context: Any) -> bool:
+        return isinstance(context['user'], Instructor)
 
     @override
     def execute(self, context: dict[str, Any]) -> None:
@@ -85,13 +118,16 @@ class AddContentStrategy(MenuActionStrategy):
         console.print()
 
         if tipo in ['Vídeo', 'PDF', 'PowerPoint']:
-            GerenciadorExterno(console, tipo).adicionar(curso)
+            gerenciador_conteudo.GerenciadorExterno(
+                console, tipo).adicionar(curso)
 
         elif tipo == 'Texto':
-            GerenciadorTexto(console, tipo).adicionar(curso)
+            gerenciador_conteudo.GerenciadorTexto(
+                console, tipo).adicionar(curso)
 
         elif tipo == 'Quiz':
-            GerenciadorQuestionario(console, tipo).adicionar(curso)
+            gerenciador_conteudo.GerenciadorQuestionario(
+                console, tipo).adicionar(curso)
 
         else:
             console.print("\nTipo inválido.\n")
@@ -107,7 +143,8 @@ class RemoveContentStrategy(MenuActionStrategy):
 
     @override
     def can_execute(self, context: Any) -> bool:
-        return len(context['course'].conteudos) > 0
+        return ((isinstance(context['user'], Instructor)) and
+                (len(context['course'].conteudos) > 0))
 
     @override
     def execute(self, context: Any) -> None:
@@ -129,6 +166,29 @@ class RemoveContentStrategy(MenuActionStrategy):
         return self.retornar()
 
 
+class PerformanceStrategy(MenuActionStrategy):
+    @override
+    def get_label(self) -> str:
+        return "Desempenho do Aluno"
+
+    @override
+    def can_execute(self, context: Any) -> bool:
+        return ((isinstance(context['user'], Student)) and
+                (len(context['course'].conteudos) > 0))
+
+    @override
+    def execute(self, context: Any) -> None:
+        student: Student = context['user']
+        course: Course = context['course']
+
+        self.cabecalho(f"Desempenho de {student.nome} no Curso [bold]{
+                       course.titulo}[/]")
+
+        desempenho_aluno.executar(student, course)
+
+        return self.retornar()
+
+
 class ReportStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
@@ -136,7 +196,8 @@ class ReportStrategy(MenuActionStrategy):
 
     @override
     def can_execute(self, context: Any) -> bool:
-        return len(context['course'].students) > 0
+        return ((isinstance(context['user'], Instructor)) and
+                (len(context['course'].students) > 0))
 
     @override
     def execute(self, context: Any) -> None:
@@ -189,6 +250,29 @@ class ReportStrategy(MenuActionStrategy):
         self.retornar()
 
 
+class AddPostCourseStrategy(MenuActionStrategy):
+    @override
+    def get_label(self) -> str:
+        return "Criar Post no Forum do Curso"
+
+    @override
+    def can_execute(self, context) -> bool:
+        return (isinstance(context['user'], Student))
+
+    @override
+    def execute(self, context: Any) -> None:
+        curso: Course = context['course']
+        usuario: Student = context['user']
+        curso_forum: list[ForumPost] = context['course'].forum
+
+        self.cabecalho(f"Adicionar Post no Forum do Curso [bold]{
+                       curso.titulo}[/]")
+
+        adicionar_post.adicionar_post(usuario, curso_forum)
+
+        return None
+
+
 class CourseForumStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
@@ -201,7 +285,7 @@ class CourseForumStrategy(MenuActionStrategy):
     @override
     def execute(self, context: Any) -> None:
         curso: Course = context['course']
-        curso_forum: list[str] = context['course'].forum
+        curso_forum: list[ForumPost] = context['course'].forum
 
         self.cabecalho(f"Forum do Curso [bold]{curso.titulo}[/]")
 

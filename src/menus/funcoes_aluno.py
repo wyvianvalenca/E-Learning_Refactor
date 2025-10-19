@@ -1,60 +1,44 @@
-import questionary
-from rich.panel import Panel
+from typing import Any
 
 from src.inicial import console
 from src.models.models import Student, Course, ForumPost
-from src.functions.student_functions import (
-    adicionar_post,
-    inscrever_curso,
-    ver_cursos,
-    plataformas_cursos,
-    desempenho_aluno
+from src.menus.menu_manager import MenuManager
+from src.menus.student_strategies import (
+    AddPostStrategy,
+    StudentsCoursesStrategy,
+    SubscribeStrategy
 )
-from src.menus import forum
+from src.menus.strategies import (
+    AccessForumStrategy,
+    ManageCourseStrategy,
+)
+from src.menus.menu_strategies import ExitStrategy
 
 
-def menu_aluno(aluno_logado: Student, cursos: list[Course], posts: list[ForumPost]):
-    while True:
+def student_menu(student: Student,
+                 all_courses: list[Course],
+                 main_forum: list[ForumPost]) -> None:
+    """Função para criar o menu do usuário"""
 
-        console.print(Panel.fit(
-            f":pencil: Menu do Aluno: {aluno_logado.nome} :pencil:", style="light_sea_green"))
+    # Cria o gerenciador de menus
+    menu = MenuManager(
+        console,
+        f":pencil: Menu do Aluno: {student.nome} :pencil:"
+    )
 
-        opcoes: list[str] = [
-            "Ver Cursos Inscritos",
-            "Inscrever em Curso",
-            "Plataforma Cursos",
-            "Desempenho do Aluno",
-            "Ver Forum",
-            "Adicionar Post",
-            "Sair"
-        ]
+    # Prepara o contexto
+    context: dict[str, Any] = {
+        'console': console,      # tipo Console
+        'user': student,         # tipo Student
+        'courses': all_courses,  # tipo list[Course]
+        'posts': main_forum      # tipo list[ForumPost]
+    }
 
-        choose: str = questionary.select("Escolha uma opcao:",
-                                         choices=opcoes).ask()
-
-        # VER CURSOS INSCRITOS
-        if choose == opcoes[0]:
-            ver_cursos.ver_cursos(aluno_logado)
-
-        # MATRICULAR EM CURSO
-        elif choose == opcoes[1]:
-            inscrever_curso.executar(aluno_logado, cursos)
-
-        elif choose == opcoes[2]:
-            plataformas_cursos.executar(aluno_logado, cursos)
-
-        elif choose == opcoes[3]:
-            desempenho_aluno.executar(aluno_logado)
-
-        elif choose == opcoes[4]:
-            forum.mostrar_feed(posts, aluno_logado)
-
-        elif choose == opcoes[5]:
-            adicionar_post.adicionar_post(aluno_logado, posts)
-
-        elif choose == opcoes[6]:
-            print("Saindo do menu do aluno. Até logo!")
-            break
-
-        else:
-            print("Opção inválida. Tente novamente.")
+    # Adiciona as estrategias e roda o menu
+    menu.add_strategy(StudentsCoursesStrategy()) \
+        .add_strategy(SubscribeStrategy()) \
+        .add_strategy(ManageCourseStrategy()) \
+        .add_strategy(AccessForumStrategy()) \
+        .add_strategy(AddPostStrategy()) \
+        .add_strategy(ExitStrategy()) \
+        .run(context)

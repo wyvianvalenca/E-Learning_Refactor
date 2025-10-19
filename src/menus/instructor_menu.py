@@ -5,8 +5,10 @@ from src.menus.menu_manager import MenuManager
 from src.menus.instructor_strategies import (
     ListCoursesStrategy,
     AddCourseStrategy,
-    ManageCourseStrategy,
     DeleteCourseStrategy,
+)
+from src.menus.strategies import (
+    ManageCourseStrategy,
     AccessForumStrategy
 )
 from src.menus.menu_strategies import ExitStrategy
@@ -25,6 +27,7 @@ def instructor_menu(instrutor: Instructor, cursos: list[Course]) -> None:
     # Prepara o contexto
     context = {
         'instructor': instrutor,
+        'user': instrutor,
         'courses': cursos,
         'posts': posts
     }

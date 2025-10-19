@@ -10,7 +10,7 @@ from src.functions.instructor_functions import (
     excluir_curso
 )
 from src.menus.course_management_menu import course_management_menu
-from src.menus import forum
+from src.functions import forum
 
 
 def cursos_instrutor(all_courses: list[Course], instructor: Instructor) -> list[Course]:
