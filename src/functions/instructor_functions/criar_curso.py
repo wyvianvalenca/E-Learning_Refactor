@@ -28,7 +28,7 @@ def executar(instructor: Instructor, all_courses_list: list[Course]) -> None:
         .with_name(name) \
         .with_descricao(desc) \
         .with_instrutor(instructor) \
-        .with_preco(price) \
+        .with_preco(float(price)) \
         .with_nivel(difficulty) \
         .with_categorias(categories_list) \
         .build()
