@@ -259,7 +259,7 @@ class ForumPost:
         return None
 
     def render_comments(self) -> None:
-        self.__state.show_comments()
+        self.__state.render_comments()
         return None
 
 
@@ -307,28 +307,31 @@ class PostState(ABC):
         pass
 
     @abstractmethod
-    def edit(self) -> None:
+    def edit(self) -> bool:
+        edited: bool = False
+
         new_name: str = questionary.text(
-            "Digite o novo nome (ou <Enter> para manter):"
+            "Digite o novo nome (ou deixe vazio para manter):"
         ).ask()
 
         if new_name:
             self.post.titulo = new_name
+            edited = True
 
         new_content: str = questionary.text(
-            "Digite o novo nome (ou <Enter> para manter):",
+            "Digite o novo nome (ou deixe vazio para manter):",
             multiline=True
         ).ask()
 
         if new_content:
             self.post.conteudo = new_content
+            edited = True
 
-        return None
+        return edited
 
     @abstractmethod
     def render(self) -> None:
-        text: str = self.post.header() + "\n" \
-            + self.post.edited + "\n" \
+        text: str = self.post.header() + " " + self.post.edited + "\n" \
             + self.post.conteudo
         panel: Panel = Panel.fit(Text(text=text).wrap(console, width=100))
         console.print(panel)
@@ -349,7 +352,7 @@ class PostState(ABC):
 
         return None
 
-    def show_comments(self) -> None:
+    def render_comments(self) -> None:
         comments: str = ""
 
         for comment in self.post.comentarios:
@@ -357,20 +360,18 @@ class PostState(ABC):
 
         console.print(Panel(comments, border_style="gray30"))
 
-        questionary.press_any_key_to_continue(
-            "Pressione qualquer tecla para voltar ao feed").ask()
-
         return None
 
     def log_change(self, new: str) -> None:
         console.print(
-            f"Changing {self.post.titulo} from [bold]{type(self).__name__}[/] to [bold]{new}[/]")
+            f"\nAlternado \"{self.post.titulo}\" de [bold]{type(self).__name__.upper()}[/] para [bold]{new.upper()}[/]")
 
         return None
 
     def log_blocked_action(self, action: str) -> None:
         console.print(
-            f"You can't {action} a post that is {type(self).__name__.upper()}"
+            f"\nVocê não pode {action} um post com estado = {
+                type(self).__name__.upper()}"
         )
 
         return None
@@ -388,13 +389,13 @@ class Draft(PostState):
     def close(self) -> None:
         """Can't close a draft"""
 
-        self.log_blocked_action("close")
+        self.log_blocked_action("fechar")
 
         return None
 
     @override
     def edit(self) -> None:
-        super().edit()
+        _ = super().edit()
 
         return None
 
@@ -402,7 +403,7 @@ class Draft(PostState):
     def render(self) -> None:
         """Can't render a draft"""
 
-        self.log_blocked_action("render")
+        self.log_blocked_action("apresentar")
 
         return None
 
@@ -410,7 +411,7 @@ class Draft(PostState):
     def comment(self, author: Usuario) -> None:
         """Can't comment on a draft"""
 
-        self.log_blocked_action("comment on")
+        self.log_blocked_action("comentar em")
 
         return None
 
@@ -420,7 +421,7 @@ class Published(PostState):
     def publish(self) -> None:
         """Can't publish what's already published"""
 
-        self.log_blocked_action("publish")
+        self.log_blocked_action("publicar")
 
         return None
 
@@ -433,8 +434,9 @@ class Published(PostState):
 
     @override
     def edit(self) -> None:
-        super().edit()
-        self.post.edited = "[EDITADO]"
+        edited: bool = super().edit()
+        if edited:
+            self.post.edited = "(editado)"
 
         return None
 
@@ -452,7 +454,7 @@ class Closed(PostState):
     def publish(self) -> None:
         """Can't publish a closed post"""
 
-        self.log_blocked_action("publish")
+        self.log_blocked_action("publicar")
 
         return None
 
@@ -460,7 +462,7 @@ class Closed(PostState):
     def close(self) -> None:
         """Can't close a closed post"""
 
-        self.log_blocked_action("close")
+        self.log_blocked_action("fechar")
 
         return None
 
@@ -468,7 +470,7 @@ class Closed(PostState):
     def edit(self) -> None:
         """Can't edit a closed post"""
 
-        self.log_blocked_action("edit")
+        self.log_blocked_action("editar")
 
         return None
 
@@ -480,7 +482,7 @@ class Closed(PostState):
     def comment(self, author: Usuario) -> None:
         """Can't comment on a closed post"""
 
-        self.log_blocked_action("comment on")
+        self.log_blocked_action("comentar em")
 
         return None
 

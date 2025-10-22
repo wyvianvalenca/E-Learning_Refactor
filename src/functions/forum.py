@@ -8,11 +8,6 @@ def nada(post: ForumPost, user: Usuario) -> None:
     return None
 
 
-def wip(post: ForumPost, user: Usuario) -> None:
-    console.print("Estamos trabalhando nisso...")
-    return None
-
-
 def comentar(post: ForumPost, user: Usuario) -> None:
     post.comment(user)
 
@@ -27,7 +22,7 @@ def mostrar_comentarios(post: ForumPost, user: Usuario) -> None:
 
 def editar_post(post: ForumPost, user: Usuario) -> None:
     if user != post.aluno:
-        console.print("Não é possível editar um post de outro usuário.")
+        console.print("\nNão é possível editar um post de outro usuário.")
         return None
 
     post.edit()
@@ -37,10 +32,12 @@ def editar_post(post: ForumPost, user: Usuario) -> None:
 
 def fechar_post(post: ForumPost, user: Usuario) -> None:
     if not isinstance(user, Instructor):
-        console.print("Apenas instrutores podem fechar posts.")
+        console.print("\nApenas instrutores podem fechar posts.")
         return None
 
     post.close()
+
+    return None
 
 
 def acoes_post(index: int, post: ForumPost, user: Usuario) -> int:
@@ -58,6 +55,13 @@ def acoes_post(index: int, post: ForumPost, user: Usuario) -> int:
                                      choices=list(actions.keys())).ask()
 
     actions[option](post, user)
+
+    if actions[option] != nada:
+        console.print()
+        questionary.press_any_key_to_continue(
+            "Pressione qualquer tecla para voltar ao feed."
+        ).ask()
+        console.print()
 
     if option == "Proximo":
         return index + 1
