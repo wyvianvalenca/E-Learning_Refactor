@@ -2,14 +2,14 @@ import os
 import sys
 import subprocess
 
-import questionary
+from typing_extensions import override
+from abc import ABC, abstractmethod
 
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 
-from typing_extensions import override
-from abc import ABC, abstractmethod
+import questionary
 
 
 class Course:
@@ -50,9 +50,9 @@ class Course:
 # classe usuario criada para implementar herança
 # assim, Student e Instructor herdam de Usuario
 class Usuario(ABC):  # abstract base class
-    def __init__(self, nome, senha):
-        self.nome = nome
-        self.__senha = senha  # senha está encapsulada
+    def __init__(self, nome: str, senha: str):
+        self.nome: str = nome
+        self.__senha: str = senha  # senha está encapsulada
 
     @abstractmethod  # método que deve ser implementado por subclasses
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
@@ -60,13 +60,14 @@ class Usuario(ABC):  # abstract base class
 
 
 class Student(Usuario):
-    def __init__(self, nome, senha):
+    def __init__(self, nome: str, senha: str):
         super().__init__(nome, senha)  # chama o init da classe usuario
         self.cursos_inscritos: list[Course] = []
         self.progresso: dict[str, list[str]] = {}
         self.cursos_pagos: list[Course] = []
         self.notas_quizzes = {}
         self.chats: dict[str, 'Chat'] = {}
+        self.posts: list['ForumPost'] = []
 
     @override
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
@@ -75,7 +76,7 @@ class Student(Usuario):
 
 
 class Instructor(Usuario):
-    def __init__(self, nome, senha):
+    def __init__(self, nome: str, senha: str):
         super().__init__(nome, senha)  # aqui tbm chama o init da classe usuario
         self.cursos: list[Course] = []
 
@@ -215,26 +216,58 @@ class Questionario(Conteudo):
         return corretas == total
 
 
+class ForumPost:
+    def __init__(self, titulo: str, conteudo: str, aluno: Student,
+                 state):
+        self.titulo: str = titulo
+        self.conteudo: str = conteudo
+        self.edited: str = ""
+        self.aluno: Student = aluno
+        self.comentarios: list[Comentario] = []
+        self.__state = state
+        self.__state.post = self
+
+    def header(self) -> str:
+        return f"> [{type(self.__state).__name__.upper()}] {self.titulo.upper()} por {self.aluno.nome}"
+
+    def transition_to(self, new_state) -> None:
+        self.__state = new_state
+        self.__state.post = self
+
+    def publish(self) -> None:
+        self.__state.publish()
+        return None
+
+    def close(self) -> None:
+        self.__state.close()
+        return None
+
+    def edit(self) -> None:
+        self.__state.edit()
+        return None
+
+    def render(self) -> None:
+        self.__state.render()
+        return None
+
+    def comment(self, author: Usuario) -> None:
+        self.__state.comment(author)
+        return None
+
+    def render_comments(self) -> None:
+        self.__state.show_comments()
+        return None
+
+
 class Comentario:
-    def __init__(self, pai: 'ForumPost', conteudo: str, autor: Usuario):
-        self.pai: 'ForumPost' = pai
+    def __init__(self, pai: ForumPost, conteudo: str, autor: Usuario):
+        self.pai: ForumPost = pai
         self.conteudo: str = conteudo
         self.autor: Usuario = autor
 
     @override
     def __str__(self) -> str:
         return f"{self.autor.nome}\n > {self.conteudo}"
-
-
-class ForumPost:
-    def __init__(self, titulo: str, conteudo: str, aluno: Student):
-        self.titulo: str = titulo
-        self.conteudo: str = conteudo
-        self.aluno: Student = aluno
-        self.comentarios: list[Comentario] = []
-
-    def header(self) -> str:
-        return f"> {self.titulo.upper()} por {self.aluno.nome}"
 
 
 class Mensagem:

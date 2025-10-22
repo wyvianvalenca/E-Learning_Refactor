@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from rich.panel import Panel
 import questionary
+from rich.panel import Panel
 
 from src.inicial import console
 

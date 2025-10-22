@@ -1,3 +1,4 @@
+from src.functions.forum_post_states import Published
 from src.inicial import console
 from src.data_base import posts
 from src.functions.instructor_functions.course_builder import CourseBuilder
@@ -122,7 +123,12 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
         .with_conteudos(conteudos_web) \
         .with_students([larissa]) \
         .with_preco(250.0) \
-        .with_forum([ForumPost("Preciso de ajuda com o interpretador!", "ajude-me!", larissa)]) \
+        .with_forum([ForumPost(
+            "Preciso de ajuda com o interpretador!",
+            "ajude-me!",
+            larissa,
+            Published()
+        )]) \
         .with_nivel("Iniciante") \
         .with_categorias(["Django", "Web", "Front-End", "Back-End"]) \
         .build()
@@ -138,10 +144,12 @@ def dados_iniciais(listaAlunos, listaInstrutores, listaCursos):
     # FORUMS
     p1 = ForumPost("Codigo Python nao roda!",
                    "Meu programa em python nao esta rodando",
-                   lucas)
+                   lucas,
+                   Published())
     p2 = ForumPost("Nao entendi encapsulamento",
                    "Alguem pode me explicar?",
-                   larissa)
+                   larissa,
+                   Published())
     posts.extend([p1, p2])
 
     # COMENTARIOS

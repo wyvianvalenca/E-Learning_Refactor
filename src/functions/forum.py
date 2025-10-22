@@ -3,50 +3,63 @@ from rich.panel import Panel
 from rich.text import Text
 
 from src.inicial import console
-from src.models.models import ForumPost, Comentario, Usuario
+from src.models.models import ForumPost, Comentario, Instructor, Usuario
 
 
-def nada(post: ForumPost, autor: Usuario) -> None:
+def nada(post: ForumPost, user: Usuario) -> None:
     return None
 
 
-def wip(post: ForumPost, autor: Usuario) -> None:
+def wip(post: ForumPost, user: Usuario) -> None:
     console.print("Estamos trabalhando nisso...")
     return None
 
 
-def comentar(pai: ForumPost, autor: Usuario) -> None:
-    conteudo: str = questionary.text("Digite seu comentario:").ask()
-    pai.comentarios.append(Comentario(pai, conteudo, autor))
-    console.print("[bold green][OK][/] Comentario adicionado!")
+def comentar(post: ForumPost, user: Usuario) -> None:
+    post.comment(user)
+
     return None
 
 
-def mostrar_comentarios(post: ForumPost, usuario_logado: Usuario) -> None:
-    comentarios: str = ""
+def mostrar_comentarios(post: ForumPost, user: Usuario) -> None:
+    post.render_comments()
 
-    for comentario in post.comentarios:
-        comentarios = comentarios + f"{comentario}\n\n"
-
-    console.print(Panel(comentarios, border_style="gray30"))
-
-    questionary.press_any_key_to_continue(
-        "Pressione qualquer tecla para voltar ao feed").ask()
+    return None
 
 
-def acoes_post(index: int, post: ForumPost, autor: Usuario) -> int:
+def editar_post(post: ForumPost, user: Usuario) -> None:
+    if user != post.aluno:
+        console.print("Não é possível editar um post de outro usuário.")
+        return None
+
+    post.edit()
+
+    return None
+
+
+def fechar_post(post: ForumPost, user: Usuario) -> None:
+    if not isinstance(user, Instructor):
+        console.print("Apenas instrutores podem fechar posts.")
+        return None
+
+    post.close()
+
+
+def acoes_post(index: int, post: ForumPost, user: Usuario) -> int:
     actions = {
         "Proximo": nada,
+        "Anterior": nada,
         "Comentar": comentar,
         "Ver Comentarios": mostrar_comentarios,
-        "Anterior": nada
+        "Editar Post": editar_post,
+        "Fechar Post": fechar_post
     }
 
     console.print()
     option: str = questionary.select("Choose an option:",
                                      choices=list(actions.keys())).ask()
 
-    actions[option](post, autor)
+    actions[option](post, user)
 
     if option == "Proximo":
         return index + 1
@@ -56,21 +69,18 @@ def acoes_post(index: int, post: ForumPost, autor: Usuario) -> int:
         return index
 
 
-def mostrar_post(index: int, post: ForumPost, usuario_logado: Usuario) -> int:
-    texto: str = post.header() + "\n" + post.conteudo
-    painel: Panel = Panel.fit(Text(text=texto).wrap(console, width=100))
-    console.print(painel)
-    console.print()
+def mostrar_post(index: int, post: ForumPost, user: Usuario) -> int:
+    post.render()
 
-    return acoes_post(index, post, usuario_logado)
+    return acoes_post(index, post, user)
 
 
-def mostrar_feed(posts: list[ForumPost], usuario_logado: Usuario) -> None:
+def mostrar_feed(posts: list[ForumPost], user: Usuario) -> None:
     index: int = 0
     while index < len(posts):
         post: ForumPost = posts[index]
 
-        index = mostrar_post(index, post, usuario_logado)
+        index = mostrar_post(index, post, user)
 
     questionary.press_any_key_to_continue(
         "Pressione qualquer tecla para voltar ao menu.").ask()

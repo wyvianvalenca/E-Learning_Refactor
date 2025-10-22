@@ -14,7 +14,7 @@ Este projeto foi feito em `Python` como um exercício prático de **Programaçã
 
 ### Padrões
 - [x] refatorar criacao de curso com builder
-- [ ] implementar strategy no menu dos alunos
+- [x] implementar strategy no menu dos alunos
 - [ ] implementar state no forum (open, closed, deleted)
 - [ ] implementar chain of responsability para criação de conteudos
 
