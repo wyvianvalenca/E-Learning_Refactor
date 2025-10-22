@@ -45,15 +45,3 @@ class AccessForumStrategy(MenuActionStrategy):
         forum.mostrar_feed(posts, user)
 
         return None
-
-
-class ExitStrategy(MenuActionStrategy):
-    @override
-    def get_label(self) -> str:
-        return "Sair"
-
-    @override
-    def execute(self, context: dict[str, Any]) -> None:
-        console.print("\nRetornando...")
-        context['continue'] = False  # Sinaliza para parar o loop
-        return None

@@ -9,9 +9,9 @@ from src.menus.instructor_strategies import (
 )
 from src.menus.strategies import (
     ManageCourseStrategy,
-    AccessForumStrategy,
-    ExitStrategy
+    AccessForumStrategy
 )
+from src.menus.exit_strategy import ExitStrategy
 
 
 # STRATEGY MENU

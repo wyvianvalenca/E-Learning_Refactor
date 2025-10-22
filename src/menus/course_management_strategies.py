@@ -1,8 +1,8 @@
 from typing import Any
 from typing_extensions import override
 
-from rich.console import Console
 import questionary
+from rich.console import Console
 
 from src.models.models import Course, Conteudo, ForumPost, Instructor, Student
 from src.menus.strategy_interface import MenuActionStrategy
@@ -10,11 +10,11 @@ from src.functions.instructor_functions import (
     gerenciador_conteudo
 )
 from src.functions.student_functions import (
-    adicionar_post,
+    # adicionar_post,
     desempenho_aluno,
     plataforma_do_curso
 )
-from src.functions import forum
+# from src.functions import forum
 
 
 # CONCRETE COURSE MANAGEMENT STRATEGIES
@@ -273,6 +273,7 @@ class AddPostCourseStrategy(MenuActionStrategy):
         return None
 
 
+"""
 class CourseForumStrategy(MenuActionStrategy):
     @override
     def get_label(self) -> str:
@@ -292,3 +293,4 @@ class CourseForumStrategy(MenuActionStrategy):
         forum.mostrar_feed(curso_forum, context['user'])
 
         return None
+"""
