@@ -17,7 +17,8 @@ Este projeto foi feito em `Python` como um exercício prático de **Programaçã
 - [x] refatorar criacao de curso com builder
 - [x] implementar strategy no menu dos alunos
 - [x] implementar state no forum (open, closed, deleted)
-- [ ] implementar chain of responsability para criação de conteudos
+- [x] implementar chain of responsability para criação de conteudos
+- [ ] definir 3 padrões estruturais para adicionar
 
 ## Funcionalidades
 
