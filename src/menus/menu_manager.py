@@ -4,6 +4,7 @@ from rich.console import Console
 from rich.panel import Panel
 
 from src.menus.strategy_interface import MenuActionStrategy
+from src.utils import clear_screen, header
 
 
 class MenuManager:
@@ -21,9 +22,12 @@ class MenuManager:
 
     def run(self, context: dict[str, Any]) -> None:
         """Executa o loop do menu"""
+
         context['continue'] = True
 
         while context.get('continue', True):
+            clear_screen()
+            self.console.print(header("Main Menu"))
             self.console.print(Panel.fit(self.title, style="dark_cyan"))
             self.console.print()
 
@@ -47,3 +51,4 @@ class MenuManager:
 
             # Executa a estratégia escolhida
             available_strategies[chosen_label].execute(context)
+            # clear_screen()

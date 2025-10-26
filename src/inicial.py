@@ -1,16 +1,24 @@
 import questionary
+from rich.align import Align
 from rich.panel import Panel
 from rich.console import Console
 
 from src.data_base import alunos, cursos, instrutores, posts
+from src.utils import clear_screen, header
 
 console = Console()
 
 
 def inicial():
 
+    clear_screen()
+    console.print(header("Home"))
     console.print(
-        Panel.fit(":laptop_computer: Bem-vind@ à plataforma E-learning! :book:", style="cyan"))
+        Panel(
+            Align.center(
+                ":laptop_computer: Bem-vind@ à plataforma E-learning! :book:"
+            ),
+            style="cyan"))
 
     # menu principal
     opcoes: list[str] = [
@@ -41,7 +49,7 @@ def inicial():
         tipo_usuario = "Instrutor"
 
     elif (choose == opcoes[2]):
-        print("Saindo do sistema. Até logo!")
+        print("\nSaindo do sistema. Até logo!")
         exit()
 
     # encontrar usuario
@@ -51,8 +59,10 @@ def inicial():
             break
 
     if usuario_logado:
+        clear_screen()
+        console.print(header("Main Menu"))
         console.print(
-            f"\n\nBem-vindo, {usuario_logado.nome}!\n",
+            f"\n\nBem-vind@, {usuario_logado.nome}!\n",
             style="gray100 on light_sea_green")
         # aqui chamamos o polimorfismo
         usuario_logado.exibir_menu(cursos, posts)

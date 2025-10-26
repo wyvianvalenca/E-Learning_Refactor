@@ -5,6 +5,7 @@
 - [x] permitir edição e publicação de posts em rascunho (alunos)
 - [x] implementar forum do curso para os alunos (visualizar e adicionar post)
 - [ ] implementar chat
+- [x] implementar limpeza de tela ao voltar para o menu
 
 ## Padrões de Projeto
 - [x] refatorar criacao de curso com builder
