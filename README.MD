@@ -55,7 +55,13 @@ Foram implementados alguns padrões de projeto para melhor qualidade de código.
 
 ### Comportamentais
 
-- **Strategy**: padrão utilizado no menu do Instrutor.
+- **Strategy**: usado para montar os menus do sistema.
+- **State**: usado para controlar o comportamento das postagens de fórum em diferentes estados (Rascunho, Publicada, Fechada).
+- **Chain Of Responsability**: usado para criar uma cadeia de validações para os conteúdos a serem inseridos nos cursos.
+
+### Estruturais
+
+- ...
 
 ## Estrutura do Código
 
