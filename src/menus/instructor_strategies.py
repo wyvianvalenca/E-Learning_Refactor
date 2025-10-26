@@ -24,6 +24,8 @@ def cursos_instrutor(all_courses: list[Course], instructor: Instructor) -> list[
 
 
 class ListCoursesStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para listar os cursos do instrutor """
+
     @override
     def get_label(self) -> str:
         return "Listar Meus Cursos"
@@ -40,6 +42,8 @@ class ListCoursesStrategy(MenuActionStrategy):
 
 
 class AddCourseStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para criar um curso """
+
     @override
     def get_label(self) -> str:
         return "Criar Curso"
@@ -55,28 +59,9 @@ class AddCourseStrategy(MenuActionStrategy):
         return self.retornar()
 
 
-class ManageCourseStrategy(MenuActionStrategy):
-    @override
-    def get_label(self) -> str:
-        return "Gerenciar Curso"
-
-    @override
-    def execute(self, context: dict[str, Any]) -> None:
-        instrutor: Instructor = context['instructor']
-        cursos: list[Course] = context['courses']
-
-        course_management_menu(console, cursos_instrutor(
-            cursos, instrutor), instrutor)
-
-    @override
-    def can_execute(self, context: dict[str, Any]) -> bool:
-        instrutor: Instructor = context['instructor']
-        cursos: list[Course] = context['courses']
-
-        return len(cursos_instrutor(cursos, instrutor)) > 0
-
-
 class DeleteCourseStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para excluir um curso """
+
     @override
     def get_label(self) -> str:
         return "Excluir Curso"
@@ -101,6 +86,8 @@ class DeleteCourseStrategy(MenuActionStrategy):
 
 
 class AccessForumStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para acessar o forum do curso """
+
     @override
     def get_label(self) -> str:
         return "Acessar Forum"

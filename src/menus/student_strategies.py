@@ -12,6 +12,8 @@ from src.menus.strategies import get_users_courses
 
 
 class StudentsCoursesStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para ver os cursos inscritos do aluno """
+
     @override
     def get_label(self) -> str:
         return "Ver Cursos Inscritos"
@@ -33,6 +35,8 @@ class StudentsCoursesStrategy(MenuActionStrategy):
 
 
 class SubscribeStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para inscrever um aluno em um curso """
+
     @override
     def get_label(self) -> str:
         return "Inscrever em Curso"
@@ -54,6 +58,8 @@ class SubscribeStrategy(MenuActionStrategy):
 
 
 class AddPostStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para criar um post no forum geral """
+
     @override
     def get_label(self) -> str:
         return "Criar Post no Forum Geral"

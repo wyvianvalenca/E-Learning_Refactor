@@ -18,7 +18,7 @@ from src.menus.exit_strategy import ExitStrategy
 def student_menu(student: Student,
                  all_courses: list[Course],
                  main_forum: list[ForumPost]) -> None:
-    """Função para criar o menu do usuário"""
+    """STRATEGY PATTERN - Menu para o aluno"""
 
     # Cria o gerenciador de menus
     menu = MenuManager(

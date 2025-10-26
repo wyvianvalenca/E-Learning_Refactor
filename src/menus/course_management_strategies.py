@@ -21,6 +21,7 @@ from src.functions.student_functions import (
 
 
 class UpdateInfoStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para atualizar informações de um curso """
 
     @override
     def get_label(self) -> str:
@@ -52,6 +53,8 @@ class UpdateInfoStrategy(MenuActionStrategy):
 
 
 class ViewContentStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para ver os conteúdos de um curso """
+
     @override
     def get_label(self) -> str:
         return "Ver Conteúdos"
@@ -76,6 +79,8 @@ class ViewContentStrategy(MenuActionStrategy):
 
 
 class CoursePlatformStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para acessar a plataforma de um curso """
+
     @override
     def get_label(self) -> str:
         return "Plataforma do Curso"
@@ -98,6 +103,8 @@ class CoursePlatformStrategy(MenuActionStrategy):
 
 
 class AddContentStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para adicionar conteúdo a um curso """
+
     @override
     def get_label(self) -> str:
         return "Adicionar Conteudo"
@@ -137,6 +144,8 @@ class AddContentStrategy(MenuActionStrategy):
 
 
 class RemoveContentStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para remover conteúdo de um curso """
+
     @override
     def get_label(self) -> str:
         return "Remover Conteúdo"
@@ -167,6 +176,8 @@ class RemoveContentStrategy(MenuActionStrategy):
 
 
 class PerformanceStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para ver o desempenho de um aluno em um curso """
+
     @override
     def get_label(self) -> str:
         return "Desempenho do Aluno"
@@ -190,6 +201,8 @@ class PerformanceStrategy(MenuActionStrategy):
 
 
 class ReportStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para ver os relatórios da turma de um curso """
+
     @override
     def get_label(self) -> str:
         return "Relatórios da Turma"
@@ -251,6 +264,8 @@ class ReportStrategy(MenuActionStrategy):
 
 
 class AddPostCourseStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para criar um post no forum do curso """
+
     @override
     def get_label(self) -> str:
         return "Criar Post no Forum do Curso"
@@ -275,6 +290,8 @@ class AddPostCourseStrategy(MenuActionStrategy):
 
 """
 class CourseForumStrategy(MenuActionStrategy):
+     STRATEGY PATTERN - Estratégia para ver o forum de um curso 
+
     @override
     def get_label(self) -> str:
         return "Ver Forum do Curso"

@@ -7,10 +7,9 @@ from rich.panel import Panel
 from src.inicial import console
 
 
-# STRATEGY INTERFACE
-
-
 class MenuActionStrategy(ABC):
+    """ STRATEGY PATTERN - Interface para todas as estratégias de menu """
+
     @staticmethod
     def cabecalho(titulo: str) -> None:
         console.print()

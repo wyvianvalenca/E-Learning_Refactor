@@ -5,10 +5,10 @@ from rich.panel import Panel
 
 from src.menus.strategy_interface import MenuActionStrategy
 
-# STRATEGY CONTEXT
-
 
 class MenuManager:
+    """ STRATEGY PATTERN - Context para adicionar e executar estratégias """
+
     def __init__(self, console: Console, title: str):
         self.console = console
         self.title = title

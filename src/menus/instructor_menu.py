@@ -14,9 +14,8 @@ from src.menus.strategies import (
 from src.menus.exit_strategy import ExitStrategy
 
 
-# STRATEGY MENU
 def instructor_menu(instrutor: Instructor, cursos: list[Course]) -> None:
-    """Função para criar o menu do instrutor"""
+    """ STRATEGY PATTERN - Menu para o instrutor """
 
     # Cria o gerenciador de menu
     menu = MenuManager(

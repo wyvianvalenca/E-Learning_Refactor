@@ -3,12 +3,10 @@ import os
 
 from src.inicial import console
 
-"""ADAPTER PATTERN"""
-
-# EXTERNAL SERVICE
-
 
 class SimpleMagicValidation:
+    """ ADAPTER PATTERN - Adaptee (biblioteca externa python-magic) """
+
     def __init__(self):
         try:
             self.magic: magic.Magic = magic.Magic(mime=True)
@@ -68,3 +66,36 @@ class SimpleMagicValidation:
 
         # Compares real MIME type with expected MIME type
         return result['mime_type'] == expected_mime
+
+
+class MagicPythonValidationAdapter(Handler):
+    """ ADAPTER PATTERN - Adapter para integrar python-magic nos validadores """
+
+    @override
+    def get_name(self) -> str:
+        return "Validação do Tipo Real do Arquivo"
+
+    @override
+    def handle(self, content: Conteudo) -> ValidationResult:
+        if not isinstance(content, Externo):
+            return ValidationResult(
+                is_valid=True,
+                message="Não é conteúdo externo, pulando validação...",
+                validator_name=self.get_name()
+            )
+
+        real_type_matches: bool = SimpleMagicValidation(). \
+            validate_file_type(content.caminho, content.tipo)
+
+        if not real_type_matches:
+            return ValidationResult(
+                is_valid=False,
+                message="O tipo real do arquivo não corresponde ao tipo esperado.",
+                validator_name=self.get_name()
+            )
+
+        return ValidationResult(
+            is_valid=True,
+            message="O tipo real do arquivo corresponde ao esperado.",
+            validator_name=self.get_name()
+        )

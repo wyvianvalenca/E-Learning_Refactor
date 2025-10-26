@@ -16,6 +16,8 @@ def get_users_courses(user: Instructor | Student) -> list[Course]:
 
 
 class ManageCourseStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para acessar e interagir com um curso """
+
     @override
     def get_label(self) -> str:
         return "Acessar Curso"
@@ -31,6 +33,8 @@ class ManageCourseStrategy(MenuActionStrategy):
 
 
 class AccessForumStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para acessar o forum """
+
     @override
     def get_label(self) -> str:
         return "Acessar Forum"

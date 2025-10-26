@@ -44,25 +44,84 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 
 ---
 
-## Padrões de Projeto
+## Padrões de Projeto Implementados
 
-Foram implementados alguns padrões de projeto para melhor qualidade de código.
+Este projeto implementa **7 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
 
-### Criacionais
+### 📦 Criacionais (3/3)
 
-- **Singleton**: instâncias únicas para o gerenciador de cursos e para os gerenciadores de conteúdo.
-- **Factory Method**: fábrica para os gerenciadores de conteúdo, visto que temos vários tipos de conteúdo.
-- **Builder**: construtor versátil para os cursos.
+#### **Singleton** - `src/singleton_metaclass.py`
+- **Problema**: Garantir uma única instância de gerenciadores de conteúdo para evitar duplicação e desperdício de recursos
+- **Solução**: Metaclasse que controla criação de instâncias únicas
+- **Implementação**: 
+    - Metaclasse: `SingletonABCMeta` (para classes abstratas e seus filhos) e `SingletonMeta`(para as demais)
+    - Singletons: `GerenciadorConteudo`, `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`
+- **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
-### Comportamentais
+#### **Factory Method** - `src/functions/instructor_functions/gerenciador_conteudo.py`
+- **Problema**: Criar e adicionar diferentes tipos de conteúdo (Texto, Externo, Questionario) aos cursos sem acoplar o código
+- **Solução**: Interface abstrata para criação de conteúdo e cadeia de validações implementada pelas classes concretas
+- **Implementação**: 
+    - Creator abstrato: `GerenciadorConteudo` (obriga a implementação do `factory_method` e `validation_chain` e usa-os no `adicionar`, para inserir novos conteúdos)
+    - Creator concretos: `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`
+- **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
-- **Strategy**: usado para montar os menus do sistema.
-- **State**: usado para controlar o comportamento das postagens de fórum em diferentes estados (Rascunho, Publicada, Fechada).
-- **Chain Of Responsability**: usado para criar uma cadeia de validações para os conteúdos a serem inseridos nos cursos.
+#### **Builder** - `src/functions/instructor_functions/course_builder.py`
+- **Problema**: Criar objetos `Course` complexos com muitos parâmetros opcionais de forma clara
+- **Solução**: Classe de construtor com métodos fluentes (retornam o próprio objeto) e validação dos dados mínimos necessários
+- **Implementação**: 
+    - Builder: `CourseBuilder`
+    - Product: `Course`
+    - Client (utilização): `src/functions/instructor_functions/criar_curso.py`
+- **Uso no projeto**: Quando um instrutor deseja criar um curso novo
 
-### Estruturais
 
-- **Adapter**: usado para implementar a validação do tipo real dos arquivos de conteúdos externos com a biblioteca python-magic, cuja interface é incompatível com os validadores utilizados no Chain Of Responsability
+### 🔄 Comportamentais (4/3)
+
+#### **Strategy** - `src/menus/`
+- **Problema**: Construção de menus com diversas opções sem usar várias condicionais
+- **Solução**: Interface para padronizar as ações dos menus e classe de contexto para adicionar ações, exibir menu e executar estratégia (ação) escolhida
+- **Implementação**: 
+  - Context: `MenuManager`
+  - Strategy abstrata (interface): `MenuActionStrategy`
+  - Strategy concretas: Classes de estratégia em `strategies.py`, `exit_strategy.py`, `course_management_strategies.py`, `instructor_strategies.py` e `student_strategies.py`
+- **Uso no projeto**: Todos os menus do sistema
+
+#### **State** - `src/models/models.py`
+- **Problema**: Comportamento de posts do fórum muda drasticamente baseado no estado (Draft, Published, Closed)
+- **Solução**: Interface para padronizar os estados do post, permitindo diferentes comportamentos para métodos de comportamento do post
+- **Implementação**: 
+  - Context: `ForumPost`
+  - State: `PostState`
+  - Concrete States: `Draft`, `Published`, `Closed`
+- **Uso no projeto**: Ao criar e interagir com posts do fórum
+
+#### **Chain of Responsibility** - `src/functions/instructor_functions/content_validation.py`
+- **Problema**: Validações complexas de conteúdo com múltiplas regras
+- **Solução**: Cadeia de handlers (validadores) que processam sequencialmente até encontrar erro ou completar
+- **Implementação**: 
+  - Handler: `Handler`
+  - Concrete Handlers: `TitleLengthValidation`, `FileFormatValidation`, etc.
+- **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
+
+#### **Template Method** - `src/functions/instructor_functions/gerenciador_conteudo.py` (intimamente relacionado com o Factory Method)
+- **Problema**: Diferentes formas de criar conteúdo e uma cadeia de validação correspondente
+- **Solução**: Algoritmo padrão para adição de conteúdos, que utiliza passos variáveis para cada tipo de conteúdo
+- **Implementação**:
+  - **AbstractClass**: `GerenciadorConteudo`, que declara os passos (`factory_method` e `validation_chain`) do algoritmo/template method (`adicionar`)
+  - **ConcreteClasses**: `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`, que implementam os passos conforme o tipo de conteúdo, mas não sobrescrevem o algoritmo/template method
+- **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
+
+### 🔧 Estruturais (1/3)
+
+#### **Adapter** - `src/functions/instructor_functions/magic_validation.py`
+- **Problema**: Biblioteca `python-magic` (usada para validar o tipo real de um arquivo) tem interface incompatível com a interface de validador do projeto (`Handler`) 
+- **Solução**: Adaptador para usar a biblioteca externa com a interface esperada pelos validadores
+- **Implementação**: 
+  - Target: `Handler` (interface de validadores)
+  - Adaptee: `SimpleMagicValidation` (classe criada para usar a biblioteca externa)
+  - Adapter: `MagicPythonValidationAdapter` (conecta interfaces)
+- **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo externo aos seus cursos
 
 ## Estrutura do Código
 

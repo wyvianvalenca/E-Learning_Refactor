@@ -7,6 +7,8 @@ from src.inicial import console
 
 
 class ExitStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para sair de qualquer menu """
+
     @override
     def get_label(self) -> str:
         return "Sair"

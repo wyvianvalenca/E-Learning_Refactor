@@ -8,6 +8,8 @@ from src.models.models import (
 
 
 class CourseBuilder:
+    """ BUILDER PATTERN - Builder para construção de Course com métodos fluentes """
+
     def __init__(self):
         self.__nome = None
         self.__descricao = None

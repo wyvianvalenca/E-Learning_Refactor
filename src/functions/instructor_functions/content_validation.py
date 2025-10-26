@@ -7,10 +7,9 @@ from src.inicial import console
 from src.models.models import Conteudo, Externo
 
 
-""" CHAIN OF RESPONSABILITY para validar conteudo"""
-
-
 class ValidationResult:
+    """ CHAIN OF RESPONSABILITY PATTERN - Resultado de validação individual """
+    
     def __init__(self, is_valid: bool, message: str, validator_name: str):
         self.is_valid: bool = is_valid
         self.message: str = message
@@ -24,7 +23,7 @@ class ValidationResult:
 
 
 class Handler(ABC):
-    """Base Handler has default chaining behavior implemented"""
+    """ CHAIN OF RESPONSABILITY PATTERN - Handler abstrato para validações """
 
     _next_handler: 'Handler | None' = None
 
@@ -50,6 +49,8 @@ class Handler(ABC):
 
 
 class TitleLengthValidation(Handler):
+    """ CHAIN OF RESPONSABILITY PATTERN - Validador concreto de tamanho do título """
+
     def __init__(self, min_size: int = 3, max_size: int = 100):
         self.__min_size: int = min_size
         self.__max_size: int = max_size
@@ -89,6 +90,8 @@ class TitleLengthValidation(Handler):
 
 
 class TitleWordsValidation(Handler):
+    """ CHAIN OF RESPONSABILITY PATTERN - Validador concreto de legibilidade do título """
+
     @override
     def get_name(self) -> str:
         return "Validação de Legibilidade"
@@ -112,6 +115,8 @@ class TitleWordsValidation(Handler):
 
 
 class FileFormatValidation(Handler):
+    """ CHAIN OF RESPONSABILITY PATTERN - Validador concreto de formato de arquivo """
+
     def __init__(self):
         self.valid_formats: dict[str, list[str]] = {
             'vídeo': ['.mp4', '.avi'],
@@ -153,40 +158,9 @@ class FileFormatValidation(Handler):
         return super().handle(content)
 
 
-class MagicPythonValidationAdapter(Handler):
-    """Adapter class to use external library in existing interface"""
-
-    @override
-    def get_name(self) -> str:
-        return "Validação do Tipo Real do Arquivo"
-
-    @override
-    def handle(self, content: Conteudo) -> ValidationResult:
-        if not isinstance(content, Externo):
-            return ValidationResult(
-                is_valid=True,
-                message="Não é conteúdo externo, pulando validação...",
-                validator_name=self.get_name()
-            )
-
-        real_type_matches: bool = SimpleMagicValidation(). \
-            validate_file_type(content.caminho, content.tipo)
-
-        if not real_type_matches:
-            return ValidationResult(
-                is_valid=False,
-                message="O tipo real do arquivo não corresponde ao tipo esperado.",
-                validator_name=self.get_name()
-            )
-
-        return ValidationResult(
-            is_valid=True,
-            message="O tipo real do arquivo corresponde ao esperado.",
-            validator_name=self.get_name()
-        )
-
-
 class FileExistenceValidation(Handler):
+    """ CHAIN OF RESPONSABILITY PATTERN - Validador concreto de existência de arquivo """
+
     @override
     def get_name(self) -> str:
         return "Validação de Existência de Arquivo"

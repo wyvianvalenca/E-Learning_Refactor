@@ -18,18 +18,15 @@ from src.functions.instructor_functions.content_validation import (
     Handler,
     FileExistenceValidation,
     FileFormatValidation,
-    MagicPythonValidationAdapter,
     TitleWordsValidation,
     TitleLengthValidation,
     ValidationResult
 )
-
-
-""" FACTORY METHOD """
+from src.functions.instructor_functions.magic_validation import MagicPythonValidationAdapter
 
 
 class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
-    """Criador Abstrato / Interface de Criador para os gerenciadores de conteúdo"""
+    """ FACTORY METHOD + SINGLETON PATTERN - Creator abstrato que define a interface para criação, validação e adição de conteúdo """
 
     def __init__(self, console: Console, tipo: str):
         self.console: Console = console
@@ -73,7 +70,7 @@ class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
 
 
 class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
-    """Criador concreto para Conteúdos Externos"""
+    """ FACTORY METHOD + SINGLETON PATTERN - Creator concreto para Conteúdos Externos"""
 
     @override
     def factory_method(self) -> Conteudo:
@@ -114,7 +111,7 @@ class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
 
 class GerenciadorTexto(GerenciadorConteudo, metaclass=SingletonABCMeta):
-    """Criador concreto para Conteúdo de Texto"""
+    """ FACTORY METHOD + SINGLETON PATTERN - Creator concreto para Conteúdo de Texto"""
 
     @override
     def factory_method(self) -> Conteudo:
@@ -148,7 +145,7 @@ class GerenciadorTexto(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
 
 class GerenciadorQuestionario(GerenciadorConteudo, metaclass=SingletonABCMeta):
-    """Criador concreto para Conteúdo de Quiz"""
+    """ FACTORY METHOD + SINGLETON PATTERN - Creator concreto para Conteúdo de Quiz"""
 
     def criar_quiz(self) -> Quiz:
         self.console.print(f"\n--- CRIAR NOVO QUIZ ---\n")

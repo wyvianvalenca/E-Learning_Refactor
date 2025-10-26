@@ -18,6 +18,8 @@ from src.menus.exit_strategy import ExitStrategy
 
 
 def escolher_curso(cursos_instrutor: list[Course]) -> None | Course:
+    """ Função para escolher um curso """
+
     nomes_cursos: list[str] = [c.titulo for c in cursos_instrutor]
     nomes_cursos.append("Sair")
     escolhido: str = questionary.select("Selecione o curso que deseja gerenciar:",
@@ -31,9 +33,8 @@ def escolher_curso(cursos_instrutor: list[Course]) -> None | Course:
             return curso
 
 
-# STRATEGY MENU
 def course_management_menu(console: Console, cursos: list[Course], usuario: Usuario) -> None:
-    """Função para criar o menu do gerenciador de cursos"""
+    """ STRATEGY PATTERN - Menu para acessar e interagir com um curso """
 
     # Prepara o contexto
     curso: Course | None = escolher_curso(cursos)

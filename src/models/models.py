@@ -221,6 +221,7 @@ class Questionario(Conteudo):
 
 
 class ForumPost:
+    """ STATE PATTERN - Context que delega comportamento para estados """
     def __init__(self, titulo: str, conteudo: str, aluno: Student,
                  state: 'PostState'):
         self.titulo: str = titulo
@@ -263,32 +264,8 @@ class ForumPost:
         return None
 
 
-"""
-FORUM POST STATES
-1. Draft
-    > can publish
-    > can't close
-    > can edit
-    > can't render
-    > can't comment
-
-2. Published
-    > can't publish
-    > can close
-    > can edit (adds edited flag)
-    > can render
-    > can comment
-
-3. Closed
-    > can't publish
-    > can't close
-    > can't edit
-    > can render
-    > can't comment
-"""
-
-
 class PostState(ABC):
+    """ STATE PATTERN - Interface abstrata para estados do ForumPost """
     @property
     def post(self) -> ForumPost:
         return self.__post
@@ -378,6 +355,7 @@ class PostState(ABC):
 
 
 class Draft(PostState):
+    """ STATE PATTERN - Estado concreto Draft (rascunho) """
     @override
     def publish(self) -> None:
         self.log_change("published")
@@ -417,6 +395,7 @@ class Draft(PostState):
 
 
 class Published(PostState):
+    """ STATE PATTERN - Estado concreto Published (publicado) """
     @override
     def publish(self) -> None:
         """Can't publish what's already published"""
@@ -450,6 +429,7 @@ class Published(PostState):
 
 
 class Closed(PostState):
+    """ STATE PATTERN - Estado concreto Closed (fechado) """
     @override
     def publish(self) -> None:
         """Can't publish a closed post"""

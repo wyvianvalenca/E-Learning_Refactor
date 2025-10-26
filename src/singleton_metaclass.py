@@ -4,6 +4,8 @@ from typing_extensions import override
 
 
 class SingletonABCMeta(ABCMeta):
+    """ SINGLETON PATTERN - Metaclasse para classes abstratas que garante uma única instância """
+
     _instances: dict[type, Any] = {}
 
     @override
@@ -17,6 +19,8 @@ class SingletonABCMeta(ABCMeta):
 
 
 class SingletonMeta(type):
+    """ SINGLETON PATTERN - Metaclasse para classes que garante uma única instância """
+
     _instances: dict[type, Any] = {}
 
     @override
