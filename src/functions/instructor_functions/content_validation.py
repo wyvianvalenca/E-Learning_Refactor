@@ -2,8 +2,12 @@ from abc import ABC, abstractmethod
 from typing_extensions import override
 from pathlib import Path
 
+from src.functions.instructor_functions.magic_validation import SimpleMagicValidation
 from src.inicial import console
 from src.models.models import Conteudo, Externo
+
+
+""" CHAIN OF RESPONSABILITY para validar conteudo"""
 
 
 class ValidationResult:
@@ -43,17 +47,6 @@ class Handler(ABC):
             message="Todas as validações passaram!",
             validator_name="Cadeia de Validações"
         )
-
-
-"""
-CHAIN OF RESPONSABILITY para validar conteudo
-    (gerais)
-        titulo maior que 10 caracteres > titulo nao todo maiusculo >
-    (especificos)
-        formato do arquivo > arquivo existe
-        texto em 2+ paragrafos > texto nao todo maiusculo
-        quiz com 2+ perguntas
-"""
 
 
 class TitleLengthValidation(Handler):
@@ -158,6 +151,39 @@ class FileFormatValidation(Handler):
         ))
 
         return super().handle(content)
+
+
+class MagicPythonValidationAdapter(Handler):
+    """Adapter class to use external library in existing interface"""
+
+    @override
+    def get_name(self) -> str:
+        return "Validação do Tipo Real do Arquivo"
+
+    @override
+    def handle(self, content: Conteudo) -> ValidationResult:
+        if not isinstance(content, Externo):
+            return ValidationResult(
+                is_valid=True,
+                message="Não é conteúdo externo, pulando validação...",
+                validator_name=self.get_name()
+            )
+
+        real_type_matches: bool = SimpleMagicValidation(). \
+            validate_file_type(content.caminho, content.tipo)
+
+        if not real_type_matches:
+            return ValidationResult(
+                is_valid=False,
+                message="O tipo real do arquivo não corresponde ao tipo esperado.",
+                validator_name=self.get_name()
+            )
+
+        return ValidationResult(
+            is_valid=True,
+            message="O tipo real do arquivo corresponde ao esperado.",
+            validator_name=self.get_name()
+        )
 
 
 class FileExistenceValidation(Handler):

@@ -18,7 +18,8 @@ Este projeto foi feito em `Python` como um exercício prático de **Programaçã
 - [x] implementar strategy no menu dos alunos
 - [x] implementar state no forum (open, closed, deleted)
 - [x] implementar chain of responsability para criação de conteudos
-- [ ] definir 3 padrões estruturais para adicionar
+- [x] implementar adapter
+- [ ] definir 2 padrões estruturais para adicionar
 
 ## Funcionalidades
 
@@ -61,7 +62,7 @@ Foram implementados alguns padrões de projeto para melhor qualidade de código.
 
 ### Estruturais
 
-- ...
+- **Adapter**: usado para implementar a validação do tipo real dos arquivos de conteúdos externos com a biblioteca python-magic, cuja interface é incompatível com os validadores utilizados no Chain Of Responsability
 
 ## Estrutura do Código
 

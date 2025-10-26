@@ -18,6 +18,7 @@ from src.functions.instructor_functions.content_validation import (
     Handler,
     FileExistenceValidation,
     FileFormatValidation,
+    MagicPythonValidationAdapter,
     TitleWordsValidation,
     TitleLengthValidation,
     ValidationResult
@@ -98,13 +99,15 @@ class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
         title_case: Handler = TitleWordsValidation()
 
         # cria validações específicas
-        file_format: Handler = FileFormatValidation()
         file_existance: Handler = FileExistenceValidation()
+        file_format: Handler = FileFormatValidation()
+        file_real_type: Handler = MagicPythonValidationAdapter()
 
         # monta cadeia de validações
         _ = title_size.set_next(title_case) \
             .set_next(file_existance) \
-            .set_next(file_format)
+            .set_next(file_format) \
+            .set_next(file_real_type)
 
         # retorna primeira validação da cadeia
         return title_size

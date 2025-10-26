@@ -13,6 +13,7 @@ prompt_toolkit==3.0.52
 ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.2
+python-magic==0.4.27
 questionary==2.1.1
 rich==14.1.0
 stack-data==0.6.3
