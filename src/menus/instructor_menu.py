@@ -7,11 +7,9 @@ from src.menus.instructor_strategies import (
     AddCourseStrategy,
     DeleteCourseStrategy,
 )
-from src.menus.strategies import (
-    ManageCourseStrategy,
-    AccessForumStrategy
-)
-from src.menus.exit_strategy import ExitStrategy
+from src.functions.access_forum import AccessForumStrategy
+from src.functions.manage_course import ManageCourseStrategy
+from src.functions.exit_strategy import ExitStrategy
 
 
 def instructor_menu(instrutor: Instructor, cursos: list[Course]) -> None:

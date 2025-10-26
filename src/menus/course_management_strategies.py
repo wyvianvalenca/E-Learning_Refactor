@@ -4,11 +4,15 @@ from typing_extensions import override
 import questionary
 from rich.console import Console
 
-from src.models.models import Course, Conteudo, ForumPost, Instructor, Student
-from src.menus.strategy_interface import MenuActionStrategy
-from src.functions.instructor_functions import (
-    gerenciador_conteudo
+from src.models.models import (
+    Course,
+    Conteudo,
+    ForumPost,
+    Instructor,
+    Student
 )
+from src.menus.strategy_interface import MenuActionStrategy
+from src.functions.instructor_functions import gerenciador_conteudo
 from src.functions.student_functions import (
     adicionar_post,
     desempenho_aluno,

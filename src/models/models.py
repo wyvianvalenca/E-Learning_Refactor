@@ -57,6 +57,7 @@ class Usuario(ABC):  # abstract base class
     def __init__(self, nome: str, senha: str):
         self.nome: str = nome
         self.__senha: str = senha  # senha está encapsulada
+        self.chats: dict[str, 'Chat'] = {}
 
     @abstractmethod  # método que deve ser implementado por subclasses
     def exibir_menu(self, cursos: list[Course], posts: list['ForumPost']) -> None:
@@ -69,8 +70,6 @@ class Student(Usuario):
         self.cursos_inscritos: list[Course] = []
         self.progresso: dict[str, list[str]] = {}
         self.cursos_pagos: list[Course] = []
-        self.notas_quizzes = {}
-        self.chats: dict[str, 'Chat'] = {}
         self.posts: list['ForumPost'] = []
 
     @override

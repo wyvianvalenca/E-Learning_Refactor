@@ -8,7 +8,7 @@ from src.functions.student_functions import (
     inscrever_curso,
     ver_cursos
 )
-from src.menus.strategies import get_users_courses
+from src.functions.manage_course import get_users_courses
 from src.functions.forum import mostrar_feed
 
 

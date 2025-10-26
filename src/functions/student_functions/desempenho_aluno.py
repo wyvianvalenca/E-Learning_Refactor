@@ -34,10 +34,6 @@ def executar(aluno_logado: Student, curso: Course):
           total_conteudos_atuais} conteúdos concluídos.")
     print(f"Porcentagem: {progresso_percent:.1f}%")
 
-    if curso.titulo in aluno_logado.notas_quizzes:
-        nota = aluno_logado.notas_quizzes[curso.titulo]
-        print(f"Nota no Quiz: {nota[0]} de {nota[1]} acertos.")
-
     if curso_completo:
         print("Status: Concluído!")
     else:

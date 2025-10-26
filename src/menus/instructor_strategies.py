@@ -1,7 +1,6 @@
 from typing import Any
 from typing_extensions import override
 
-from src.inicial import console
 from src.models.models import Instructor, Course, ForumPost
 from src.menus.strategy_interface import MenuActionStrategy
 from src.functions.instructor_functions import (
@@ -9,7 +8,6 @@ from src.functions.instructor_functions import (
     criar_curso,
     excluir_curso
 )
-from src.menus.course_management_menu import course_management_menu
 from src.functions import forum
 
 
@@ -18,9 +16,6 @@ def cursos_instrutor(all_courses: list[Course], instructor: Instructor) -> list[
         curso for curso in all_courses if curso.instrutor == instructor
     ]
     return instructor_courses_list
-
-
-# CONCRETE INSTRUCTOR STRATEGIES
 
 
 class ListCoursesStrategy(MenuActionStrategy):

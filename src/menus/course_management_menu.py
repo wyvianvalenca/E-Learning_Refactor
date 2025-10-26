@@ -14,7 +14,7 @@ from src.menus.course_management_strategies import (
     ReportStrategy,
     CourseForumStrategy
 )
-from src.menus.exit_strategy import ExitStrategy
+from src.functions.exit_strategy import ExitStrategy
 
 
 def escolher_curso(cursos_instrutor: list[Course]) -> None | Course:

@@ -9,11 +9,9 @@ from src.menus.student_strategies import (
     StudentsCoursesStrategy,
     SubscribeStrategy
 )
-from src.menus.strategies import (
-    AccessForumStrategy,
-    ManageCourseStrategy,
-)
-from src.menus.exit_strategy import ExitStrategy
+from src.functions.access_forum import AccessForumStrategy
+from src.functions.manage_course import ManageCourseStrategy
+from src.functions.exit_strategy import ExitStrategy
 
 
 def student_menu(student: Student,
@@ -39,8 +37,8 @@ def student_menu(student: Student,
     menu.add_strategy(StudentsCoursesStrategy()) \
         .add_strategy(SubscribeStrategy()) \
         .add_strategy(ManageCourseStrategy()) \
-        .add_strategy(AccessForumStrategy()) \
         .add_strategy(AddPostStrategy()) \
+        .add_strategy(AccessForumStrategy()) \
         .add_strategy(AccessDraftPostsStrategy()) \
         .add_strategy(ExitStrategy()) \
         .run(context)
