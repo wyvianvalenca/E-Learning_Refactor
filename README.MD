@@ -3,24 +3,6 @@
 ## Sobre o Projeto
 Este projeto foi feito em `Python` como um exercício prático de **Programação Orientada a Objetos**. É uma simulação de console completa, demonstra a interação entre diferentes objetos e usuários (Alunos e Instrutores) em um ambiente de cursos online.
 
----
-
-## TO-DO
-
-### Funcional
-- [x] inserir novas informações do curso (nível e categorias) na visualização dos cursos
-- [ ] permitir edição e publicação de posts em rascunho (alunos)
-- [ ] implementar forum do curso para os alunos (visualizar e adicionar post)
-- [ ] implementar chat
-
-### Padrões
-- [x] refatorar criacao de curso com builder
-- [x] implementar strategy no menu dos alunos
-- [x] implementar state no forum (open, closed, deleted)
-- [x] implementar chain of responsability para criação de conteudos
-- [x] implementar adapter
-- [ ] definir 2 padrões estruturais para adicionar
-
 ## Funcionalidades
 
 O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataforma de E-learning, com foco na lógica de backend e na interação entre os objetos.
@@ -46,7 +28,7 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 
 ## Padrões de Projeto Implementados
 
-Este projeto implementa **7 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
+Este projeto implementa **8 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
 
 ### 📦 Criacionais (3/3)
 
@@ -112,6 +94,7 @@ Este projeto implementa **7 padrões de projeto** para demonstrar conceitos avan
   - **ConcreteClasses**: `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`, que implementam os passos conforme o tipo de conteúdo, mas não sobrescrevem o algoritmo/template method
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
+
 ### 🔧 Estruturais (1/3)
 
 #### **Adapter** - `src/functions/instructor_functions/magic_validation.py`
@@ -171,6 +154,7 @@ source venv/bin/activate
 Esse projeto usa algumas bibliotecas externas:
 - [rich](https://github.com/Textualize/rich)
 - [questionary](https://github.com/tmbo/questionary)
+- [python-magic](https://github.com/ahupp/python-magic)
 
 ```bash
 pip install -r requirements.txt

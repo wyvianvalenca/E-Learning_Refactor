@@ -1,7 +1,16 @@
 import magic
 import os
+from typing_extensions import override
 
 from src.inicial import console
+from src.models.models import (
+    Conteudo,
+    Externo
+)
+from src.functions.instructor_functions.content_validation import (
+    Handler,
+    ValidationResult
+)
 
 
 class SimpleMagicValidation:

@@ -4,6 +4,7 @@ from src.inicial import console
 from src.models.models import Student, Course, ForumPost
 from src.menus.menu_manager import MenuManager
 from src.menus.student_strategies import (
+    AccessDraftPostsStrategy,
     AddPostStrategy,
     StudentsCoursesStrategy,
     SubscribeStrategy
@@ -40,5 +41,6 @@ def student_menu(student: Student,
         .add_strategy(ManageCourseStrategy()) \
         .add_strategy(AccessForumStrategy()) \
         .add_strategy(AddPostStrategy()) \
+        .add_strategy(AccessDraftPostsStrategy()) \
         .add_strategy(ExitStrategy()) \
         .run(context)

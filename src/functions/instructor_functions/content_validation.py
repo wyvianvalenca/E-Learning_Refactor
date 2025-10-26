@@ -2,14 +2,13 @@ from abc import ABC, abstractmethod
 from typing_extensions import override
 from pathlib import Path
 
-from src.functions.instructor_functions.magic_validation import SimpleMagicValidation
 from src.inicial import console
 from src.models.models import Conteudo, Externo
 
 
 class ValidationResult:
     """ CHAIN OF RESPONSABILITY PATTERN - Resultado de validação individual """
-    
+
     def __init__(self, is_valid: bool, message: str, validator_name: str):
         self.is_valid: bool = is_valid
         self.message: str = message

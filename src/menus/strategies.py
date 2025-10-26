@@ -37,15 +37,15 @@ class AccessForumStrategy(MenuActionStrategy):
 
     @override
     def get_label(self) -> str:
-        return "Acessar Forum"
+        return "Forum Geral"
 
     @override
     def execute(self, context: dict[str, Any]) -> None:
         user: Usuario = context['user']
         posts: list[ForumPost] = context['posts']
 
-        self.cabecalho("Acessar Forum")
+        self.cabecalho("Acessar Forum Geral")
 
-        forum.mostrar_feed(posts, user)
+        forum.mostrar_feed(posts, user, "forum")
 
         return None

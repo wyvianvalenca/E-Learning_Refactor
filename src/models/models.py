@@ -222,6 +222,7 @@ class Questionario(Conteudo):
 
 class ForumPost:
     """ STATE PATTERN - Context que delega comportamento para estados """
+
     def __init__(self, titulo: str, conteudo: str, aluno: Student,
                  state: 'PostState'):
         self.titulo: str = titulo
@@ -231,6 +232,10 @@ class ForumPost:
         self.comentarios: list[Comentario] = []
         self.__state: 'PostState' = state
         self.__state.post = self
+
+    @property
+    def state(self) -> str:
+        return type(self.__state).__name__.lower()
 
     def header(self) -> str:
         return f"> [{type(self.__state).__name__.upper()}] {self.titulo.upper()} por {self.aluno.nome}"
@@ -248,11 +253,15 @@ class ForumPost:
         return None
 
     def edit(self) -> None:
-        self.__state.edit()
+        _ = self.__state.edit()
         return None
 
     def render(self) -> None:
         self.__state.render()
+        return None
+
+    def render_draft(self) -> None:
+        self.__state.render_draft()
         return None
 
     def comment(self, author: Usuario) -> None:
@@ -266,6 +275,7 @@ class ForumPost:
 
 class PostState(ABC):
     """ STATE PATTERN - Interface abstrata para estados do ForumPost """
+
     @property
     def post(self) -> ForumPost:
         return self.__post
@@ -285,6 +295,8 @@ class PostState(ABC):
 
     @abstractmethod
     def edit(self) -> bool:
+        """ Default editing behavior (allowed), return boolean indicating if post was edited """
+
         edited: bool = False
 
         new_name: str = questionary.text(
@@ -308,6 +320,11 @@ class PostState(ABC):
 
     @abstractmethod
     def render(self) -> None:
+        self.render_draft()
+
+        return None
+
+    def render_draft(self) -> None:
         text: str = self.post.header() + " " + self.post.edited + "\n" \
             + self.post.conteudo
         panel: Panel = Panel.fit(Text(text=text).wrap(console, width=100))
@@ -356,6 +373,7 @@ class PostState(ABC):
 
 class Draft(PostState):
     """ STATE PATTERN - Estado concreto Draft (rascunho) """
+
     @override
     def publish(self) -> None:
         self.log_change("published")

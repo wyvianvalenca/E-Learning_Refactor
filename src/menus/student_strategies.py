@@ -9,6 +9,7 @@ from src.functions.student_functions import (
     ver_cursos
 )
 from src.menus.strategies import get_users_courses
+from src.functions.forum import mostrar_feed
 
 
 class StudentsCoursesStrategy(MenuActionStrategy):
@@ -16,7 +17,7 @@ class StudentsCoursesStrategy(MenuActionStrategy):
 
     @override
     def get_label(self) -> str:
-        return "Ver Cursos Inscritos"
+        return "Ver Meus Cursos"
 
     @override
     def can_execute(self, context: dict[str, Any]) -> bool:
@@ -27,7 +28,7 @@ class StudentsCoursesStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         student: Student = context['user']
 
-        self.cabecalho(f"Cursos Inscritos de {student.nome}")
+        self.cabecalho(f"Cursos de {student.nome}")
 
         ver_cursos.ver_cursos(student)
 
@@ -39,7 +40,7 @@ class SubscribeStrategy(MenuActionStrategy):
 
     @override
     def get_label(self) -> str:
-        return "Inscrever em Curso"
+        return "Inscrever-se em Novo Curso"
 
     @override
     def can_execute(self, context: dict[str, Any]) -> bool:
@@ -50,7 +51,7 @@ class SubscribeStrategy(MenuActionStrategy):
         student: Student = context['user']
         courses: list[Course] = context['courses']
 
-        self.cabecalho("Inscrever em Curso")
+        self.cabecalho(self.get_label())
 
         inscrever_curso.executar(student, courses)
 
@@ -76,3 +77,27 @@ class AddPostStrategy(MenuActionStrategy):
         self.cabecalho("Forum Geral")
 
         adicionar_post.adicionar_post(student, posts)
+
+        return None
+
+
+class AccessDraftPostsStrategy(MenuActionStrategy):
+    """ STRATEGY PATTERN - Estratégia para ver e editar os rascunhos de posts do aluno """
+
+    @override
+    def get_label(self) -> str:
+        return "Ver Rascunhos de Posts"
+
+    @override
+    def can_execute(self, context: dict[str, Any]) -> bool:
+        return isinstance(context['user'], Student)
+
+    @override
+    def execute(self, context: dict[str, Any]) -> None:
+        student: Student = context['user']
+
+        # Captura somente os rascunhos do aluno
+        drafts: list[ForumPost] = [
+            p for p in student.posts if p.state == "draft"]
+
+        mostrar_feed(drafts, student, "drafts")

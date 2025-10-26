@@ -99,7 +99,7 @@ class CoursePlatformStrategy(MenuActionStrategy):
 
         plataforma_do_curso.executar(student, course)
 
-        return self.retornar()
+        return None
 
 
 class AddContentStrategy(MenuActionStrategy):
@@ -197,7 +197,7 @@ class PerformanceStrategy(MenuActionStrategy):
 
         desempenho_aluno.executar(student, course)
 
-        return self.retornar()
+        return None
 
 
 class ReportStrategy(MenuActionStrategy):

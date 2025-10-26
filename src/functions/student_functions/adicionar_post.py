@@ -21,9 +21,7 @@ def adicionar_post(aluno_logado: Student, posts: list[ForumPost]) -> None:
         state=initial_state
     )
 
-    if state == "Publicar":
-        posts.append(new_post)
-
+    posts.append(new_post)
     aluno_logado.posts.append(new_post)
     console.print("\n[bold green][OK][/] Post criado.\n")
     return None
