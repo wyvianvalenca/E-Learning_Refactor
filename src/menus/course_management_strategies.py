@@ -10,14 +10,11 @@ from src.functions.instructor_functions import (
     gerenciador_conteudo
 )
 from src.functions.student_functions import (
-    # adicionar_post,
+    adicionar_post,
     desempenho_aluno,
     plataforma_do_curso
 )
-# from src.functions import forum
-
-
-# CONCRETE COURSE MANAGEMENT STRATEGIES
+from src.functions import forum
 
 
 class UpdateInfoStrategy(MenuActionStrategy):
@@ -288,9 +285,8 @@ class AddPostCourseStrategy(MenuActionStrategy):
         return None
 
 
-"""
 class CourseForumStrategy(MenuActionStrategy):
-     STRATEGY PATTERN - Estratégia para ver o forum de um curso 
+    """ STRATEGY PATTERN - Estratégia para ver o forum de um curso """
 
     @override
     def get_label(self) -> str:
@@ -303,11 +299,10 @@ class CourseForumStrategy(MenuActionStrategy):
     @override
     def execute(self, context: Any) -> None:
         curso: Course = context['course']
-        curso_forum: list[ForumPost] = context['course'].forum
+        curso_forum: list[ForumPost] = curso.forum
 
         self.cabecalho(f"Forum do Curso [bold]{curso.titulo}[/]")
 
-        forum.mostrar_feed(curso_forum, context['user'])
+        forum.mostrar_feed(curso_forum, context['user'], "published")
 
         return None
-"""

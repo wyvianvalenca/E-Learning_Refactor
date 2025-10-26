@@ -3,7 +3,7 @@
 ## Funcionalidades
 - [x] inserir novas informações do curso (nível e categorias) na visualização dos cursos
 - [x] permitir edição e publicação de posts em rascunho (alunos)
-- [ ] implementar forum do curso para os alunos (visualizar e adicionar post)
+- [x] implementar forum do curso para os alunos (visualizar e adicionar post)
 - [ ] implementar chat
 
 ## Padrões de Projeto

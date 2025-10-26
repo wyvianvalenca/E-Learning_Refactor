@@ -12,7 +12,7 @@ from src.menus.course_management_strategies import (
     AddContentStrategy,
     RemoveContentStrategy,
     ReportStrategy,
-    # CourseForumStrategy
+    CourseForumStrategy
 )
 from src.menus.exit_strategy import ExitStrategy
 
@@ -63,6 +63,7 @@ def course_management_menu(console: Console, cursos: list[Course], usuario: Usua
         .add_strategy(ReportStrategy()) \
         .add_strategy(PerformanceStrategy()) \
         .add_strategy(AddPostCourseStrategy()) \
+        .add_strategy(CourseForumStrategy()) \
         .add_strategy(ExitStrategy()) \
         .run(context)
 

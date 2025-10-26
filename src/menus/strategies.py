@@ -46,6 +46,6 @@ class AccessForumStrategy(MenuActionStrategy):
 
         self.cabecalho("Acessar Forum Geral")
 
-        forum.mostrar_feed(posts, user, "forum")
+        forum.mostrar_feed(posts, user, "published")
 
         return None

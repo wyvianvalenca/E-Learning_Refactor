@@ -127,7 +127,7 @@ def mostrar_feed(posts: list[ForumPost], user: Usuario, type: str) -> None:
     while index < len(posts):
         post: ForumPost = posts[index]
 
-        if type == "forum":
+        if type == "published":
             index = mostrar_post(index, post, user)
 
         elif type == "drafts":
