@@ -23,6 +23,7 @@ from src.functions.instructor_functions.content_validation import (
     ValidationResult
 )
 from src.functions.instructor_functions.magic_validation import MagicPythonValidationAdapter
+from src.validations import is_positive_number
 
 
 class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
@@ -79,7 +80,7 @@ class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
         duracao: str = questionary.text(
             "Informe a duração do conteúdo (em minutos):",
-            validate=lambda text: True if int(text) > 0 else "A duração precisa ser positiva").ask()
+            validate=is_positive_number).ask()
 
         caminho: str = questionary.text(
             "Informe o caminho para o arquivo:").ask()
@@ -120,7 +121,7 @@ class GerenciadorTexto(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
         duracao: str = questionary.text(
             "Informe a duração do conteúdo (em minutos):",
-            validate=lambda text: True if int(text) > 0 else "A duração precisa ser positiva").ask()
+            validate=is_positive_number).ask()
 
         texto: str = questionary.text(
             "Digite o texto completo:",
@@ -187,7 +188,7 @@ class GerenciadorQuestionario(GerenciadorConteudo, metaclass=SingletonABCMeta):
 
         duracao: str = questionary.text(
             "Informe a duração do conteúdo (em minutos):",
-            validate=lambda text: True if int(text) > 0 else "A duração precisa ser positiva").ask()
+            validate=is_positive_number).ask()
 
         # criar quiz
         quiz: Quiz = self.criar_quiz()
