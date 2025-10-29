@@ -13,4 +13,5 @@
 - [x] implementar state no forum (open, closed, deleted)
 - [x] implementar chain of responsability para criação de conteudos
 - [x] implementar adapter
-- [ ] definir 2 padrões estruturais para adicionar
+- [x] implementar decorator
+- [ ] definir 1 padrão estrutural para adicionar
