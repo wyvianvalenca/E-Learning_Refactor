@@ -1,10 +1,10 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from typing import Any
 
 from src.menus.strategy_interface import MenuActionStrategy
 
 
-class BaseDecoratorStrategy(MenuActionStrategy):
+class BaseDecoratorStrategy(MenuActionStrategy, ABC):
     _strategy: MenuActionStrategy
 
     def __init__(self, component: MenuActionStrategy):

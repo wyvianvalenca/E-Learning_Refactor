@@ -8,6 +8,7 @@ from src.utils import clear_screen, header
 
 console = Console()
 logs = "logs.txt"
+open(logs, 'w').close()
 
 
 def inicial():

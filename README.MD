@@ -95,7 +95,7 @@ Este projeto implementa **8 padrões de projeto** para demonstrar conceitos avan
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
 
-### 🔧 Estruturais (1/3)
+### 🔧 Estruturais (2/3)
 
 #### **Adapter** - `src/functions/instructor_functions/magic_validation.py`
 - **Problema**: Biblioteca `python-magic` (usada para validar o tipo real de um arquivo) tem interface incompatível com a interface de validador do projeto (`Handler`) 
@@ -105,6 +105,16 @@ Este projeto implementa **8 padrões de projeto** para demonstrar conceitos avan
   - Adaptee: `SimpleMagicValidation` (classe criada para usar a biblioteca externa)
   - Adapter: `MagicPythonValidationAdapter` (conecta interfaces)
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo externo aos seus cursos
+
+
+#### **Decorator** - `src/logging/strategy_logging_decorator`
+- **Problema**: Adicionar logs das opções de menu seleciondas pelos usuários sem alterar cada uma das classes de Strategy
+- **Solução**: Criar um decorador para guardar o opção selecionada pelo usuário e depois executar a função
+- **Implementação**:
+  - Component: `MenuActionStrategy` (interface para todas as opções de menu)
+  - Concrete Components: Todas as opções de menu (classes que herdam `MenuActionStrategy`)
+  - Base Decorator: `BaseDecoratorStrategy`
+  - Concrete Decorator: `LoggingDecoratorStrategy`
 
 ## Estrutura do Código
 

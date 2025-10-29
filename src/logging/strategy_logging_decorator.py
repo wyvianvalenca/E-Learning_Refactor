@@ -1,13 +1,17 @@
+from typing import Any
 from typing_extensions import override
 
 from src.inicial import logs
+from src.models.models import Usuario
 from src.logging.base_decorator_strategy import BaseDecoratorStrategy
 
 
 class LoggingDecoratorStrategy(BaseDecoratorStrategy):
     @override
-    def execute(self, context: dict[str, str]) -> None:
+    def execute(self, context: dict[str, Any]) -> None:
+        user: Usuario = context['user']
         with open(logs, "a") as log_file:
-            log_file.write(f"{context['user']} choose {type(self.strategy).__name__}\n")
+            _ = log_file.write(f"{user.nome} choose {
+                               type(self.strategy).__name__}\n")
 
         self.strategy.execute(context)
