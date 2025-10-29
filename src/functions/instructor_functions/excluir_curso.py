@@ -13,8 +13,7 @@ def executar(instrutor, cursos):
         return
 
     try:
-        confirmacao = input(f"Tem certeza que deseja excluir o curso '{
-                            curso_para_excluir.titulo}'? (s/n): ").lower()
+        confirmacao = input(f"Tem certeza que deseja excluir o curso '{curso_para_excluir.titulo}'? (s/n): ").lower()
 
         if confirmacao == 's':
             # Remove o curso da lista geral e da lista pessoal do instrutor

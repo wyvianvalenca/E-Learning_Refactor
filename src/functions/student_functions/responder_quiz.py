@@ -24,8 +24,7 @@ def executar(conteudo_quiz):
                 corretas += 1
             else:
                 resposta_certa_texto = pergunta_atual.alternativas[pergunta_atual.indiceResposta]
-                print(f"Resposta Incorreta. A resposta certa era: '{
-                      resposta_certa_texto}'")
+                print(f"Resposta Incorreta. A resposta certa era: '{resposta_certa_texto}'")
         except (ValueError, IndexError):
             print("Resposta inválida.")
 

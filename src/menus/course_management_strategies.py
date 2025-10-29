@@ -36,8 +36,7 @@ class UpdateInfoStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         curso: Course = context['course']
 
-        self.cabecalho(f"Atualizar informações do Curso [bold]{
-                       curso.titulo}[/]")
+        self.cabecalho(f"Atualizar informações do Curso [bold]{curso.titulo}[/]")
         novo_nome: str = questionary.text(
             "Digite o novo nome (ou <Enter> para manter):").ask()
 
@@ -193,8 +192,7 @@ class PerformanceStrategy(MenuActionStrategy):
         student: Student = context['user']
         course: Course = context['course']
 
-        self.cabecalho(f"Desempenho de {student.nome} no Curso [bold]{
-                       course.titulo}[/]")
+        self.cabecalho(f"Desempenho de {student.nome} no Curso [bold]{course.titulo}[/]")
 
         desempenho_aluno.executar(student, course)
 
@@ -257,8 +255,7 @@ class ReportStrategy(MenuActionStrategy):
         print("=" * 45)
         print(f"Total de Alunos Inscritos: {total_alunos}")
         print(f"Progresso Médio da Turma: {progresso_medio_turma:.1f}%")
-        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({
-              (total_concluintes / total_alunos) * 100:.1f}%)")
+        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({(total_concluintes / total_alunos) * 100:.1f}%)")
         print("=" * 45)
 
         self.retornar()
@@ -281,8 +278,7 @@ class AddPostCourseStrategy(MenuActionStrategy):
         usuario: Student = context['user']
         curso_forum: list[ForumPost] = context['course'].forum
 
-        self.cabecalho(f"Adicionar Post no Forum do Curso [bold]{
-                       curso.titulo}[/]")
+        self.cabecalho(f"Adicionar Post no Forum do Curso [bold]{curso.titulo}[/]")
 
         adicionar_post.adicionar_post(usuario, curso_forum)
 

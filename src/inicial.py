@@ -7,6 +7,7 @@ from src.data_base import alunos, cursos, instrutores, posts
 from src.utils import clear_screen, header
 
 console = Console()
+logs = "logs.txt"
 
 
 def inicial():

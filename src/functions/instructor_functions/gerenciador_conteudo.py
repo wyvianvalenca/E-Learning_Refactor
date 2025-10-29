@@ -42,6 +42,7 @@ class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
         pass
 
     def adicionar(self, curso_selecionado: Course) -> None:
+        """ TEMPLATE METHOD - Algoritmo de adição de cursos padrão que chama passos variáveis (factory_method e validation_chain) """
         novo_conteudo: Conteudo = self.factory_method()
 
         self.console.print("\nIniciando validação do conteúdo...\n")

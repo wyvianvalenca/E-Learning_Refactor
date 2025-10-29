@@ -1,5 +1,6 @@
 from src.data_base import posts
 from src.inicial import console
+from src.logging.strategy_logging_decorator import LoggingDecoratorStrategy
 from src.models.models import Course, Instructor
 from src.menus.menu_manager import MenuManager
 from src.menus.instructor_strategies import (
@@ -31,9 +32,9 @@ def instructor_menu(instrutor: Instructor, cursos: list[Course]) -> None:
 
     # Adiciona as estratégias na ordem desejada e roda o menu
     menu.add_strategy(ListCoursesStrategy()) \
-        .add_strategy(AddCourseStrategy()) \
+        .add_strategy(LoggingDecoratorStrategy(AddCourseStrategy())) \
         .add_strategy(ManageCourseStrategy()) \
-        .add_strategy(DeleteCourseStrategy()) \
+        .add_strategy(LoggingDecoratorStrategy(DeleteCourseStrategy())) \
         .add_strategy(AccessForumStrategy()) \
         .add_strategy(ExitStrategy()) \
         .run(context)

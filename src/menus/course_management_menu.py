@@ -1,6 +1,7 @@
 import questionary
 from rich.console import Console
 
+from src.logging.strategy_logging_decorator import LoggingDecoratorStrategy
 from src.models.models import Usuario, Course
 from src.menus.menu_manager import MenuManager
 from src.menus.course_management_strategies import (
@@ -55,14 +56,14 @@ def course_management_menu(console: Console, cursos: list[Course], usuario: Usua
     )
 
     # Adiciona as estratégias na ordem desejada e roda o menu
-    menu.add_strategy(UpdateInfoStrategy()) \
+    menu.add_strategy(LoggingDecoratorStrategy(UpdateInfoStrategy())) \
         .add_strategy(ViewContentStrategy()) \
         .add_strategy(CoursePlatformStrategy()) \
-        .add_strategy(AddContentStrategy()) \
-        .add_strategy(RemoveContentStrategy()) \
+        .add_strategy(LoggingDecoratorStrategy(AddContentStrategy())) \
+        .add_strategy(LoggingDecoratorStrategy(RemoveContentStrategy())) \
         .add_strategy(ReportStrategy()) \
         .add_strategy(PerformanceStrategy()) \
-        .add_strategy(AddPostCourseStrategy()) \
+        .add_strategy(LoggingDecoratorStrategy(AddPostCourseStrategy())) \
         .add_strategy(CourseForumStrategy()) \
         .add_strategy(ExitStrategy()) \
         .run(context)

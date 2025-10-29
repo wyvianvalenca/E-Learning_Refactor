@@ -1,6 +1,7 @@
 from typing import Any
 
 from src.inicial import console
+from src.logging.strategy_logging_decorator import LoggingDecoratorStrategy
 from src.models.models import Student, Course, ForumPost
 from src.menus.menu_manager import MenuManager
 from src.menus.student_strategies import (
@@ -35,9 +36,9 @@ def student_menu(student: Student,
 
     # Adiciona as estrategias e roda o menu
     menu.add_strategy(StudentsCoursesStrategy()) \
-        .add_strategy(SubscribeStrategy()) \
+        .add_strategy(LoggingDecoratorStrategy(SubscribeStrategy())) \
         .add_strategy(ManageCourseStrategy()) \
-        .add_strategy(AddPostStrategy()) \
+        .add_strategy(LoggingDecoratorStrategy(AddPostStrategy())) \
         .add_strategy(AccessForumStrategy()) \
         .add_strategy(AccessDraftPostsStrategy()) \
         .add_strategy(ExitStrategy()) \

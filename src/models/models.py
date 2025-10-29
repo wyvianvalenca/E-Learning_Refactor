@@ -363,8 +363,7 @@ class PostState(ABC):
 
     def log_blocked_action(self, action: str) -> None:
         console.print(
-            f"\nVocê não pode {action} um post com estado = {
-                type(self).__name__.upper()}"
+            f"\nVocê não pode {action} um post com estado = {type(self).__name__.upper()}"
         )
 
         return None

@@ -30,8 +30,7 @@ def executar(aluno_logado: Student, curso: Course):
     print("\n" + "="*45)
     print(f"  RELATÓRIO DE DESEMPENHO: {curso.titulo.upper()}")
     print("="*45)
-    print(f"Progresso Geral: {vistos_que_ainda_existem} de {
-          total_conteudos_atuais} conteúdos concluídos.")
+    print(f"Progresso Geral: {vistos_que_ainda_existem} de {total_conteudos_atuais} conteúdos concluídos.")
     print(f"Porcentagem: {progresso_percent:.1f}%")
 
     if curso_completo:

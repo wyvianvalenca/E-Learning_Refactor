@@ -65,23 +65,20 @@ class TitleLengthValidation(Handler):
         if title_size < self.__min_size:
             return ValidationResult(
                 is_valid=False,
-                message=f"O título tem menos do que {
-                    self.__min_size} caracteres.",
+                message=f"O título tem menos do que {self.__min_size} caracteres.",
                 validator_name=self.get_name()
             )
 
         if title_size > self.__max_size:
             return ValidationResult(
                 is_valid=False,
-                message=f"O título tem mais do que {
-                    self.__max_size} caracteres.",
+                message=f"O título tem mais do que {self.__max_size} caracteres.",
                 validator_name=self.get_name()
             )
 
         console.print(ValidationResult(
             is_valid=True,
-            message=f"O título do conteúdo está entre {
-                self.__min_size} e {self.__max_size}!",
+            message=f"O título do conteúdo está entre {self.__min_size} e {self.__max_size}!",
             validator_name=self.get_name()
         ))
 
@@ -142,15 +139,13 @@ class FileFormatValidation(Handler):
         if file_extension not in self.valid_formats[content.tipo]:
             return ValidationResult(
                 is_valid=False,
-                message=f"Extensão {
-                    file_extension} não suportada para conteúdos do tipo {content.tipo}",
+                message=f"Extensão {file_extension} não suportada para conteúdos do tipo {content.tipo}",
                 validator_name=self.get_name()
             )
 
         console.print(ValidationResult(
             is_valid=True,
-            message=f"O formato {
-                file_extension} é válido para o tipo {content.tipo}.",
+            message=f"O formato {file_extension} é válido para o tipo {content.tipo}.",
             validator_name=self.get_name()
         ))
 
