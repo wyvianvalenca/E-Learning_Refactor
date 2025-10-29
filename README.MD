@@ -28,7 +28,7 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 
 ## Padrões de Projeto Implementados
 
-Este projeto implementa **8 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
+Este projeto implementa **9 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
 
 ### 📦 Criacionais (3/3)
 
