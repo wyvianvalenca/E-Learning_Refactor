@@ -124,22 +124,73 @@ O projeto foi organizado de forma modular para seguir o **Princípio da Responsa
 / (pasta raiz)
 ├── requirements.txt
 ├── main.py
-├── inicial.py
-├── dados_iniciais.py
-├── data_base.py
-├── singleton_metaclass.py
-├── models/
-│   └── models.py
-├── aluno/
-│   ├── funcoes_aluno.py
-│   └── ... (um arquivo para cada ação do aluno)
-├── instrutor/
-│   ├── funcoes_instrutor.py
-│   └── ... (um arquivo para cada ação do instrutor)
-└── content/
-    ├── video.mp4
-    ├── pdf.pdf
-    └── ... (arquivos de conteudo externo)
+├── src/
+│   ├── __init__.py
+│   ├── inicial.py
+│   ├── dados_iniciais.py
+│   ├── data_base.py
+│   ├── singleton_metaclass.py
+│   ├── utils.py
+│   ├── validations.py
+│   ├── print_courses.py
+│   │
+│   ├── models/                  # Modelos de dados organizados por domínio
+│   │   ├── __init__.py
+│   │   ├── user.py             # Usuario (ABC), Student, Instructor
+│   │   ├── course.py           # Course
+│   │   ├── quiz.py             # PerguntaQuiz, Quiz
+│   │   ├── content.py          # Conteudo (ABC), Externo, Texto, Questionario
+│   │   ├── forum.py            # ForumPost, PostState (ABC), Draft, Published, Closed, Comentario
+│   │   └── chat.py             # Mensagem, Chat
+│   │
+│   ├── functions/              # Funções e lógica de negócio
+│   │   ├── access_forum.py
+│   │   ├── exit_strategy.py
+│   │   ├── forum.py
+│   │   ├── forum_post_states.py
+│   │   ├── manage_course.py
+│   │   │
+│   │   ├── instructor_functions/
+│   │   │   ├── content_validation.py
+│   │   │   ├── course_builder.py
+│   │   │   ├── criar_curso.py
+│   │   │   ├── excluir_curso.py
+│   │   │   ├── gerenciador_conteudo.py
+│   │   │   ├── listar_cursos.py
+│   │   │   └── magic_validation.py
+│   │   │
+│   │   └── student_functions/
+│   │       ├── adicionar_post.py
+│   │       ├── certificado.py
+│   │       ├── desempenho_aluno.py
+│   │       ├── inscrever_curso.py
+│   │       ├── pagamento.py
+│   │       ├── plataforma_do_curso.py
+│   │       ├── responder_quiz.py
+│   │       └── ver_cursos.py
+│   │
+│   ├── menus/                  # Menus e estratégias do sistema
+│   │   ├── __init__.py
+│   │   ├── menu_manager.py
+│   │   ├── strategy_interface.py
+│   │   ├── instructor_menu.py
+│   │   ├── instructor_strategies.py
+│   │   ├── student_menu.py
+│   │   ├── student_strategies.py
+│   │   ├── course_management_menu.py
+│   │   └── course_management_strategies.py
+│   │
+│   └── logging/                # Sistema de logging
+│       ├── __init__.py
+│       ├── base_decorator_strategy.py
+│       └── strategy_logging_decorator.py
+│
+├── content/                   # Arquivos de conteúdo externo
+│   ├── video.mp4
+│   └── pdf.pdf
+│
+└── certificados/              # Certificados gerados
+    └── ... (arquivos .txt)
 ```
 
 ---
