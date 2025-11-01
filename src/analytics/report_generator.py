@@ -1,9 +1,8 @@
 from rich.console import Console
 
-from src.analytics.course_analytics_calculator import CourseAnalytics
-from src.models.course import Course
+from src.models import Course
 from src.singleton_metaclass import SingletonMeta
-
+from src.analytics.course_analytics_calculator import CourseAnalytics
 from src.analytics.student_progress_calculator import ProgressMetrics
 
 
