@@ -1,23 +1,25 @@
+from __future__ import annotations
+
 from typing_extensions import override
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
 
 import questionary
 
-from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
 
 from src.inicial import console
 from src.validations import is_non_empty
 
-if TYPE_CHECKING:
-    from src.models.user import Usuario, Student
+from src.models import (
+    Usuario,
+    Student
+)
 
 
 class Comentario:
     """Classe que representa um comentário em um post do fórum"""
-    
+
     def __init__(self, pai: 'ForumPost', conteudo: str, autor: 'Usuario'):
         self.pai: 'ForumPost' = pai
         self.conteudo: str = conteudo
@@ -122,7 +124,8 @@ class PostState(ABC):
 
     def log_blocked_action(self, action: str) -> None:
         console.print(
-            f"\nVocê não pode {action} um post com estado = {type(self).__name__.upper()}"
+            f"\nVocê não pode {action} um post com estado = {
+                type(self).__name__.upper()}"
         )
 
         return None
@@ -171,7 +174,7 @@ class Draft(PostState):
 
 class Published(PostState):
     """STATE PATTERN - Estado concreto Published (publicado)"""
-    
+
     @override
     def publish(self) -> None:
         """Can't publish what's already published"""
@@ -208,7 +211,7 @@ class Published(PostState):
 
 class Closed(PostState):
     """STATE PATTERN - Estado concreto Closed (fechado)"""
-    
+
     @override
     def publish(self) -> None:
         """Can't publish a closed post"""

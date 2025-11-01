@@ -1,14 +1,16 @@
-from typing import TYPE_CHECKING
+from __future__ import annotations
 
-if TYPE_CHECKING:
-    from src.models.user import Instructor, Student
-    from src.models.content import Conteudo
-    from src.models.forum import ForumPost
+from src.models import (
+    Instructor,
+    Student,
+    Conteudo,
+    ForumPost
+)
 
 
 class Course:
     """Classe que representa um curso"""
-    
+
     def __init__(self, titulo: str, descricao: str,
                  instrutor: 'Instructor',
                  conteudos: list['Conteudo'],

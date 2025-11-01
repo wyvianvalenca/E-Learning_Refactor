@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from typing_extensions import override
 
 
 class PerguntaQuiz:
     """Classe que representa uma pergunta de quiz"""
-    
+
     def __init__(self, pergunta: str,
                  alternativas: list[str],
                  resposta: str):
@@ -21,7 +23,7 @@ class PerguntaQuiz:
 
 class Quiz:
     """Classe que representa um quiz completo"""
-    
+
     def __init__(self, titulo: str, perguntas: list[PerguntaQuiz]):
         self.titulo: str = titulo
         self.perguntas: list[PerguntaQuiz] = perguntas

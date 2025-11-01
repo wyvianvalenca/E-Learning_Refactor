@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import sys
 import subprocess
@@ -11,17 +13,12 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from src.models.quiz import Quiz
-
-from src.inicial import console
+from src.models import Quiz
 
 
 class Conteudo(ABC):
     """Classe abstrata que representa um conteúdo do curso"""
-    
+
     def __init__(self, console: Console,
                  titulo: str, tipo: str, duracao_minutos: int):
         self.console: Console = console
@@ -53,7 +50,7 @@ class Conteudo(ABC):
 
 class Externo(Conteudo):
     """Classe que representa conteúdo externo (PDF, vídeo, etc.)"""
-    
+
     def __init__(self, console: Console,
                  titulo: str, tipo: str, duracao: int, caminho: str) -> None:
         super().__init__(console, titulo, tipo, duracao)
@@ -67,7 +64,7 @@ class Externo(Conteudo):
 
 class Texto(Conteudo):
     """Classe que representa conteúdo de texto"""
-    
+
     def __init__(self, console: Console,
                  titulo: str, tipo: str, duracao: int, texto: str) -> None:
         super().__init__(console, titulo, tipo, duracao)
@@ -81,7 +78,7 @@ class Texto(Conteudo):
 
 class Questionario(Conteudo):
     """Classe que representa um questionário/quiz"""
-    
+
     def __init__(self, console: Console,
                  titulo: str, tipo: str, duracao: int, quiz: 'Quiz') -> None:
         super().__init__(console, titulo, tipo, duracao)

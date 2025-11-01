@@ -1,16 +1,18 @@
+from __future__ import annotations
+
 from typing_extensions import override
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from src.models.course import Course
-    from src.models.forum import ForumPost
-    from src.models.chat import Chat
+from src.models import (
+    Course,
+    ForumPost,
+    Chat
+)
 
 
 class Usuario(ABC):  # abstract base class
     """Classe base abstrata para usuários do sistema"""
-    
+
     def __init__(self, nome: str, senha: str):
         self.nome: str = nome
         self.__senha: str = senha  # senha está encapsulada
@@ -23,7 +25,7 @@ class Usuario(ABC):  # abstract base class
 
 class Student(Usuario):
     """Classe que representa um estudante"""
-    
+
     def __init__(self, nome: str, senha: str):
         super().__init__(nome, senha)  # chama o init da classe usuario
         self.cursos_inscritos: list['Course'] = []
@@ -39,7 +41,7 @@ class Student(Usuario):
 
 class Instructor(Usuario):
     """Classe que representa um instrutor"""
-    
+
     def __init__(self, nome: str, senha: str):
         super().__init__(nome, senha)  # aqui tbm chama o init da classe usuario
         self.cursos: list['Course'] = []
