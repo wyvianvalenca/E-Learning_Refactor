@@ -3,3 +3,4 @@ __pycache__/
 alunos/__pycache__/
 instrutor/__pycache__/
 model/__pycache__/
+logs.txt

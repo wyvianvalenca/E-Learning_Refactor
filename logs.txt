@@ -1,2 +1,0 @@
-Carlos choose AddCourseStrategy
-Larissa choose AddPostStrategy

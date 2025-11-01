@@ -15,10 +15,10 @@ from src.menus.strategy_interface import MenuActionStrategy
 from src.functions.instructor_functions import gerenciador_conteudo
 from src.functions.student_functions import (
     adicionar_post,
-    desempenho_aluno,
     plataforma_do_curso
 )
 from src.functions import forum
+from src.analytics import AnalyticsFacade
 
 
 class UpdateInfoStrategy(MenuActionStrategy):
@@ -36,7 +36,8 @@ class UpdateInfoStrategy(MenuActionStrategy):
     def execute(self, context: dict[str, Any]) -> None:
         curso: Course = context['course']
 
-        self.cabecalho(f"Atualizar informações do Curso [bold]{curso.titulo}[/]")
+        self.cabecalho(f"Atualizar informações do Curso [bold]{
+                       curso.titulo}[/]")
         novo_nome: str = questionary.text(
             "Digite o novo nome (ou <Enter> para manter):").ask()
 
@@ -191,12 +192,14 @@ class PerformanceStrategy(MenuActionStrategy):
     def execute(self, context: Any) -> None:
         student: Student = context['user']
         course: Course = context['course']
+        console: Console = context['console']
 
-        self.cabecalho(f"Desempenho de {student.nome} no Curso [bold]{course.titulo}[/]")
+        self.cabecalho(f"Desempenho de {student.nome} no Curso [bold]{
+                       course.titulo}[/]")
 
-        desempenho_aluno.executar(student, course)
+        AnalyticsFacade(console).student_performance(student, course)
 
-        return None
+        return self.retornar()
 
 
 class ReportStrategy(MenuActionStrategy):
@@ -213,52 +216,12 @@ class ReportStrategy(MenuActionStrategy):
 
     @override
     def execute(self, context: Any) -> None:
-        curso: Course = context['course']
-        alunos_curso: list[Student] = curso.students
-        total_alunos: int = len(alunos_curso)
+        course: Course = context['course']
+        console: Console = context['console']
 
-        self.cabecalho(f"Relatórios da Turma [bold]{curso.titulo}[/]")
+        AnalyticsFacade(console).course_report(course)
 
-        total_concluintes = 0
-        soma_percentuais_progresso = 0
-
-        titulos_obrigatorios_do_curso = {c.titulo for c in curso.conteudos}
-        total_conteudos_curso = len(titulos_obrigatorios_do_curso)
-
-        for aluno in alunos_curso:
-            if curso.titulo in aluno.progresso:
-                titulos_vistos_pelo_aluno = set(aluno.progresso[curso.titulo])
-            else:
-                titulos_vistos_pelo_aluno = set()
-
-            # issubset verifica se todos os conteúdos foram vistos pelo aluno
-            # ele verifica da seguinte forma: todos os itens do primeiro conjunto (conteúdos do curso)
-            # estão presentes no segundo conjunto (conteúdos vistos pelo aluno)
-            aluno_concluiu = titulos_obrigatorios_do_curso.issubset(
-                titulos_vistos_pelo_aluno)
-
-            if aluno_concluiu:
-                total_concluintes += 1
-                percentual_aluno = 100.0
-            else:
-                vistos_que_ainda_existem = len(
-                    titulos_obrigatorios_do_curso.intersection(titulos_vistos_pelo_aluno))
-                percentual_aluno = (vistos_que_ainda_existem / total_conteudos_curso) * \
-                    100 if total_conteudos_curso > 0 else 0
-
-            soma_percentuais_progresso += percentual_aluno
-
-        progresso_medio_turma = soma_percentuais_progresso / total_alunos
-
-        print("\n" + "=" * 45)
-        print(f"  RELATÓRIO DO CURSO: {curso.titulo.upper()}")
-        print("=" * 45)
-        print(f"Total de Alunos Inscritos: {total_alunos}")
-        print(f"Progresso Médio da Turma: {progresso_medio_turma:.1f}%")
-        print(f"Alunos que Concluíram o Curso: {total_concluintes} ({(total_concluintes / total_alunos) * 100:.1f}%)")
-        print("=" * 45)
-
-        self.retornar()
+        return self.retornar()
 
 
 class AddPostCourseStrategy(MenuActionStrategy):
@@ -278,7 +241,8 @@ class AddPostCourseStrategy(MenuActionStrategy):
         usuario: Student = context['user']
         curso_forum: list[ForumPost] = context['course'].forum
 
-        self.cabecalho(f"Adicionar Post no Forum do Curso [bold]{curso.titulo}[/]")
+        self.cabecalho(f"Adicionar Post no Forum do Curso [bold]{
+                       curso.titulo}[/]")
 
         adicionar_post.adicionar_post(usuario, curso_forum)
 
