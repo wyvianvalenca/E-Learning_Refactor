@@ -1,4 +1,4 @@
-from src.models.models import (
+from src.models import (
     Instructor,
     Conteudo,
     Student,

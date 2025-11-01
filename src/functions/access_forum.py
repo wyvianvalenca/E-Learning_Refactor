@@ -1,7 +1,7 @@
 from typing import Any
 from typing_extensions import override
 
-from src.models.models import (
+from src.models import (
     ForumPost,
     Usuario
 )

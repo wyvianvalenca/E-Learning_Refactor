@@ -5,7 +5,7 @@ import questionary
 from rich.console import Console
 
 from src.singleton_metaclass import SingletonABCMeta
-from src.models.models import (
+from src.models import (
     Course,
     Conteudo,
     Externo,

@@ -5,6 +5,8 @@ from src.menus.strategy_interface import MenuActionStrategy
 
 
 class BaseDecoratorStrategy(MenuActionStrategy, ABC):
+    """ DECORATOR PATTERN - Base para decoradores de estratégias de menu """
+
     _strategy: MenuActionStrategy
 
     def __init__(self, component: MenuActionStrategy):

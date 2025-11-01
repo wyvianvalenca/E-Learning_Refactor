@@ -2,11 +2,13 @@ from typing import Any
 from typing_extensions import override
 
 from src.inicial import logs
-from src.models.models import Usuario
+from src.models import Usuario
 from src.logging.base_decorator_strategy import BaseDecoratorStrategy
 
 
 class LoggingDecoratorStrategy(BaseDecoratorStrategy):
+    """ DECORATOR PATTERN - Decorador para adicionar logs das opções de menu seleciondas pelos usuários """
+
     @override
     def execute(self, context: dict[str, Any]) -> None:
         user: Usuario = context['user']

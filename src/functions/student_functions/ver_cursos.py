@@ -3,7 +3,7 @@
     função que permite a um aluno ver os cursos nos quais está inscrito
 '''
 
-from src.models.models import Student
+from src.models import Student
 from src.print_courses import print_courses
 
 

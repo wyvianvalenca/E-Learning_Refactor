@@ -2,7 +2,7 @@ from typing import Any
 
 from src.inicial import console
 from src.logging.strategy_logging_decorator import LoggingDecoratorStrategy
-from src.models.models import Student, Course, ForumPost
+from src.models import Student, Course, ForumPost
 from src.menus.menu_manager import MenuManager
 from src.menus.student_strategies import (
     AccessDraftPostsStrategy,

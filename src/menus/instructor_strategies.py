@@ -1,7 +1,7 @@
 from typing import Any
 from typing_extensions import override
 
-from src.models.models import Instructor, Course, ForumPost
+from src.models import Instructor, Course, ForumPost
 from src.menus.strategy_interface import MenuActionStrategy
 from src.functions.instructor_functions import (
     listar_cursos,

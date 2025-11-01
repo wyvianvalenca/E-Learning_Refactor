@@ -2,7 +2,7 @@
 import questionary
 
 from src.validations import is_non_empty, is_positive_number
-from src.models.models import Course, Instructor
+from src.models import Course, Instructor
 from src.functions.instructor_functions.course_builder import CourseBuilder
 
 """

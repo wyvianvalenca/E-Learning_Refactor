@@ -3,7 +3,7 @@ from typing_extensions import override
 from pathlib import Path
 
 from src.inicial import console
-from src.models.models import Conteudo, Externo
+from src.models import Conteudo, Externo
 
 
 class ValidationResult:

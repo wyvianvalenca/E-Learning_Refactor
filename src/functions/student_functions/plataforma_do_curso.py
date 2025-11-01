@@ -1,5 +1,5 @@
 from src.functions.student_functions import certificado
-from src.models.models import Course, Student
+from src.models import Course, Student
 
 
 '''

@@ -4,7 +4,7 @@ from typing_extensions import override
 import questionary
 from rich.console import Console
 
-from src.models.models import (
+from src.models import (
     Course,
     Conteudo,
     ForumPost,

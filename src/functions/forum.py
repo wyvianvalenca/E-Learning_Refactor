@@ -1,7 +1,7 @@
 import questionary
 
 from src.inicial import console
-from src.models.models import ForumPost, Instructor, Usuario
+from src.models import ForumPost, Instructor, Usuario
 
 
 def nada(post: ForumPost, user: Usuario) -> None:

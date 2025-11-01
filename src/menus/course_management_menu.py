@@ -2,7 +2,7 @@ import questionary
 from rich.console import Console
 
 from src.logging.strategy_logging_decorator import LoggingDecoratorStrategy
-from src.models.models import Usuario, Course
+from src.models import Usuario, Course
 from src.menus.menu_manager import MenuManager
 from src.menus.course_management_strategies import (
     AddPostCourseStrategy,

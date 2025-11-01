@@ -1,7 +1,7 @@
 from src.inicial import console
 from src.data_base import posts
 from src.functions.instructor_functions.course_builder import CourseBuilder
-from src.models.models import (
+from src.models import (
     Course,
     Student,
     Instructor,

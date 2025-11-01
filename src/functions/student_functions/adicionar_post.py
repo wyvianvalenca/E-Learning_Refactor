@@ -1,7 +1,7 @@
 import questionary
 
 from src.inicial import console
-from src.models.models import ForumPost, Student, Draft, PostState, Published
+from src.models import ForumPost, Student, Draft, PostState, Published
 
 
 def adicionar_post(aluno_logado: Student, posts: list[ForumPost]) -> None:

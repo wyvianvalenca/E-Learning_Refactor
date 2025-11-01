@@ -3,7 +3,7 @@ import os
 from typing_extensions import override
 
 from src.inicial import console
-from src.models.models import (
+from src.models import (
     Conteudo,
     Externo
 )

@@ -1,7 +1,7 @@
 """
     mostra um relatório de desempenho do aluno.
 """
-from src.models.models import Course, Student
+from src.models import Course, Student
 
 
 def executar(aluno_logado: Student, curso: Course):

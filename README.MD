@@ -69,7 +69,7 @@ Este projeto implementa **9 padrões de projeto** para demonstrar conceitos avan
   - Strategy concretas: Classes de estratégia em `strategies.py`, `exit_strategy.py`, `course_management_strategies.py`, `instructor_strategies.py` e `student_strategies.py`
 - **Uso no projeto**: Todos os menus do sistema
 
-#### **State** - `src/models/models.py`
+#### **State** - `src/models/forum.py`
 - **Problema**: Comportamento de posts do fórum muda drasticamente baseado no estado (Draft, Published, Closed)
 - **Solução**: Interface para padronizar os estados do post, permitindo diferentes comportamentos para métodos de comportamento do post
 - **Implementação**: 
