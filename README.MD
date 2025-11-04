@@ -28,7 +28,7 @@ O sistema foi desenvolvido para cobrir os requisitos essenciais de uma plataform
 
 ## Padrões de Projeto Implementados
 
-Este projeto implementa **9 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
+Este projeto implementa **10 padrões de projeto** para demonstrar conceitos avançados de **Projeto de Software** e melhorar a qualidade do código. Cada padrão foi aplicado em contextos reais e práticos do sistema de E-Learning.
 
 ### 📦 Criacionais (3/3)
 
@@ -95,7 +95,7 @@ Este projeto implementa **9 padrões de projeto** para demonstrar conceitos avan
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
 
-### 🔧 Estruturais (2/3)
+### 🔧 Estruturais (3/3)
 
 #### **Adapter** - `src/functions/instructor_functions/magic_validation.py`
 - **Problema**: Biblioteca `python-magic` (usada para validar o tipo real de um arquivo) tem interface incompatível com a interface de validador do projeto (`Handler`) 
@@ -115,10 +115,17 @@ Este projeto implementa **9 padrões de projeto** para demonstrar conceitos avan
   - Concrete Components: Todas as opções de menu (classes que herdam `MenuActionStrategy`)
   - Base Decorator: `BaseDecoratorStrategy`
   - Concrete Decorator: `LoggingDecoratorStrategy`
+- **Uso no projeto**: Quando o usuário seleciona opções que podem alterar os dados do sistema
+
+#### **Facade** - `src/analytics`
+- **Problema**: Subssistema de geração de relatórios complexo
+- **Solução**: Criar uma fachada que simplifique a interação com o subssistema
+- **Implementação**:
+  - Facade: `AnalyticsFacade`
+  - Subssistemas complexos: `CourseAnalyticsCalculator`, `StudentProgressClaculator`, `RerportGenerator`
+- **Uso no projeto**: Ao gerar relatórios do curso e individuais (para aluno)
 
 ## Estrutura do Código
-
-O projeto foi organizado de forma modular para seguir o **Princípio da Responsabilidade Única**, onde cada arquivo possui uma responsabilidade clara.
 
 ```
 / (pasta raiz)
@@ -134,14 +141,8 @@ O projeto foi organizado de forma modular para seguir o **Princípio da Responsa
 │   ├── validations.py
 │   ├── print_courses.py
 │   │
-│   ├── models/                  # Modelos de dados organizados por domínio
-│   │   ├── __init__.py
-│   │   ├── user.py             # Usuario (ABC), Student, Instructor
-│   │   ├── course.py           # Course
-│   │   ├── quiz.py             # PerguntaQuiz, Quiz
-│   │   ├── content.py          # Conteudo (ABC), Externo, Texto, Questionario
-│   │   ├── forum.py            # ForumPost, PostState (ABC), Draft, Published, Closed, Comentario
-│   │   └── chat.py             # Mensagem, Chat
+│   ├── models/
+│   │   └── models.py
 │   │
 │   ├── functions/              # Funções e lógica de negócio
 │   │   ├── access_forum.py
@@ -179,6 +180,13 @@ O projeto foi organizado de forma modular para seguir o **Princípio da Responsa
 │   │   ├── student_strategies.py
 │   │   ├── course_management_menu.py
 │   │   └── course_management_strategies.py
+│   │
+│   ├── analytics               # Sistema de relatórios
+│   │   ├── __init__.py
+│   │   ├── analytics_facade.py
+│   │   ├── course_analytics_calculator.py
+│   │   ├── report_generator.py
+│   │   └── student_progress_calculator.py
 │   │
 │   └── logging/                # Sistema de logging
 │       ├── __init__.py
