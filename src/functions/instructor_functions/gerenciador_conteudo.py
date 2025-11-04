@@ -26,6 +26,13 @@ from src.functions.instructor_functions.magic_validation import MagicPythonValid
 from src.validations import is_positive_number
 
 
+class CancelledByUserError(Exception):
+    """ Exceção customizada para quando o usuário deseja cancelar a criação de um conteúdo """
+
+    def __init__(self, message="Operação cancelada pelo usuário") -> None:
+        super().__init__(message)
+
+
 class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
     """ FACTORY METHOD + SINGLETON PATTERN - Creator abstrato que define a interface para criação, validação e adição de conteúdo """
 
@@ -43,7 +50,12 @@ class GerenciadorConteudo(ABC, metaclass=SingletonABCMeta):
 
     def adicionar(self, curso_selecionado: Course) -> None:
         """ TEMPLATE METHOD - Algoritmo de adição de cursos padrão que chama passos variáveis (factory_method e validation_chain) """
-        novo_conteudo: Conteudo = self.factory_method()
+
+        try:
+            novo_conteudo: Conteudo = self.factory_method()
+        except CancelledByUserError as e:
+            self.console.print(e)
+            return None
 
         self.console.print("\nIniciando validação do conteúdo...\n")
 
@@ -79,12 +91,21 @@ class GerenciadorExterno(GerenciadorConteudo, metaclass=SingletonABCMeta):
         titulo: str = questionary.text(
             "Digite o título do conteúdo:").ask()
 
+        if titulo is None:
+            raise CancelledByUserError()
+
         duracao: str = questionary.text(
             "Informe a duração do conteúdo (em minutos):",
             validate=is_positive_number).ask()
 
-        caminho: str = questionary.text(
+        if duracao is None:
+            raise CancelledByUserError()
+
+        caminho: str = questionary.path(
             "Informe o caminho para o arquivo:").ask()
+
+        if caminho is None:
+            raise CancelledByUserError()
 
         novo_externo: Externo = Externo(self.console, titulo,
                                         self.tipo, int(duracao), caminho)
@@ -120,13 +141,22 @@ class GerenciadorTexto(GerenciadorConteudo, metaclass=SingletonABCMeta):
         titulo: str = questionary.text(
             "Digite o título do conteúdo:").ask()
 
+        if titulo is None:
+            raise CancelledByUserError()
+
         duracao: str = questionary.text(
             "Informe a duração do conteúdo (em minutos):",
             validate=is_positive_number).ask()
 
+        if duracao is None:
+            raise CancelledByUserError()
+
         texto: str = questionary.text(
             "Digite o texto completo:",
             multiline=True).ask()
+
+        if texto is None:
+            raise CancelledByUserError()
 
         novo_texto: Texto = Texto(self.console, titulo,
                                   self.tipo, int(duracao), texto)
@@ -153,6 +183,9 @@ class GerenciadorQuestionario(GerenciadorConteudo, metaclass=SingletonABCMeta):
         self.console.print(f"\n--- CRIAR NOVO QUIZ ---\n")
         titulo_quiz: str = questionary.text("Digite o nome do quiz:").ask()
 
+        if titulo_quiz is None:
+            raise CancelledByUserError()
+
         perguntas: list[PerguntaQuiz] = []
 
         while True:
@@ -161,13 +194,22 @@ class GerenciadorQuestionario(GerenciadorConteudo, metaclass=SingletonABCMeta):
             enunciado: str = questionary.text(
                 "Digite o enunciado da questão:").ask()
 
+            if enunciado is None:
+                raise CancelledByUserError()
+
             alternativas: str = questionary.text(
                 "Digite as alternativas (separadas por vírgula):").ask()
             opcoes: list[str] = [opt.strip() for opt in alternativas.split()]
 
+            if alternativas is None:
+                raise CancelledByUserError()
+
             correta: str = questionary.select(
                 "Selecione a alternativa correta:",
                 choices=opcoes).ask()
+
+            if correta is None:
+                raise CancelledByUserError()
 
             nova_pergunta: PerguntaQuiz = PerguntaQuiz(
                 enunciado, opcoes, correta)
@@ -187,9 +229,15 @@ class GerenciadorQuestionario(GerenciadorConteudo, metaclass=SingletonABCMeta):
         titulo: str = questionary.text(
             "Digite o título do conteúdo:").ask()
 
+        if titulo is None:
+            raise CancelledByUserError()
+
         duracao: str = questionary.text(
             "Informe a duração do conteúdo (em minutos):",
             validate=is_positive_number).ask()
+
+        if duracao is None:
+            raise CancelledByUserError()
 
         # criar quiz
         quiz: Quiz = self.criar_quiz()

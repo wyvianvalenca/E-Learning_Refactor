@@ -26,7 +26,7 @@ def escolher_curso(cursos_instrutor: list[Course]) -> None | Course:
     escolhido: str = questionary.select("Selecione o curso que deseja gerenciar:",
                                         choices=nomes_cursos).ask()
 
-    if escolhido == "Sair":
+    if escolhido == "Sair" or escolhido == None:
         return None
 
     for curso in cursos_instrutor:

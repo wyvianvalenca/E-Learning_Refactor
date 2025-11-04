@@ -1,4 +1,5 @@
 from src.functions.student_functions import certificado
+from src.menus.strategy_interface import MenuActionStrategy
 from src.models import Course, Student
 
 
@@ -44,6 +45,11 @@ def executar(aluno_logado: Student, curso_escolhido: Course):
         except ValueError:
             print("Opção inválida.")
             continue
+        # tratamento de inturrupção pelo usuário
+        except KeyboardInterrupt:
+            print("\nOperação cancelada pelo usuário.")
+            MenuActionStrategy.retornar()
+            return
 
         # se o usuario escolheu um conteudo
         if 1 <= escolha <= total_conteudos:

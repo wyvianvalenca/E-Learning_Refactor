@@ -19,11 +19,12 @@ def selecionar_curso_do_instrutor(instrutor, cursos):
 
     try:
         escolha_num = int(input("Digite o número do curso: "))
-        if 1 <= escolha_num <= len(cursos_do_instrutor):
-            return cursos_do_instrutor[escolha_num - 1]
-        else:
-            print("Número fora do intervalo.")
-            return None
-    except:
+    except ValueError:
         print("Entrada inválida. Digite um número.")
+        return None
+
+    if 1 <= escolha_num <= len(cursos_do_instrutor):
+        return cursos_do_instrutor[escolha_num - 1]
+    else:
+        print("Número fora do intervalo.")
         return None

@@ -15,7 +15,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 
 from src.inicial import console
-from src.validations import is_non_empty
+from src.validations import is_non_empty, text_geq_50characters
 
 
 # CLASSES DO FORUM
@@ -88,8 +88,12 @@ class PostState(ABC):
     def comment(self, author: Usuario) -> None:
         conteudo: str = questionary.text(
             "Digite seu comentario:",
-            validate=is_non_empty
+            validate=text_geq_50characters
         ).ask()
+
+        if conteudo is None:
+            console.print("Operação cancelada pelo usuário")
+            return None
 
         self.post.comentarios.append(Comentario(self.post, conteudo, author))
 

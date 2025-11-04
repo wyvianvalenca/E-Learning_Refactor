@@ -37,7 +37,11 @@ def inicial():
     if (choose == opcoes[0]):
         # logica para o aluno
         print("\nAlunos disponíveis:", [aluno.nome for aluno in alunos])
-        nome_usuario = input("Digite o nome do aluno para 'logar': ")
+        # nome_usuario = input("Digite o nome do aluno para 'logar': ")
+        nome_usuario = questionary.autocomplete(
+            "Digite o nome do aluno para 'logar': ",
+            choices=[aluno.nome for aluno in alunos]
+        ).ask()
         lista_usuarios = alunos
         tipo_usuario = "Aluno"
 
@@ -45,12 +49,19 @@ def inicial():
         # logica para o instrutor
         print("\nInstrutores disponíveis:", [
               instrutor.nome for instrutor in instrutores])
-        nome_usuario: str = questionary.text(
-            "Digite o nome do instrutor para 'logar':").ask()
+        # nome_usuario: str = questionary.text("Digite o nome do instrutor para 'logar':").ask()
+        nome_usuario = questionary.autocomplete(
+            "Digite o nome do instrutor para 'logar': ",
+            choices=[instrutor.nome for instrutor in instrutores]
+        ).ask()
         lista_usuarios = instrutores
         tipo_usuario = "Instrutor"
 
-    elif (choose == opcoes[2]):
+    elif (choose == opcoes[2]) or choose is None:
+        print("\nSaindo do sistema. Até logo!")
+        exit()
+
+    if nome_usuario is None:
         print("\nSaindo do sistema. Até logo!")
         exit()
 

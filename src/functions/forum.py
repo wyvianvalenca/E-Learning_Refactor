@@ -60,6 +60,10 @@ def acoes_post(index: int, post: ForumPost, user: Usuario) -> int:
     option: str = questionary.select("Choose an option:",
                                      choices=list(actions.keys())).ask()
 
+    if option is None:
+        console.print("Operação cancelada pelo usuário")
+        return -1
+
     actions[option](post, user)
 
     if actions[option] != nada:
@@ -99,6 +103,10 @@ def draft_actions(index: int, post: ForumPost, user: Usuario) -> int:
     option: str = questionary.select("Choose an option:",
                                      choices=list(actions.keys())).ask()
 
+    if option is None:
+        console.print("Operação cancelada pelo usuário")
+        return -1
+
     actions[option](post, user)
 
     if actions[option] != nada:
@@ -124,7 +132,7 @@ def render_drafts(index: int, post: ForumPost, user: Usuario) -> int:
 
 def mostrar_feed(posts: list[ForumPost], user: Usuario, type: str) -> None:
     index: int = 0
-    while index < len(posts):
+    while index < len(posts) and index != -1:
         post: ForumPost = posts[index]
 
         if type == "published":
@@ -133,6 +141,7 @@ def mostrar_feed(posts: list[ForumPost], user: Usuario, type: str) -> None:
         elif type == "drafts":
             index = render_drafts(index, post, user)
 
+    console.print()
     questionary.press_any_key_to_continue(
         "Pressione qualquer tecla para voltar ao menu.").ask()
     return None

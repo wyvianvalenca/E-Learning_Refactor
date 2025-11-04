@@ -1,7 +1,11 @@
 # instrutor/criar_curso.py
 import questionary
 
-from src.validations import is_non_empty, is_positive_number
+from src.validations import (
+    is_positive_number,
+    text_geq_50characters,
+    text_has_2words
+)
 from src.models import Course, Instructor
 from src.functions.instructor_functions.course_builder import CourseBuilder
 
@@ -12,17 +16,39 @@ from src.functions.instructor_functions.course_builder import CourseBuilder
 
 def executar(instructor: Instructor, all_courses_list: list[Course]) -> None:
 
-    name: str = questionary.text("Digite o nome do novo curso:", qmark="->",
-                                 validate=is_non_empty).ask()
-    desc: str = questionary.text("Digite a descrição do curso:", qmark="->",
-                                 validate=is_non_empty).ask()
-    price: float = questionary.text("Digite o preço do curso (R$):", qmark="->",
-                                    validate=is_positive_number).ask()
-    difficulty: str = questionary.text(
-        "Digite o nível de dificuldade do curso:", qmark="->").ask()
-    categories: str = questionary.text(
-        "Digite as categorias do curso (separadas por vírgula):", qmark="->").ask()
-    categories_list = categories.split(",")
+    name: str = questionary.text(
+        "Digite o nome do novo curso:", qmark="->",
+        validate=text_has_2words
+    ).ask()
+
+    desc: str = questionary.text(
+        "Digite a descrição do curso:", qmark="->",
+        validate=text_geq_50characters
+    ).ask()
+
+    price: str = questionary.text(
+        "Digite o preço do curso (R$):", qmark="->",
+        validate=is_positive_number
+    ).ask()
+
+    difficulty: str = questionary.select(
+        "Selecione o nível de dificuldade do curso:", qmark="->",
+        choices=["Iniciante", "Intermediário", "Avançado"]
+    ).ask()
+
+    categories_list: list[str] = questionary.checkbox(
+        "Escolha as categorias do curso (separadas por vírgula):", qmark="->",
+        choices=["Web", "Segurança", "IA",
+                 "Desenvolvimento", "Software", "Qualidade"]
+    ).ask()
+
+    if (name is None or
+            desc is None or
+            price is None or
+            difficulty is None or
+            categories_list is None):
+        print("Operação cancelada pelo usuário")
+        return None
 
     new_course: Course = CourseBuilder() \
         .with_name(name) \

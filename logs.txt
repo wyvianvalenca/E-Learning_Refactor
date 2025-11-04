@@ -1,2 +1,1 @@
-Larissa choose SubscribeStrategy
-Larissa choose AddPostCourseStrategy
+Carlos choose RemoveContentStrategy

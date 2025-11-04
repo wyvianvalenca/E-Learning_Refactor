@@ -19,6 +19,7 @@ from src.functions.student_functions import (
 )
 from src.functions import forum
 from src.analytics import AnalyticsFacade
+from src.validations import text_geq_50characters, text_has_2words
 
 
 class UpdateInfoStrategy(MenuActionStrategy):
@@ -39,13 +40,17 @@ class UpdateInfoStrategy(MenuActionStrategy):
         self.cabecalho(f"Atualizar informações do Curso [bold]{
                        curso.titulo}[/]")
         novo_nome: str = questionary.text(
-            "Digite o novo nome (ou <Enter> para manter):").ask()
+            "Digite o novo nome (ou <Ctrl+C> para manter):",
+            validate=text_has_2words
+        ).ask()
 
         if novo_nome:
             curso.titulo = novo_nome
 
         nova_desc: str = questionary.text(
-            "Digite a nova descrição (ou <Enter> para manter):").ask()
+            "Digite a nova descrição (ou <Ctrl+C> para manter):",
+            validate=text_geq_50characters
+        ).ask()
 
         if nova_desc:
             curso.descricao = nova_desc
@@ -167,6 +172,11 @@ class RemoveContentStrategy(MenuActionStrategy):
         remover: str = questionary.select(
             "Selecione o conteúdo que deseja remover:",
             choices=nomes).ask()
+
+        if remover is None:
+            context['console'].print("Operação cancelada pelo usuário")
+            return MenuActionStrategy.retornar()
+
         index_remover: int = int(remover.split('-')[0].strip())
 
         removido: Conteudo = curso.conteudos.pop(index_remover)

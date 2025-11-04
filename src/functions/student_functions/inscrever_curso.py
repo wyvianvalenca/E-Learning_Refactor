@@ -12,7 +12,12 @@ def executar(aluno_logado, cursos):
 
     print_courses(cursos, show_students=False)
 
-    titulo_curso = input("\nDigite o título do curso para se matricular: ")
+    try:
+        titulo_curso = input("\nDigite o título do curso para se matricular: ")
+    except KeyboardInterrupt:
+        print("Cancelled by user")
+        return None
+
     curso_encontrado = None
 
     for curso in cursos:
@@ -21,7 +26,6 @@ def executar(aluno_logado, cursos):
             break
 
     if curso_encontrado:
-
         if curso_encontrado in aluno_logado.cursos_inscritos:
             print("Você já está inscrito neste curso.")
         else:
@@ -30,6 +34,7 @@ def executar(aluno_logado, cursos):
                     f"Inscrevendo-se no curso '{curso_encontrado.titulo}'...")
                 aluno_logado.cursos_inscritos.append(curso_encontrado)
                 curso_encontrado.students.append(aluno_logado)
-                print(f"Você se inscreveu no curso '{curso_encontrado.titulo}' com sucesso!")
+                print(f"Você se inscreveu no curso '{
+                      curso_encontrado.titulo}' com sucesso!")
     else:
         print("Curso não encontrado.")

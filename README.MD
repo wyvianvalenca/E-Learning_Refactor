@@ -140,9 +140,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
 │   ├── utils.py
 │   ├── validations.py
 │   ├── print_courses.py
-│   │
-│   ├── models/
-│   │   └── models.py
+│   ├── models.py
 │   │
 │   ├── functions/              # Funções e lógica de negócio
 │   │   ├── access_forum.py

@@ -49,6 +49,10 @@ class MenuManager:
                 choices=choices
             ).ask()
 
+            # Verifica cancelamento pelo usuario
+            if chosen_label is None:
+                continue
+
             # Executa a estratégia escolhida
             available_strategies[chosen_label].execute(context)
             # clear_screen()
