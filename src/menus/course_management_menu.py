@@ -68,4 +68,4 @@ def course_management_menu(console: Console, cursos: list[Course], usuario: Usua
         .add_strategy(ExitStrategy()) \
         .run(context)
 
-    None
+    return None

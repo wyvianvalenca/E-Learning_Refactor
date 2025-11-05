@@ -38,6 +38,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
 - **Implementação**: 
     - Metaclasse: `SingletonABCMeta` (para classes abstratas e seus filhos) e `SingletonMeta`(para as demais)
     - Singletons: `GerenciadorConteudo`, `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`
+  - Client: `AddContentStrategy` em `src/menus/course_management_strategies.py`
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
 #### **Factory Method** - `src/functions/instructor_functions/gerenciador_conteudo.py`
@@ -46,6 +47,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
 - **Implementação**: 
     - Creator abstrato: `GerenciadorConteudo` (obriga a implementação do `factory_method` e `validation_chain` e usa-os no `adicionar`, para inserir novos conteúdos)
     - Creator concretos: `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`
+  - Client: `AddContentStrategy` em `src/menus/course_management_strategies.py`
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
 #### **Builder** - `src/functions/instructor_functions/course_builder.py`
@@ -67,6 +69,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
   - Context: `MenuManager`
   - Strategy abstrata (interface): `MenuActionStrategy`
   - Strategy concretas: Classes de estratégia em `strategies.py`, `exit_strategy.py`, `course_management_strategies.py`, `instructor_strategies.py` e `student_strategies.py`
+  - Client: `course_management_menu`, `student_menu` e `instructor_menu` em `src/menus/`
 - **Uso no projeto**: Todos os menus do sistema
 
 #### **State** - `src/models/forum.py`
@@ -76,6 +79,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
   - Context: `ForumPost`
   - State: `PostState`
   - Concrete States: `Draft`, `Published`, `Closed`
+  - Client: `adicionar_post` em `src/functions/student_functions/adicionar_post.py`
 - **Uso no projeto**: Ao criar e interagir com posts do fórum
 
 #### **Chain of Responsibility** - `src/functions/instructor_functions/content_validation.py`
@@ -84,6 +88,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
 - **Implementação**: 
   - Handler: `Handler`
   - Concrete Handlers: `TitleLengthValidation`, `FileFormatValidation`, etc.
+  - Client: `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario` em `src/functions/instructor_functions/gerenciador_conteudo.py`
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
 #### **Template Method** - `src/functions/instructor_functions/gerenciador_conteudo.py` (intimamente relacionado com o Factory Method)
@@ -92,6 +97,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
 - **Implementação**:
   - **AbstractClass**: `GerenciadorConteudo`, que declara os passos (`factory_method` e `validation_chain`) do algoritmo/template method (`adicionar`)
   - **ConcreteClasses**: `GerenciadorExterno`, `GerenciadorTexto` e `GerenciadorQuestionario`, que implementam os passos conforme o tipo de conteúdo, mas não sobrescrevem o algoritmo/template method
+  - Client: `AddContentStrategy` em `src/menus/course_management_strategies.py`
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo aos seus cursos
 
 
@@ -104,6 +110,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
   - Target: `Handler` (interface de validadores)
   - Adaptee: `SimpleMagicValidation` (classe criada para usar a biblioteca externa)
   - Adapter: `MagicPythonValidationAdapter` (conecta interfaces)
+  - Client: método `validation_chain` de `GerenciadorExterno` em `src/functions/instructor_functions/gerenciador_conteudo.py`
 - **Uso no projeto**: Quando um instrutor deseja adicionar conteúdo externo aos seus cursos
 
 
@@ -115,6 +122,7 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
   - Concrete Components: Todas as opções de menu (classes que herdam `MenuActionStrategy`)
   - Base Decorator: `BaseDecoratorStrategy`
   - Concrete Decorator: `LoggingDecoratorStrategy`
+  - Client: `course_management_menu`, `student_menu` e `instructor_menu` em `src/menus/`
 - **Uso no projeto**: Quando o usuário seleciona opções que podem alterar os dados do sistema
 
 #### **Facade** - `src/analytics`
@@ -123,83 +131,56 @@ Este projeto implementa **10 padrões de projeto** para demonstrar conceitos ava
 - **Implementação**:
   - Facade: `AnalyticsFacade`
   - Subssistemas complexos: `CourseAnalyticsCalculator`, `StudentProgressClaculator`, `RerportGenerator`
+  - Client: `ReportStrategy` e `PerformanceStrategy` em `src/menus/course_management_strategies.py`
 - **Uso no projeto**: Ao gerar relatórios do curso e individuais (para aluno)
 
-## Estrutura do Código
-
-```
-/ (pasta raiz)
-├── requirements.txt
-├── main.py
-├── src/
-│   ├── __init__.py
-│   ├── inicial.py
-│   ├── dados_iniciais.py
-│   ├── data_base.py
-│   ├── singleton_metaclass.py
-│   ├── utils.py
-│   ├── validations.py
-│   ├── print_courses.py
-│   ├── models.py
-│   │
-│   ├── functions/              # Funções e lógica de negócio
-│   │   ├── access_forum.py
-│   │   ├── exit_strategy.py
-│   │   ├── forum.py
-│   │   ├── forum_post_states.py
-│   │   ├── manage_course.py
-│   │   │
-│   │   ├── instructor_functions/
-│   │   │   ├── content_validation.py
-│   │   │   ├── course_builder.py
-│   │   │   ├── criar_curso.py
-│   │   │   ├── excluir_curso.py
-│   │   │   ├── gerenciador_conteudo.py
-│   │   │   ├── listar_cursos.py
-│   │   │   └── magic_validation.py
-│   │   │
-│   │   └── student_functions/
-│   │       ├── adicionar_post.py
-│   │       ├── certificado.py
-│   │       ├── desempenho_aluno.py
-│   │       ├── inscrever_curso.py
-│   │       ├── pagamento.py
-│   │       ├── plataforma_do_curso.py
-│   │       ├── responder_quiz.py
-│   │       └── ver_cursos.py
-│   │
-│   ├── menus/                  # Menus e estratégias do sistema
-│   │   ├── __init__.py
-│   │   ├── menu_manager.py
-│   │   ├── strategy_interface.py
-│   │   ├── instructor_menu.py
-│   │   ├── instructor_strategies.py
-│   │   ├── student_menu.py
-│   │   ├── student_strategies.py
-│   │   ├── course_management_menu.py
-│   │   └── course_management_strategies.py
-│   │
-│   ├── analytics               # Sistema de relatórios
-│   │   ├── __init__.py
-│   │   ├── analytics_facade.py
-│   │   ├── course_analytics_calculator.py
-│   │   ├── report_generator.py
-│   │   └── student_progress_calculator.py
-│   │
-│   └── logging/                # Sistema de logging
-│       ├── __init__.py
-│       ├── base_decorator_strategy.py
-│       └── strategy_logging_decorator.py
-│
-├── content/                   # Arquivos de conteúdo externo
-│   ├── video.mp4
-│   └── pdf.pdf
-│
-└── certificados/              # Certificados gerados
-    └── ... (arquivos .txt)
-```
-
 ---
+
+## Tratamento de Exceções
+
+A maioria das alterações feitas no código para tratar exceções encontram-se no commit [61dc2dc](https://github.com/wyvianvalenca/E-Learning_Refactor/commit/61dc2dcaf6301149b74def112b3d6e2e887f3c56)
+
+### Entradas lidas com `questionary`
+
+A maioria das exceções ocorre quando o usuário insere uma entrada que difere do esperado pelo programa. Com o uso da biblioteca `questionary`, pude realizar um tratamento melhor das entradas do usuário, pois ela permite inserir uma função para verificar a entrada, impedindo a gravação do dado até que tal função retorne `True`.
+
+Foram usadas funções como `is_positive_number`, `text_has_2words`, entre outras, para validar as entradas do usuário. Todas as funções de validação estão em `src/validations.py`
+
+Além disso, outra ação do usuário que pode atrapalhar o fluxo do sistema é o uso do Ctrl+C (interrupção por teclado). Nesses casos, todas as funções de input da biblioteca `questionary` capturam essa entrada e retornan `None`. Para evitar que o valor nulo quebre qualquer lógica da aplicação, as variáveis que recebem as entradas do usuário sempre são verificadas para o valor nulo e, caso o contenham, a operação é cancelada imediatamente.
+
+#### Caso específico: Gerenciadores de Conteúdo em `src/functions/instructor_functions/gerenciador_conteudo.py`
+
+Em relação ao tratamento da interrupção do usuário com Ctrl+C dentro da criação de conteúdo, precisamos criar um erro personalizado, por causa da estrutura do padrão criacional FACTORY METHOD aplicado.
+
+As funções de `template_method` de cada criador concreto capturam as informações do usuário e fazem a criação de um novo conteúdo. Nesse processo, o usuário pode aplicar a interrupção por teclado (Ctrl+C) em algum dos inputs, o que retornaria o valor `None` para o programa. Para evitar isso, criamos uma excessão `CancelledByYserError` para indicar que o usuário deseja cancelar a operação. Ao pressionar Ctrl+C em qualquer um dos inputs desse processo, o sistema levanta a exceção personalizada.
+
+Para tratar tal comportamento inesperado, na função `adicionar` (TEMPLATE METHOD), inserimos um bloco `try-except` que captura o erro personalizado e cancela toda a operação de criação e adição de conteúdos, evitando que erros apareçam para o usuário.
+
+### Código legado
+
+Algumas das funções do sistema não foram refatoradas e não implementaram a biblioteca `questionary`, para tais, utilizamos blocos `try-except`.
+
+#### `executar` em `src/functions/student_functions/plataforma_do_curso.py` (a partir da linha 43)
+
+Como a entrada é lida como texto e o programa espera um número, tentamos fazer o casting de tipos, e, caso a entrada contenha letras ou símbolos, um erro `ValueError` é levantado, o qual tratamos no bloco `except`.
+
+Além disso, também tratamos a exceção `KeyboardInterrupt`, cancelando a operação caso o usuário pressione Ctrl+C.
+
+#### `executar` em `src/functions/student_functions/inscrever_curso.py` (a partir da linha 15)
+
+Tratamos a exceção `KeyboardInterrupt`, cancelando a operação caso o usuário pressione Ctrl+C.
+
+#### `selecionar_curso_do_instrutor` em `src/functions/instructor_functions/dry.py` (a partir da linha 20)
+
+Como a entrada é lida como texto e o programa espera um número, tentamos fazer o casting de tipos, e, caso a entrada contenha letras ou símbolos, um erro `ValueError` é levantado, o qual tratamos no bloco `except`.
+
+### Validações de arquivos com bilbioteca externa `python-magic` (`src/functions/instructor_functions/magic_validations.py`)
+
+Para validar os conteúdos externos (arquivos) que são inseridos no sistema, utilizamos uma biblioteca externa que verifica o tipo real do arquivo. Para evitar problemas com a inicialização dessa biblioteca, utilizamos excepts genéricos, visto que não conhecemos os erros específicos que podem ser levantados.
+
+Entrtanto, salvamos e imprimimos na tela todas as exceções geradas pelas operações da biblioteca, para podermos identificá-los e tratá-los individualmente. Porém, até o momento, nenhum erro foi gerado pelo programa na validação de arquivos.
+
+--
 
 ## Como Rodar o Projeto
 

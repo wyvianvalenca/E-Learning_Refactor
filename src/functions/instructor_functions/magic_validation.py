@@ -93,8 +93,15 @@ class MagicPythonValidationAdapter(Handler):
                 validator_name=self.get_name()
             )
 
-        real_type_matches: bool = SimpleMagicValidation(). \
-            validate_file_type(content.caminho, content.tipo)
+        try:
+            real_type_matches: bool = SimpleMagicValidation(). \
+                validate_file_type(content.caminho, content.tipo)
+        except RuntimeError:
+            return ValidationResult(
+                is_valid=False,
+                message="Erro na validação do arquivo.",
+                validator_name=self.get_name()
+            )
 
         if not real_type_matches:
             return ValidationResult(

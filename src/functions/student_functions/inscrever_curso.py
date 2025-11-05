@@ -15,7 +15,7 @@ def executar(aluno_logado, cursos):
     try:
         titulo_curso = input("\nDigite o título do curso para se matricular: ")
     except KeyboardInterrupt:
-        print("Cancelled by user")
+        print("\nCancelled by user")
         return None
 
     curso_encontrado = None
